@@ -5,7 +5,9 @@
     </testsuite>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src/Bws</directory>
+            <directory suffix=".php">src/Bws/Entity</directory>
+            <directory suffix=".php">src/Bws/Interactor</directory>
+            <directory suffix=".php">src/Bws/Repository</directory>
         </whitelist>
     </filter>
 </phpunit>
