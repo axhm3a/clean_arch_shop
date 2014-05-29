@@ -6,7 +6,7 @@ class ViewBasketRequest
 {
     private $basketId;
 
-    function __construct($basketId)
+    public function __construct($basketId)
     {
         $this->basketId = $basketId;
     }
