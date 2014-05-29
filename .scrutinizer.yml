@@ -3,3 +3,6 @@ tools:
     php_pdepend: true
     php_cpd: true
     php_analyzer: true
+
+filter:
+    paths: [src/*]
