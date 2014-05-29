@@ -1,0 +1,50 @@
+parameters:
+    article.entity.class: Bws\DoctrineBundle\Entity\Article
+    article.repository.class: Bws\DoctrineBundle\Entity\ArticleRepository
+    basket.entity.class: Bws\DoctrineBundle\Entity\Basket
+    basket.repository.class: Bws\DoctrineBundle\Entity\BasketRepository
+    basket.position.entity.class: Bws\DoctrineBundle\Entity\BasketPosition
+    basket.position.repository.class: Bws\DoctrineBundle\Entity\BasketPositionRepository
+
+    interactor.add_to_basket.class: Bws\Interactor\AddToBasket
+    interactor.view_basket.class: Bws\Interactor\ViewBasket
+    interactor.change_basket.class: Bws\Interactor\ChangeBasket
+
+services:
+    article.repository:
+        class: %article.repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - %article.entity.class%
+    basket.repository:
+        class: %basket.repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - %basket.entity.class%
+    basket.position.repository:
+        class: %basket.position.repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - %basket.position.entity.class%
+
+    interactor.add_to_basket:
+        class: %interactor.add_to_basket.class%
+        arguments:
+            - @article.repository
+            - @basket.position.repository
+            - @basket.repository
+
+    interactor.view_basket:
+        class: %interactor.view_basket.class%
+        arguments:
+            - @basket.repository
+            - @basket.position.repository
+
+    interactor.change_basket:
+        class: %interactor.change_basket.class%
+        arguments:
+            - @basket.position.repository
+            - @basket.repository

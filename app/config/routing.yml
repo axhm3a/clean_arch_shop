@@ -1,0 +1,4 @@
+bws_shop_web:
+    resource: "@BwsShopWebBundle/Resources/config/routing.yml"
+    prefix:   /shop
+

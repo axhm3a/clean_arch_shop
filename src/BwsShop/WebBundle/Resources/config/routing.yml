@@ -1,0 +1,15 @@
+bws_shop_web_homepage:
+    pattern:  /
+    defaults: { _controller: BwsShopWebBundle:Articles:index }
+
+bws_shop_web_add_to_basket:
+    pattern: /basket/add/
+    defaults: { _controller: BwsShopWebBundle:Basket:add }
+
+bws_shop_web_list_basket:
+    pattern: /basket.{_format}
+    defaults: { _controller: BwsShopWebBundle:Basket:list, _format: html }
+
+bws_shop_web_change_basket_position:
+    pattern: /basket/change.{_format}
+    defaults: { _controller: BwsShopWebBundle:Basket:change, _format: json }

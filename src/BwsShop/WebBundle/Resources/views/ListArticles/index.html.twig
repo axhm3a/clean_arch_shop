@@ -1,0 +1,27 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    {% for article in articles %}
+        <form action="{{ url('bws_shop_web_add_to_basket') }}" method="post">
+            <img src="{{ article.imagePath }}" alt="" style="width: 150px;"/><br/>
+
+            <h2>{{ article.title }}</h2>
+
+            <p>
+                <strong style="color: #880000">{{ article.price }} €</strong>
+                <select name="count">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+                <input type="hidden" name="articleId" value="{{ article.id }}">
+                <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-shopping-cart"></span> Add to cart
+                </button>
+            </p>
+
+            <p>{{ article.description }}</p>
+        </form>
+        <hr/>
+    {% endfor %}
+{% endblock %}
