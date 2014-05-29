@@ -8,14 +8,37 @@ class ViewBasketResponse
     const BAD_BASKET_ID    = -1;
     const BASKET_NOT_FOUND = -2;
 
+    /**
+     * @var int
+     */
     private $code;
+
+    /**
+     * @var string
+     */
     private $message;
 
+    /**
+     * @var array
+     */
     private $positions;
+
+    /**
+     * @var float
+     */
     private $total;
 
     /**
+     * @var int
+     */
+    private $posCount;
+
+    /**
+     * @param int    $code
      * @param string $message
+     * @param array  $positions
+     * @param float  $total
+     * @param int    $positionCount
      */
     public function __construct($code, $message, $positions = array(), $total = 0.0, $positionCount = 0)
     {
@@ -27,7 +50,7 @@ class ViewBasketResponse
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getCode()
     {
@@ -43,7 +66,7 @@ class ViewBasketResponse
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getPositions()
     {
