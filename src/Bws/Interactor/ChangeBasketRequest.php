@@ -4,10 +4,26 @@ namespace Bws\Interactor;
 
 class ChangeBasketRequest
 {
+    /**
+     * @var integer
+     */
     public $basketId;
+
+    /**
+     * @var integer
+     */
     public $articleId;
+
+    /**
+     * @var integer
+     */
     public $count;
 
+    /**
+     * @param integer $articleId
+     * @param integer $basketId
+     * @param integer $count
+     */
     public function __construct($articleId, $basketId, $count)
     {
         $this->articleId = $articleId;
@@ -16,7 +32,7 @@ class ChangeBasketRequest
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getArticleId()
     {
@@ -38,7 +54,5 @@ class ChangeBasketRequest
     {
         return $this->count;
     }
-
-
 }
  
