@@ -71,6 +71,7 @@ class ViewBasketTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(1, $result->getPositionCount());
         $this->assertEquals('9.99', $result->getTotal());
+        $this->assertEquals('', $result->getMessage());
     }
 }
  
