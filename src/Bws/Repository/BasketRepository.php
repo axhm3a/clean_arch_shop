@@ -3,7 +3,6 @@
 namespace Bws\Repository;
 
 use Bws\Entity\Basket;
-use Bws\Entity\BasketPosition;
 
 interface BasketRepository
 {
@@ -16,6 +15,7 @@ interface BasketRepository
 
     /**
      * @param Basket $basket
+     * @return void
      */
     public function save(Basket $basket);
 

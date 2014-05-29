@@ -17,6 +17,9 @@ class AddToBasketResponse
     private $total;
     private $posCount;
 
+    /**
+     * @param string $message
+     */
     public function __construct($code, $message, $basketId = 0, $total = 0.0, $posCount = 0)
     {
         $this->code     = $code;

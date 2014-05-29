@@ -101,8 +101,8 @@ class AddToBasket
 
     /**
      * @param AddToBasketRequest $request
-     * @param                    $article
-     * @param                    $basket
+     * @param                    \Bws\Entity\Article $article
+     * @param                    \Bws\Entity\Basket $basket
      *
      * @return \Bws\Entity\BasketPosition
      */

@@ -3,7 +3,6 @@
 namespace BwsShop\WebBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class ArticlesController extends Controller
 {
