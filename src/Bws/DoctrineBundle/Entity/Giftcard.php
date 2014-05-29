@@ -2,8 +2,6 @@
 
 namespace Bws\DoctrineBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Giftcard
  */

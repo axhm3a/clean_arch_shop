@@ -38,7 +38,7 @@ class BasketController extends FOSRestController
 
     /**
      * @View()
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction()
     {
@@ -60,7 +60,7 @@ class BasketController extends FOSRestController
 
     /**
      * @View()
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function changeAction()
     {

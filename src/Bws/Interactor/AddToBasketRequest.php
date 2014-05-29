@@ -24,7 +24,7 @@ class AddToBasketRequest
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getCount()
     {
@@ -32,7 +32,7 @@ class AddToBasketRequest
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getBasketId()
     {

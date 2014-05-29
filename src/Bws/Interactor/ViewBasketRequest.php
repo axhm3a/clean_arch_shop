@@ -12,7 +12,7 @@ class ViewBasketRequest
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getBasketId()
     {

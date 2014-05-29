@@ -14,6 +14,9 @@ class ViewBasketResponse
     private $positions;
     private $total;
 
+    /**
+     * @param string $message
+     */
     public function __construct($code, $message, $positions = array(), $total = 0.0, $positionCount = 0)
     {
         $this->code      = $code;
@@ -48,7 +51,7 @@ class ViewBasketResponse
     }
 
     /**
-     * @return mixed
+     * @return double
      */
     public function getTotal()
     {

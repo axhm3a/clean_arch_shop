@@ -16,6 +16,7 @@ interface BasketPositionRepository
 
     /**
      * @param BasketPosition $basketPosition
+     * @return void
      */
     public function addToBasket(BasketPosition $basketPosition);
 
