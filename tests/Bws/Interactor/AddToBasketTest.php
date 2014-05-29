@@ -91,6 +91,7 @@ class AddToBasketTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $response->getPosCount());
         $this->assertEquals(12356, $this->basketRepository->getFindByIdArgument());
         $this->assertEquals(1, $this->basketPositionRepository->getAddToBasketCalls());
+        $this->assertEquals('', $response->getMessage());
 
         $response = $this->interactor->execute(new AddToBasketRequest(ArticleStub::ID, 1, 12356));
 
@@ -100,6 +101,7 @@ class AddToBasketTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $response->getPosCount());
         $this->assertEquals(12356, $this->basketRepository->getFindByIdArgument());
         $this->assertEquals(2, $this->basketPositionRepository->getAddToBasketCalls());
+        $this->assertEquals('', $response->getMessage());
     }
 }
  
