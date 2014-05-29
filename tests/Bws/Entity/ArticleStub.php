@@ -5,42 +5,20 @@ namespace Bws\Entity;
 class ArticleStub extends Article
 {
     const ID = 12;
-
     const TITLE = 'some title';
-
     const PRICE = 9.99;
-
     const IMAGE_PATH = '/path/to/image.png';
+    const EAN = '978-013235088';
+    const DESCRIPTION = 'some description';
 
-    public function getEan()
+    public function __construct()
     {
-        return '978-013235088';
+        $this->setId(self::ID);
+        $this->setTitle(self::TITLE);
+        $this->setEan(self::EAN);
+        $this->setDescription(self::DESCRIPTION);
+        $this->setPrice(self::PRICE);
+        $this->setImagePath(self::IMAGE_PATH);
     }
-
-    public function getTitle()
-    {
-        return self::TITLE;
-    }
-
-    public function getDescription()
-    {
-        return 'some description';
-    }
-
-    public function getPrice()
-    {
-        return self::PRICE;
-    }
-
-    public function getImagePath()
-    {
-        return self::IMAGE_PATH;
-    }
-
-    public function getId()
-    {
-        return self::ID;
-    }
-
 }
  

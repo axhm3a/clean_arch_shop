@@ -1,13 +1,12 @@
-<phpunit
-        bootstrap="bootstrap.php">
+<phpunit bootstrap="bootstrap.php">
     <testsuite name="Bws Library">
         <directory>./</directory>
     </testsuite>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src/Bws/Entity</directory>
-            <directory suffix=".php">src/Bws/Interactor</directory>
-            <directory suffix=".php">src/Bws/Repository</directory>
+            <directory suffix=".php">./../src/Bws/Entity</directory>
+            <directory suffix=".php">./../src/Bws/Interactor</directory>
+            <directory suffix=".php">./../src/Bws/Repository</directory>
         </whitelist>
     </filter>
 </phpunit>
