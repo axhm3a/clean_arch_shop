@@ -3,4 +3,9 @@
     <testsuite name="Bws Library">
         <directory>./</directory>
     </testsuite>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src/Bws</directory>
+        </whitelist>
+    </filter>
 </phpunit>
