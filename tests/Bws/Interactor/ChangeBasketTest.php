@@ -76,6 +76,7 @@ class ChangeBasketTest extends \PHPUnit_Framework_TestCase
             new ChangeBasketRequest(ArticleStub::ID, BasketRepositoryMock::BASKET_ID, 0)
         );
         $this->assertEquals(ChangeBasketResponse::SUCCESS, $response->getCode());
+        $this->assertEquals('', $response->getMessage());
     }
 
     public function testBasketPositionCountIncreased()

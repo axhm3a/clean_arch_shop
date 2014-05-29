@@ -12,9 +12,20 @@ class ChangeBasketResponse
     const ARTICLE_IS_NOT_IN_BASKET = -5;
     const BASKET_IS_EMPTY          = -6;
 
+    /**
+     * @var int
+     */
     private $code;
+
+    /**
+     * @var string
+     */
     private $message;
 
+    /**
+     * @param int    $code
+     * @param string $message
+     */
     public function __construct($code, $message = '')
     {
         $this->code    = $code;
@@ -22,7 +33,7 @@ class ChangeBasketResponse
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getCode()
     {
