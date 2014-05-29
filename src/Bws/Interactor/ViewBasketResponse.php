@@ -35,7 +35,7 @@ class ViewBasketResponse
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMessage()
     {

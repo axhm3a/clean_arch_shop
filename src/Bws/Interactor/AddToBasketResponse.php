@@ -38,7 +38,7 @@ class AddToBasketResponse
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMessage()
     {
