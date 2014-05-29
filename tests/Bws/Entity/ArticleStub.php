@@ -6,6 +6,12 @@ class ArticleStub extends Article
 {
     const ID = 12;
 
+    const TITLE = 'some title';
+
+    const PRICE = 9.99;
+
+    const IMAGE_PATH = '/path/to/image.png';
+
     public function getEan()
     {
         return '978-013235088';
@@ -13,7 +19,7 @@ class ArticleStub extends Article
 
     public function getTitle()
     {
-        return 'some title';
+        return self::TITLE;
     }
 
     public function getDescription()
@@ -23,12 +29,12 @@ class ArticleStub extends Article
 
     public function getPrice()
     {
-        return 9.99;
+        return self::PRICE;
     }
 
     public function getImagePath()
     {
-        return '/path/to/image.png';
+        return self::IMAGE_PATH;
     }
 
     public function getId()

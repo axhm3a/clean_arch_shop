@@ -42,9 +42,9 @@ class ViewBasket
             return new ViewBasketResponse(ViewBasketResponse::SUCCESS, '');
         }
 
-        $positionsDto = array();
+        $positionsDto  = array();
         $positionCount = 0;
-        $total = 0.0;
+        $total         = 0.0;
 
         /** @var BasketPosition $position */
         foreach ($positions as $position) {

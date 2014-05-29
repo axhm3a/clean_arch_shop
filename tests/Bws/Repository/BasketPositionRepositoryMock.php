@@ -23,6 +23,7 @@ class BasketPositionRepositoryMock implements BasketPositionRepository
         $position->setId(self::POSITION_ID);
         $position->setBasket($basket);
         $position->setArticle(new ArticleStub());
+        $position->setCount(1);
 
         $this->positions[$position->getId()] = $position;
     }
