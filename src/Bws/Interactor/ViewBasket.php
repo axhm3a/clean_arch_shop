@@ -18,12 +18,21 @@ class ViewBasket
      */
     private $positionRepository;
 
+    /**
+     * @param BasketRepository         $basketRepository
+     * @param BasketPositionRepository $positionRepository
+     */
     public function __construct(BasketRepository $basketRepository, BasketPositionRepository $positionRepository)
     {
         $this->basketRepository   = $basketRepository;
         $this->positionRepository = $positionRepository;
     }
 
+    /**
+     * @param ViewBasketRequest $request
+     *
+     * @return ViewBasketResponse
+     */
     public function execute(ViewBasketRequest $request)
     {
         if (null === $request->getBasketId()) {
