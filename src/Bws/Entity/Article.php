@@ -156,7 +156,7 @@ class Article
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -164,7 +164,7 @@ class Article
     }
 
     /**
-     * @param int $id
+     * @param integer $id
      */
     public function setId($id)
     {

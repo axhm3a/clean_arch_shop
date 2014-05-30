@@ -11,7 +11,7 @@ class AddToBasketResponse
     const BAD_ARTICLE_ID    = -4;
 
     /**
-     * @var int
+     * @var integer
      */
     private $code;
 
@@ -21,7 +21,7 @@ class AddToBasketResponse
     private $message;
 
     /**
-     * @var int
+     * @var integer
      */
     private $basketId;
 
@@ -31,16 +31,16 @@ class AddToBasketResponse
     private $total;
 
     /**
-     * @var int
+     * @var integer
      */
     private $posCount;
 
     /**
-     * @param int    $code
-     * @param string $message
-     * @param int    $basketId
-     * @param float  $total
-     * @param int    $posCount
+     * @param integer $code
+     * @param string  $message
+     * @param integer $basketId
+     * @param float   $total
+     * @param integer $posCount
      */
     public function __construct($code, $message, $basketId = 0, $total = 0.0, $posCount = 0)
     {
@@ -52,7 +52,7 @@ class AddToBasketResponse
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getCode()
     {
@@ -68,7 +68,7 @@ class AddToBasketResponse
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getBasketId()
     {
@@ -84,7 +84,7 @@ class AddToBasketResponse
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getPosCount()
     {

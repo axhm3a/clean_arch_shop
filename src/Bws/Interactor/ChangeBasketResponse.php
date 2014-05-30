@@ -13,7 +13,7 @@ class ChangeBasketResponse
     const BASKET_IS_EMPTY          = -6;
 
     /**
-     * @var int
+     * @var integer
      */
     private $code;
 
@@ -23,8 +23,8 @@ class ChangeBasketResponse
     private $message;
 
     /**
-     * @param int    $code
-     * @param string $message
+     * @param integer $code
+     * @param string  $message
      */
     public function __construct($code, $message = '')
     {
@@ -33,7 +33,7 @@ class ChangeBasketResponse
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getCode()
     {

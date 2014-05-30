@@ -7,7 +7,7 @@ use Bws\Entity\Basket;
 interface BasketRepository
 {
     /**
-     * @param int $id
+     * @param integer $id
      *
      * @return Basket
      */
