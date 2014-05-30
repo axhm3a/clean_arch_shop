@@ -11,11 +11,12 @@ use Bws\Interactor\AddToBasketRequest;
 use Bws\Interactor\ViewBasket;
 use Bws\Interactor\ViewBasketRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class BasketController extends FOSRestController
 {
-    public function addAction()
+    public function addAction(Request $request)
     {
         $session = new Session();
 
@@ -23,8 +24,8 @@ class BasketController extends FOSRestController
         $interactor = $this->get('interactor.add_to_basket');
         $response   = $interactor->execute(
             new AddToBasketRequest(
-                $this->getRequest()->get('articleId', null),
-                $this->getRequest()->get('count', null),
+                $request->get('articleId', null),
+                $request->get('count', null),
                 $session->get('basketId', 0)
             )
         );
@@ -60,9 +61,11 @@ class BasketController extends FOSRestController
 
     /**
      * @View()
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function changeAction()
+    public function changeAction(Request $request)
     {
         $session = new Session();
 
@@ -70,9 +73,9 @@ class BasketController extends FOSRestController
         $interactor = $this->get('interactor.change_basket');
         $response   = $interactor->execute(
             new ChangeBasketRequest(
-                $this->getRequest()->get('articleId'),
+                $request->get('articleId'),
                 $session->get('basketId', 0),
-                $this->getRequest()->get('count')
+                $request->get('count')
             )
         );
 
