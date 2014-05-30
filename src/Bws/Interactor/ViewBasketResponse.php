@@ -9,7 +9,7 @@ class ViewBasketResponse
     const BASKET_NOT_FOUND = -2;
 
     /**
-     * @var int
+     * @var integer
      */
     private $code;
 
@@ -29,16 +29,16 @@ class ViewBasketResponse
     private $total;
 
     /**
-     * @var int
+     * @var integer
      */
     private $posCount;
 
     /**
-     * @param int    $code
-     * @param string $message
-     * @param array  $positions
-     * @param float  $total
-     * @param int    $positionCount
+     * @param integer $code
+     * @param string  $message
+     * @param array   $positions
+     * @param float   $total
+     * @param integer $positionCount
      */
     public function __construct($code, $message, $positions = array(), $total = 0.0, $positionCount = 0)
     {
@@ -50,7 +50,7 @@ class ViewBasketResponse
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getCode()
     {
@@ -74,7 +74,7 @@ class ViewBasketResponse
     }
 
     /**
-     * @return double
+     * @return float
      */
     public function getTotal()
     {
@@ -82,7 +82,7 @@ class ViewBasketResponse
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getPositionCount()
     {

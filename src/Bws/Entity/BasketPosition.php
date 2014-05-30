@@ -123,7 +123,7 @@ class BasketPosition
     }
 
     /**
-     * @param int $id
+     * @param integer $id
      */
     public function setId($id)
     {
