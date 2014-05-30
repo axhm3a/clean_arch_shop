@@ -51,15 +51,7 @@ class ChangeBasket
             return new ChangeBasketResponse(ChangeBasketResponse::BASKET_IS_EMPTY);
         }
 
-        /** @var BasketPosition $position */
-        foreach ($basketPosition as $position) {
-            if ($this->isRequestedArticle($request, $position)) {
-                $this->changeOrRemovePosition($request, $position);
-                return new ChangeBasketResponse(ChangeBasketResponse::SUCCESS);
-            }
-        }
-
-        return new ChangeBasketResponse(ChangeBasketResponse::ARTICLE_IS_NOT_IN_BASKET);
+        return $this->buildBasketResponseFromBasketPositions($request, $basketPosition);
     }
 
     /**
@@ -117,6 +109,25 @@ class ChangeBasket
     protected function isBasketEmpty(array $basketPosition = null)
     {
         return null === $basketPosition || 0 == sizeof($basketPosition);
+    }
+
+    /**
+     * @param ChangeBasketRequest $request
+     * @param array               $basketPosition
+     *
+     * @return ChangeBasketResponse
+     */
+    protected function buildBasketResponseFromBasketPositions(ChangeBasketRequest $request, array $basketPosition)
+    {
+        /** @var BasketPosition $position */
+        foreach ($basketPosition as $position) {
+            if ($this->isRequestedArticle($request, $position)) {
+                $this->changeOrRemovePosition($request, $position);
+                return new ChangeBasketResponse(ChangeBasketResponse::SUCCESS);
+            }
+        }
+
+        return new ChangeBasketResponse(ChangeBasketResponse::ARTICLE_IS_NOT_IN_BASKET);
     }
 }
  
