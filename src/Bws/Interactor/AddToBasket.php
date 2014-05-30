@@ -132,6 +132,26 @@ class AddToBasket
         $positionCount          = 0;
         $articleAlreadyInBasket = false;
         $basketPositions        = $this->basketPositionRepository->findByBasket($basket);
+        $this->calculatePositions($request, $basketPositions, $positionCount, $total, $articleAlreadyInBasket);
+        $this->handleNewArticleIfNeeded($request, $basket, $article, $articleAlreadyInBasket, $total, $positionCount);
+
+        return new AddToBasketResponse(AddToBasketResponse::SUCCESS, '', $basket->getId(), $total, $positionCount);
+    }
+
+    /**
+     * @param AddToBasketRequest $request
+     * @param                    $basketPositions
+     * @param                    $positionCount
+     * @param                    $total
+     * @param                    $articleAlreadyInBasket
+     */
+    protected function calculatePositions(
+        AddToBasketRequest $request,
+        $basketPositions,
+        &$positionCount,
+        &$total,
+        &$articleAlreadyInBasket
+    ) {
         if (sizeof($basketPositions) > 0) {
             foreach ($basketPositions as $pos) {
                 $positionCount++;
@@ -145,15 +165,30 @@ class AddToBasket
                 $total += $pos->getArticle()->getPrice() * $pos->getCount();
             }
         }
+    }
 
+    /**
+     * @param AddToBasketRequest $request
+     * @param Basket             $basket
+     * @param Article            $article
+     * @param                    $articleAlreadyInBasket
+     * @param                    $total
+     * @param                    $positionCount
+     */
+    protected function handleNewArticleIfNeeded(
+        AddToBasketRequest $request,
+        Basket $basket,
+        Article $article,
+        $articleAlreadyInBasket,
+        &$total,
+        &$positionCount
+    ) {
         if (!$articleAlreadyInBasket) {
             $basketPosition = $this->createBasketPosition($request, $article, $basket);
             $this->basketPositionRepository->addToBasket($basketPosition);
             $total += $basketPosition->getArticle()->getPrice() * $basketPosition->getCount();
             $positionCount++;
         }
-
-        return new AddToBasketResponse(AddToBasketResponse::SUCCESS, '', $basket->getId(), $total, $positionCount);
     }
 }
  
