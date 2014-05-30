@@ -35,16 +35,8 @@ class ChangeBasket
      */
     public function execute(ChangeBasketRequest $request)
     {
-        if (null === $request->getBasketId()) {
-            return new ChangeBasketResponse(ChangeBasketResponse::BAD_BASKET_ID);
-        }
-
-        if (null === $request->getCount()) {
-            return new ChangeBasketResponse(ChangeBasketResponse::BAD_COUNT);
-        }
-
-        if (null === $request->getArticleId()) {
-            return new ChangeBasketResponse(ChangeBasketResponse::BAD_ARTICLE_ID);
+        if (true !== ($response = $this->isRequestValid($request))) {
+            return $response;
         }
 
         $basket = $this->basketRepository->find($request->getBasketId());
@@ -68,6 +60,28 @@ class ChangeBasket
         }
 
         return new ChangeBasketResponse(ChangeBasketResponse::ARTICLE_IS_NOT_IN_BASKET);
+    }
+
+    /**
+     * @param ChangeBasketRequest $request
+     *
+     * @return bool|ChangeBasketResponse    True if request is valid, ChangeBasketResponse if not
+     */
+    protected function isRequestValid(ChangeBasketRequest $request)
+    {
+        if (null === $request->getBasketId()) {
+            return new ChangeBasketResponse(ChangeBasketResponse::BAD_BASKET_ID);
+        }
+
+        if (null === $request->getCount()) {
+            return new ChangeBasketResponse(ChangeBasketResponse::BAD_COUNT);
+        }
+
+        if (null === $request->getArticleId()) {
+            return new ChangeBasketResponse(ChangeBasketResponse::BAD_ARTICLE_ID);
+        }
+
+        return true;
     }
 
     /**
