@@ -2,6 +2,8 @@
 
 namespace Bws\Interactor;
 
+use Bws\Entity\Article;
+use Bws\Entity\Basket;
 use Bws\Repository\ArticleRepository;
 use Bws\Repository\BasketPositionRepository;
 use Bws\Repository\BasketRepository;
@@ -50,35 +52,7 @@ class AddToBasket
             return new AddToBasketResponse(AddToBasketResponse::ARTICLE_NOT_FOUND, 'ARTICLE_NOT_FOUND');
         }
 
-        $basket = $this->getBasket($request);
-
-        // calc total
-        $total                  = 0.0;
-        $positionCount          = 0;
-        $articleAlreadyInBasket = false;
-        $basketPositions        = $this->basketPositionRepository->findByBasket($basket);
-        if (sizeof($basketPositions) > 0) {
-            foreach ($basketPositions as $pos) {
-                $positionCount++;
-
-                if ($pos->getArticle()->getId() == $request->getArticleId()) {
-                    $articleAlreadyInBasket = true;
-                    $pos->increaseCount($request->getCount());
-                    $this->basketPositionRepository->addToBasket($pos);
-                }
-
-                $total += $pos->getArticle()->getPrice() * $pos->getCount();
-            }
-        }
-
-        if (!$articleAlreadyInBasket) {
-            $basketPosition = $this->createBasketPosition($request, $article, $basket);
-            $this->basketPositionRepository->addToBasket($basketPosition);
-            $total += $basketPosition->getArticle()->getPrice() * $basketPosition->getCount();
-            $positionCount++;
-        }
-
-        return new AddToBasketResponse(AddToBasketResponse::SUCCESS, '', $basket->getId(), $total, $positionCount);
+        return $this->addToBasket($request, $this->getBasket($request), $article);
     }
 
     /**
@@ -143,6 +117,43 @@ class AddToBasket
         }
 
         return $basket;
+    }
+
+    /**
+     * @param AddToBasketRequest $request
+     * @param Basket             $basket
+     * @param Article            $article
+     *
+     * @return AddToBasketResponse
+     */
+    protected function addToBasket(AddToBasketRequest $request, Basket $basket, Article $article)
+    {
+        $total                  = 0.0;
+        $positionCount          = 0;
+        $articleAlreadyInBasket = false;
+        $basketPositions        = $this->basketPositionRepository->findByBasket($basket);
+        if (sizeof($basketPositions) > 0) {
+            foreach ($basketPositions as $pos) {
+                $positionCount++;
+
+                if ($pos->getArticle()->getId() == $request->getArticleId()) {
+                    $articleAlreadyInBasket = true;
+                    $pos->increaseCount($request->getCount());
+                    $this->basketPositionRepository->addToBasket($pos);
+                }
+
+                $total += $pos->getArticle()->getPrice() * $pos->getCount();
+            }
+        }
+
+        if (!$articleAlreadyInBasket) {
+            $basketPosition = $this->createBasketPosition($request, $article, $basket);
+            $this->basketPositionRepository->addToBasket($basketPosition);
+            $total += $basketPosition->getArticle()->getPrice() * $basketPosition->getCount();
+            $positionCount++;
+        }
+
+        return new AddToBasketResponse(AddToBasketResponse::SUCCESS, '', $basket->getId(), $total, $positionCount);
     }
 }
  
