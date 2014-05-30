@@ -51,6 +51,16 @@ class ViewBasket
             return new ViewBasketResponse(ViewBasketResponse::SUCCESS, '');
         }
 
+        return $this->buildResponseFromPositions($positions);
+    }
+
+    /**
+     * @param array $positions
+     *
+     * @return ViewBasketResponse
+     */
+    protected function buildResponseFromPositions(array $positions)
+    {
         $positionsDto  = array();
         $positionCount = 0;
         $total         = 0.0;
