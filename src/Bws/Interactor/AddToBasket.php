@@ -40,16 +40,8 @@ class AddToBasket
      */
     public function execute(AddToBasketRequest $request)
     {
-        if (null === $request->getBasketId()) {
-            return new AddToBasketResponse(AddToBasketResponse::BAD_BASKET_ID, 'MISSING_BASKET_ID');
-        }
-
-        if (null === $request->getCount() || 0 === $request->getCount()) {
-            return new AddToBasketResponse(AddToBasketResponse::ZERO_COUNT, 'ZERO_COUNT');
-        }
-
-        if (null === $request->getArticleId()) {
-            return new AddToBasketResponse(AddToBasketResponse::BAD_ARTICLE_ID, 'BAD_ARTICLE_ID');
+        if (true !== ($response = $this->isRequestValid($request))) {
+            return $response;
         }
 
         $article = $this->articleRepository->find($request->getArticleId());
@@ -90,6 +82,28 @@ class AddToBasket
     }
 
     /**
+     * @param AddToBasketRequest $request
+     *
+     * @return bool|AddToBasketResponse True if request is valid, AddToBasketResponse if not
+     */
+    protected function isRequestValid(AddToBasketRequest $request)
+    {
+        if (null === $request->getBasketId()) {
+            return new AddToBasketResponse(AddToBasketResponse::BAD_BASKET_ID, 'MISSING_BASKET_ID');
+        }
+
+        if (null === $request->getCount() || 0 === $request->getCount()) {
+            return new AddToBasketResponse(AddToBasketResponse::ZERO_COUNT, 'ZERO_COUNT');
+        }
+
+        if (null === $request->getArticleId()) {
+            return new AddToBasketResponse(AddToBasketResponse::BAD_ARTICLE_ID, 'BAD_ARTICLE_ID');
+        }
+
+        return true;
+    }
+
+    /**
      * @return \Bws\Entity\Basket
      */
     protected function createAndSaveNewBasket()
@@ -100,9 +114,9 @@ class AddToBasket
     }
 
     /**
-     * @param AddToBasketRequest $request
+     * @param AddToBasketRequest                     $request
      * @param                    \Bws\Entity\Article $article
-     * @param                    \Bws\Entity\Basket $basket
+     * @param                    \Bws\Entity\Basket  $basket
      *
      * @return \Bws\Entity\BasketPosition
      */
