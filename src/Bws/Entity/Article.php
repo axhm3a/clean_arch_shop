@@ -156,7 +156,7 @@ class Article
     /**
      * Get id
      *
-     * @return integer integer
+     * @return integer
      */
     public function getId()
     {
