@@ -66,7 +66,7 @@ class AddToBasket
             return new AddToBasketResponse(AddToBasketResponse::BAD_BASKET_ID, 'MISSING_BASKET_ID');
         }
 
-        if (null === $request->getCount() || 0 === $request->getCount()) {
+        if ($this->isValidCount($request)) {
             return new AddToBasketResponse(AddToBasketResponse::ZERO_COUNT, 'ZERO_COUNT');
         }
 
@@ -189,6 +189,16 @@ class AddToBasket
             $total += $basketPosition->getArticle()->getPrice() * $basketPosition->getCount();
             $positionCount++;
         }
+    }
+
+    /**
+     * @param AddToBasketRequest $request
+     *
+     * @return bool
+     */
+    protected function isValidCount(AddToBasketRequest $request)
+    {
+        return null === $request->getCount() || 0 === $request->getCount();
     }
 }
  
