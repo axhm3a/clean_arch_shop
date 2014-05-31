@@ -1,6 +1,6 @@
 var app = angular.module('shopApp', []);
 
-app.controller('PhoneListCtrl', function ($scope, $http) {
+app.controller('ShopCtrl', function ($scope, $http) {
     $scope.updateBasket = function () {
         $http.get('basket.json').success(function (data) {
             $scope.basket = data;
