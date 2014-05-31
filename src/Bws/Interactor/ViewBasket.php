@@ -55,7 +55,7 @@ class ViewBasket
     }
 
     /**
-     * @param array $positions
+     * @param BasketPosition[] $positions
      *
      * @return ViewBasketResponse
      */

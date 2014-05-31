@@ -140,10 +140,10 @@ class AddToBasket
 
     /**
      * @param AddToBasketRequest $request
-     * @param                    $basketPositions
-     * @param                    $positionCount
-     * @param                    $total
-     * @param                    $articleAlreadyInBasket
+     * @param                    \Bws\Entity\BasketPosition[] $basketPositions
+     * @param                    integer $positionCount
+     * @param                    double $total
+     * @param                    boolean $articleAlreadyInBasket
      */
     protected function calculatePositions(
         AddToBasketRequest $request,
