@@ -140,7 +140,13 @@ class AddToBasket
         $this->calculatePositions($request, $basketPositions, $positionCount, $total, $articleAlreadyInBasket);
         $this->handleNewArticleIfNeeded($request, $basket, $article, $articleAlreadyInBasket, $total, $positionCount);
 
-        return new AddToBasketResponse(AddToBasketResponse::SUCCESS, '', $basket->getId(), $total, $positionCount);
+        return new AddToBasketResponse(
+            AddToBasketResponse::SUCCESS,
+            '',
+            $basket->getId(),
+            PriceFormatter::format($total),
+            $positionCount
+        );
     }
 
     /**

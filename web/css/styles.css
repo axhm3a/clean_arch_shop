@@ -1,54 +1,43 @@
-/* line 4, ../../sass/styles.scss */
 body {
-  padding-top: 80px;
-}
+  padding-top: 80px; }
 
-/* line 8, ../../sass/styles.scss */
+.price {
+  color: #b12704;
+  font-weight: bold; }
+
+.list_articles_image {
+  width: 150px; }
+
 .table-list-basket tr:last-child {
-  border-bottom: 1px solid #444;
-}
+  border-bottom: 1px solid #444; }
 
-/* line 13, ../../sass/styles.scss */
 .table-list-basket tr:last-child td,
 .table-list-basket tr:last-child td:hover {
-  background-color: #eee !important;
-}
+  background-color: #eee !important; }
 
-/* line 17, ../../sass/styles.scss */
 .list_basket_title {
-  font-weight: bold;
-}
+  font-weight: bold; }
 
-/* line 21, ../../sass/styles.scss */
 .list_basket_quantity {
   text-align: center;
-  width: 70px;
-}
+  width: 70px; }
 
-/* line 26, ../../sass/styles.scss */
 .list_basket_price {
   color: #b12704;
   text-align: right;
-  width: 90px;
-}
+  width: 90px; }
 
-/* line 32, ../../sass/styles.scss */
 .list_basket_total {
   text-align: right;
-  width: 90px;
-}
+  width: 90px; }
 
-/* line 37, ../../sass/styles.scss */
 .list_basket_total_order_sum_label {
   font-size: 110%;
   font-weight: bold;
-  text-align: right;
-}
+  text-align: right; }
 
-/* line 43, ../../sass/styles.scss */
 .list_basket_total_order_sum {
   color: #b12704;
   font-size: 110%;
   font-weight: bold;
-  text-align: right;
-}
+  text-align: right; }

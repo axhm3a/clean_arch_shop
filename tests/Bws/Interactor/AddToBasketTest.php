@@ -86,22 +86,22 @@ class AddToBasketTest extends \PHPUnit_Framework_TestCase
         $response = $this->interactor->execute(new AddToBasketRequest(ArticleStub::ID, 1, 12356));
 
         $this->assertResponseCode($response, AddToBasketResponse::SUCCESS);
-        $this->assertEquals(9.99, $response->getTotal());
+        $this->assertSame('9.99', $response->getTotal());
         $this->assertNotEquals(12356, $response->getBasketId());
-        $this->assertEquals(1, $response->getPosCount());
-        $this->assertEquals(12356, $this->basketRepository->getFindByIdArgument());
-        $this->assertEquals(1, $this->basketPositionRepository->getAddToBasketCalls());
-        $this->assertEquals('', $response->getMessage());
+        $this->assertSame(1, $response->getPosCount());
+        $this->assertSame(12356, $this->basketRepository->getFindByIdArgument());
+        $this->assertSame(1, $this->basketPositionRepository->getAddToBasketCalls());
+        $this->assertSame('', $response->getMessage());
 
         $response = $this->interactor->execute(new AddToBasketRequest(ArticleStub::ID, 1, 12356));
 
         $this->assertResponseCode($response, AddToBasketResponse::SUCCESS);
-        $this->assertEquals(19.98, $response->getTotal());
+        $this->assertSame('19.98', $response->getTotal());
         $this->assertNotEquals(12356, $response->getBasketId());
-        $this->assertEquals(1, $response->getPosCount());
-        $this->assertEquals(12356, $this->basketRepository->getFindByIdArgument());
-        $this->assertEquals(2, $this->basketPositionRepository->getAddToBasketCalls());
-        $this->assertEquals('', $response->getMessage());
+        $this->assertSame(1, $response->getPosCount());
+        $this->assertSame(12356, $this->basketRepository->getFindByIdArgument());
+        $this->assertSame(2, $this->basketPositionRepository->getAddToBasketCalls());
+        $this->assertSame('', $response->getMessage());
     }
 }
  
