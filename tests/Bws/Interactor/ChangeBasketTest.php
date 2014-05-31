@@ -5,6 +5,7 @@ namespace Bws\Interactor;
 use Bws\Entity\ArticleStub;
 use Bws\Entity\Basket;
 use Bws\Entity\BasketPositionStub;
+use Bws\Entity\BasketStub;
 use Bws\Entity\EmptyBasketStub;
 use Bws\Repository\BasketPositionRepositoryMock;
 use Bws\Repository\BasketRepositoryMock;
@@ -65,14 +66,14 @@ class ChangeBasketTest extends \PHPUnit_Framework_TestCase
 
     public function testArticleIsNotInBasket()
     {
-        $request  = new ChangeBasketRequest(9999, BasketRepositoryMock::BASKET_ID, 2);
+        $request  = new ChangeBasketRequest(9999, BasketStub::ID, 2);
         $response = $this->interactor->execute($request);
         $this->assertEquals(ChangeBasketResponse::ARTICLE_IS_NOT_IN_BASKET, $response->getCode());
     }
 
     public function testBasketPositionRemovedIfCountIsZero()
     {
-        $request  = new ChangeBasketRequest(ArticleStub::ID, BasketRepositoryMock::BASKET_ID, 0);
+        $request  = new ChangeBasketRequest(ArticleStub::ID, BasketStub::ID, 0);
         $response = $this->interactor->execute($request);
         $this->assertEquals(ChangeBasketResponse::SUCCESS, $response->getCode());
         $this->assertEquals('', $response->getMessage());
@@ -81,12 +82,12 @@ class ChangeBasketTest extends \PHPUnit_Framework_TestCase
 
     public function testBasketPositionCountIncreased()
     {
-        $request  = new ChangeBasketRequest(ArticleStub::ID, BasketRepositoryMock::BASKET_ID, 2);
+        $request  = new ChangeBasketRequest(ArticleStub::ID, BasketStub::ID, 2);
         $response = $this->interactor->execute($request);
         $this->assertEquals(ChangeBasketResponse::SUCCESS, $response->getCode());
         $this->assertEquals(2, $this->basketPositionRepository->find(BasketPositionStub::ID)->getCount());
 
-        $request  = new ChangeBasketRequest(ArticleStub::ID, BasketRepositoryMock::BASKET_ID, 3);
+        $request  = new ChangeBasketRequest(ArticleStub::ID, BasketStub::ID, 3);
         $response = $this->interactor->execute($request);
         $this->assertEquals(ChangeBasketResponse::SUCCESS, $response->getCode());
         $this->assertEquals(3, $this->basketPositionRepository->find(BasketPositionStub::ID)->getCount());

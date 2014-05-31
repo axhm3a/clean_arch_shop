@@ -3,20 +3,17 @@
 namespace Bws\Repository;
 
 use Bws\Entity\Basket;
+use Bws\Entity\BasketStub;
 use Bws\Entity\EmptyBasketStub;
 
 class BasketRepositoryMock implements BasketRepository
 {
-    const BASKET_ID = 5;
-
     private $baskets = array();
     private $findById;
 
     public function __construct()
     {
-        $basket = new Basket();
-        $basket->setId(self::BASKET_ID);
-        $this->save($basket);
+        $this->save(new BasketStub());
         $this->save(new EmptyBasketStub());
     }
 

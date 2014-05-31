@@ -6,6 +6,7 @@ use Bws\Entity\ArticleStub;
 use Bws\Entity\Basket;
 use Bws\Entity\BasketPosition;
 use Bws\Entity\BasketPositionStub;
+use Bws\Entity\BasketStub;
 
 class BasketPositionRepositoryMock implements BasketPositionRepository
 {
@@ -16,10 +17,8 @@ class BasketPositionRepositoryMock implements BasketPositionRepository
 
     public function __construct()
     {
-        $basket = new Basket();
-        $basket->setId(BasketRepositoryMock::BASKET_ID);
         $position = new BasketPositionStub();
-        $position->setBasket($basket);
+        $position->setBasket(new BasketStub());
         $this->positions[$position->getId()] = $position;
     }
 

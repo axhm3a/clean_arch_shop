@@ -3,6 +3,7 @@
 namespace Bws\Interactor;
 
 use Bws\Entity\ArticleStub;
+use Bws\Entity\BasketStub;
 use Bws\Entity\EmptyBasketStub;
 use Bws\Repository\BasketPositionRepositoryMock;
 use Bws\Repository\BasketRepositoryMock;
@@ -54,7 +55,7 @@ class ViewBasketTest extends \PHPUnit_Framework_TestCase
 
     public function testFilledBasket()
     {
-        $result = $this->interactor->execute(new ViewBasketRequest(BasketRepositoryMock::BASKET_ID));
+        $result = $this->interactor->execute(new ViewBasketRequest(BasketStub::ID));
         $this->assertEquals(ViewBasketResponse::SUCCESS, $result->getCode());
         $this->assertEquals(
             array(
