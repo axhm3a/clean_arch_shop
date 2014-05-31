@@ -23,7 +23,7 @@
                         </button>
                     </p>
 
-                    <p>{{ article.description }}</p>
+                    <p>{{ article.description|slice(0, 400) }} ...</p>
                 </div>
             </form>
         </div>
