@@ -16,7 +16,7 @@ class BasketRepositoryMock implements BasketRepository
     {
         $basket = new Basket();
         $basket->setId(self::BASKET_ID);
-        $this->baskets[$basket->getId()] = $basket;
+        $this->save($basket);
         $this->save(new EmptyBasketStub());
     }
 
