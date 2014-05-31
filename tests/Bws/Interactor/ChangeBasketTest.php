@@ -4,6 +4,7 @@ namespace Bws\Interactor;
 
 use Bws\Entity\ArticleStub;
 use Bws\Entity\Basket;
+use Bws\Entity\BasketPositionStub;
 use Bws\Entity\EmptyBasketStub;
 use Bws\Repository\BasketPositionRepositoryMock;
 use Bws\Repository\BasketRepositoryMock;
@@ -64,26 +65,30 @@ class ChangeBasketTest extends \PHPUnit_Framework_TestCase
 
     public function testArticleIsNotInBasket()
     {
-        $response = $this->interactor->execute(
-            new ChangeBasketRequest(9999, BasketRepositoryMock::BASKET_ID, 2)
-        );
+        $request  = new ChangeBasketRequest(9999, BasketRepositoryMock::BASKET_ID, 2);
+        $response = $this->interactor->execute($request);
         $this->assertEquals(ChangeBasketResponse::ARTICLE_IS_NOT_IN_BASKET, $response->getCode());
     }
 
     public function testBasketPositionRemovedIfCountIsZero()
     {
-        $response = $this->interactor->execute(
-            new ChangeBasketRequest(ArticleStub::ID, BasketRepositoryMock::BASKET_ID, 0)
-        );
+        $request  = new ChangeBasketRequest(ArticleStub::ID, BasketRepositoryMock::BASKET_ID, 0);
+        $response = $this->interactor->execute($request);
         $this->assertEquals(ChangeBasketResponse::SUCCESS, $response->getCode());
         $this->assertEquals('', $response->getMessage());
+        $this->assertEquals(0, sizeof($this->basketPositionRepository->findAll()));
     }
 
     public function testBasketPositionCountIncreased()
     {
-        $response = $this->interactor->execute(
-            new ChangeBasketRequest(ArticleStub::ID, BasketRepositoryMock::BASKET_ID, 2)
-        );
+        $request  = new ChangeBasketRequest(ArticleStub::ID, BasketRepositoryMock::BASKET_ID, 2);
+        $response = $this->interactor->execute($request);
         $this->assertEquals(ChangeBasketResponse::SUCCESS, $response->getCode());
+        $this->assertEquals(2, $this->basketPositionRepository->find(BasketPositionStub::ID)->getCount());
+
+        $request  = new ChangeBasketRequest(ArticleStub::ID, BasketRepositoryMock::BASKET_ID, 3);
+        $response = $this->interactor->execute($request);
+        $this->assertEquals(ChangeBasketResponse::SUCCESS, $response->getCode());
+        $this->assertEquals(3, $this->basketPositionRepository->find(BasketPositionStub::ID)->getCount());
     }
 }

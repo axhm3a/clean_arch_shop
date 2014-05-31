@@ -5,26 +5,21 @@ namespace Bws\Repository;
 use Bws\Entity\ArticleStub;
 use Bws\Entity\Basket;
 use Bws\Entity\BasketPosition;
+use Bws\Entity\BasketPositionStub;
 
 class BasketPositionRepositoryMock implements BasketPositionRepository
 {
-    const POSITION_ID = 5;
-
     private $positions = array();
     private $findById;
     private $addToBasketCalls = 0;
+    private $removeCalls = 0;
 
     public function __construct()
     {
         $basket = new Basket();
         $basket->setId(BasketRepositoryMock::BASKET_ID);
-
-        $position = new BasketPosition();
-        $position->setId(self::POSITION_ID);
+        $position = new BasketPositionStub();
         $position->setBasket($basket);
-        $position->setArticle(new ArticleStub());
-        $position->setCount(1);
-
         $this->positions[$position->getId()] = $position;
     }
 
@@ -90,6 +85,7 @@ class BasketPositionRepositoryMock implements BasketPositionRepository
      */
     public function removeFromBasket(BasketPosition $position)
     {
+        $this->removeCalls++;
         unset($this->positions[$position->getId()]);
     }
 
@@ -109,6 +105,12 @@ class BasketPositionRepositoryMock implements BasketPositionRepository
         return $this->addToBasketCalls;
     }
 
-
+    /**
+     * @return int
+     */
+    public function getRemoveCalls()
+    {
+        return $this->removeCalls;
+    }
 }
  
