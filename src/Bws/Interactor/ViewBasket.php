@@ -61,9 +61,8 @@ class ViewBasket
      */
     protected function buildResponseFromPositions(array $positions)
     {
-        $positionsDto  = array();
-        $positionCount = 0;
-        $total         = 0.0;
+        $positionsDto = array();
+        $total        = 0.0;
 
         /** @var BasketPosition $position */
         foreach ($positions as $position) {
@@ -77,13 +76,15 @@ class ViewBasket
                 'count'        => $position->getCount(),
             );
             $total += $positionPrice;
-            $positionCount++;
         }
 
-        // Presenters work normally
-        $total = number_format($total, 2);
-
-        return new ViewBasketResponse(ViewBasketResponse::SUCCESS, '', $positionsDto, $total, $positionCount);
+        return new ViewBasketResponse(
+            ViewBasketResponse::SUCCESS,
+            '',
+            $positionsDto,
+            number_format($total, 2),
+            sizeof($positions)
+        );
     }
 }
  
