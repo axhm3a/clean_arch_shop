@@ -1,6 +1,10 @@
 body {
   padding-top: 80px; }
 
+.price {
+  color: #b12704;
+  font-weight: bold; }
+
 .list_articles_image {
   width: 150px; }
 
