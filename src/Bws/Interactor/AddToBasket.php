@@ -25,6 +25,11 @@ class AddToBasket
      */
     private $basketPositionRepository;
 
+    /**
+     * @param ArticleRepository        $articleRepository
+     * @param BasketPositionRepository $basketPositionRepository
+     * @param BasketRepository         $basketRepository
+     */
     public function __construct(
         ArticleRepository $articleRepository,
         BasketPositionRepository $basketPositionRepository,
@@ -88,9 +93,9 @@ class AddToBasket
     }
 
     /**
-     * @param AddToBasketRequest                     $request
-     * @param                    \Bws\Entity\Article $article
-     * @param                    \Bws\Entity\Basket  $basket
+     * @param AddToBasketRequest  $request
+     * @param \Bws\Entity\Article $article
+     * @param \Bws\Entity\Basket  $basket
      *
      * @return \Bws\Entity\BasketPosition
      */
@@ -139,11 +144,11 @@ class AddToBasket
     }
 
     /**
-     * @param AddToBasketRequest $request
-     * @param                    \Bws\Entity\BasketPosition[] $basketPositions
-     * @param                    integer $positionCount
-     * @param                    double $total
-     * @param                    boolean $articleAlreadyInBasket
+     * @param AddToBasketRequest           $request
+     * @param \Bws\Entity\BasketPosition[] $basketPositions
+     * @param integer                      $positionCount
+     * @param double                       $total
+     * @param boolean                      $articleAlreadyInBasket
      */
     protected function calculatePositions(
         AddToBasketRequest $request,
@@ -171,9 +176,9 @@ class AddToBasket
      * @param AddToBasketRequest $request
      * @param Basket             $basket
      * @param Article            $article
-     * @param                    $articleAlreadyInBasket
-     * @param                    $total
-     * @param                    $positionCount
+     * @param bool               $articleAlreadyInBasket
+     * @param double             $total
+     * @param int                $positionCount
      */
     protected function handleNewArticleIfNeeded(
         AddToBasketRequest $request,
