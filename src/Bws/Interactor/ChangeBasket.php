@@ -113,7 +113,7 @@ class ChangeBasket
 
     /**
      * @param ChangeBasketRequest $request
-     * @param array               $basketPosition
+     * @param BasketPosition[]               $basketPosition
      *
      * @return ChangeBasketResponse
      */
