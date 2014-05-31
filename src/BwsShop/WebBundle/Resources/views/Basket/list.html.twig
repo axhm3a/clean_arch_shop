@@ -18,7 +18,7 @@
             <td class="list_basket_quantity">
                 <select ng-model="position.count"
                         ng-options="option as option for option in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
-                        ng-change="something(position)"
+                        ng-change="changeBasket(position)"
                         id="select_quantity_{{ position.articleId }}">
                 </select>
             </td>

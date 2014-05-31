@@ -7,7 +7,7 @@ app.controller('ShopCtrl', function ($scope, $http) {
         });
     };
 
-    $scope.something = function (position) {
+    $scope.changeBasket = function (position) {
         $http.post('basket/change.json', position).success(function (data) {
             $scope.updateBasket();
         });
