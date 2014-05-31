@@ -88,9 +88,9 @@ class ViewBasket
             $positionsDto[] = array(
                 'articleId'    => $position->getArticle()->getId(),
                 'articleTitle' => $position->getArticle()->getTitle(),
-                'articlePrice' => $position->getArticle()->getPrice(),
+                'articlePrice' => PriceFormatter::format($position->getArticle()->getPrice()),
                 'articleImage' => $position->getArticle()->getImagePath(),
-                'totalPrice'   => $positionPrice,
+                'totalPrice'   => PriceFormatter::format($positionPrice),
                 'count'        => $position->getCount(),
             );
             $total += $positionPrice;
