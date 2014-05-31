@@ -13,3 +13,19 @@ bws_shop_web_list_basket:
 bws_shop_web_change_basket_position:
     pattern: /basket/change.{_format}
     defaults: { _controller: BwsShopWebBundle:Basket:change, _format: json }
+
+bws_shop_web_authentication:
+    pattern: /checkout/authentication
+    defaults: { _controller: BwsShopWebBundle:Authentication:index }
+
+bws_shop_web_unregistered:
+    pattern: /checkout/unregistered
+    defaults: { _controller: BwsShopWebBundle:UnregisteredCustomer:index }
+
+bws_shop_web_submit_order:
+    pattern: /checkout/order/submit
+    defaults: { _controller: BwsShopWebBundle:Order:submit }
+
+bws_shop_web_thanks:
+    pattern: /checkout/thanks
+    defaults: { _controller: BwsShopWebBundle:Order:thanks }

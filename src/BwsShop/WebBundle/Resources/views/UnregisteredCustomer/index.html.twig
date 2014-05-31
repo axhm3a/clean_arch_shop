@@ -1,0 +1,120 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    <form role="form" class="form-horizontal" action="{{ url('bws_shop_web_submit_order') }}">
+
+        <h3>Invoice Address</h3>
+
+        <div class="form-group">
+            <label for="invoiceFirstName" class="col-sm-2 control-label">First Name:</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="invoiceFirstName">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="invoiceLastName" class="col-sm-2 control-label">Last Name:</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="invoiceLastName">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="invoiceStreetHouseNumber" class="col-sm-2 control-label">Street/No:</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="invoiceStreetHouseNumber">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="invoiceZip" class="col-sm-2 control-label">Zip:</label>
+
+            <div class="col-sm-10"><input type="text" class="form-control" id="invoiceZip"></div>
+        </div>
+        <div class="form-group">
+            <label for="invoiceZip" class="col-sm-2 control-label">City:</label>
+
+            <div class="col-sm-10"><input type="text" class="form-control" id="invoiceCity"></div>
+        </div>
+
+        <h3>Delivery Address</h3>
+
+        <div class="form-group">
+            <label for="deliveryFirstName" class="col-sm-2 control-label">First Name:</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="deliveryFirstName">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="deliveryLastName" class="col-sm-2 control-label">Last Name:</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="deliveryLastName">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="deliveryStreetHouseNumber" class="col-sm-2 control-label">Street/No:</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="deliveryStreetHouseNumber">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="deliveryZip" class="col-sm-2 control-label">Zip:</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="deliveryZip">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="deliveryZip" class="col-sm-2 control-label">City:</label>
+
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="deliveryCity">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-md-offset-2">
+                <h3>Payment</h3>
+
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="payment" id="invoice" value="invoice" checked>
+                        Invoice
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="payment" id="cashOnDelivery" value="cashOnDelivery">
+                        Cash on Delivery
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4 col-md-offset-2">
+                <h3>Logistic Partner</h3>
+
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="logisticPartner" id="dhl" value="dhl" checked>
+                        DHL
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="logisticPartner" id="hermes" value="hermes">
+                        Hermes
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <button type="submit" class="btn btn-primary pull-right">Submit Order</button>
+        </div>
+
+    </form>
+
+{% endblock %}

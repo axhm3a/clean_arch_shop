@@ -1,0 +1,32 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-4">
+            <h1>Login for Customers</h1>
+        </div>
+        <div class="col-md-4">
+            <h1>New Customer</h1>
+
+            <p>You will be registered as a new customer and you can login for your next order.</p>
+        </div>
+        <div class="col-md-4">
+            <h1>No Registration</h1>
+
+            <p>No registration is required.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <span class="alert alert-warning">Not possible yet</span>
+        </div>
+        <div class="col-md-4">
+            <a href="{{ url('bws_shop_web_unregistered') }}" class="btn btn-default">Proceed</a>
+        </div>
+        <div class="col-md-4">
+            <a href="{{ url('bws_shop_web_unregistered') }}" class="btn btn-default">Proceed</a>
+        </div>
+    </div>
+
+{% endblock %}
