@@ -70,7 +70,7 @@ class ViewBasket
             ViewBasketResponse::SUCCESS,
             '',
             $positionsDto,
-            number_format($total, 2),
+            PriceFormatter::format($total),
             sizeof($positions)
         );
     }
