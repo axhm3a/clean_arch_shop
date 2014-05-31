@@ -64,6 +64,24 @@ class ViewBasket
         $positionsDto = array();
         $total        = 0.0;
 
+        $this->buildPositionsDtoAndCalculatePrices($positions, $positionsDto, $total);
+
+        return new ViewBasketResponse(
+            ViewBasketResponse::SUCCESS,
+            '',
+            $positionsDto,
+            number_format($total, 2),
+            sizeof($positions)
+        );
+    }
+
+    /**
+     * @param array  $positions
+     * @param array  $positionsDto
+     * @param double $total
+     */
+    protected function buildPositionsDtoAndCalculatePrices(array $positions, &$positionsDto, &$total)
+    {
         /** @var BasketPosition $position */
         foreach ($positions as $position) {
             $positionPrice  = $position->getArticle()->getPrice() * $position->getCount();
@@ -77,14 +95,6 @@ class ViewBasket
             );
             $total += $positionPrice;
         }
-
-        return new ViewBasketResponse(
-            ViewBasketResponse::SUCCESS,
-            '',
-            $positionsDto,
-            number_format($total, 2),
-            sizeof($positions)
-        );
     }
 }
  
