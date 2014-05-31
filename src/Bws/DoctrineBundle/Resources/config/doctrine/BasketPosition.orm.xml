@@ -9,14 +9,14 @@
       <generator strategy="IDENTITY"/>
     </id>
     <field name="count" type="integer" column="count" nullable="true"/>
-    <many-to-one field="article" target-entity="Article">
-      <join-columns>
-        <join-column name="article_id" referenced-column-name="id"/>
-      </join-columns>
-    </many-to-one>
     <many-to-one field="basket" target-entity="Basket">
       <join-columns>
         <join-column name="basket_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="article" target-entity="Article">
+      <join-columns>
+        <join-column name="article_id" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
   </entity>
