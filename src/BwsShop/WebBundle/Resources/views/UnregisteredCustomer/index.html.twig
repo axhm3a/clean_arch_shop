@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <form role="form" class="form-horizontal" action="{{ url('bws_shop_web_submit_order') }}">
+    <form role="form" class="form-horizontal" method="post" action="{{ url('bws_shop_web_submit_order') }}">
 
         <h3>Invoice Address</h3>
 
@@ -10,32 +10,36 @@
             <label for="invoiceFirstName" class="col-sm-2 control-label">First Name:</label>
 
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="invoiceFirstName">
+                <input type="text" class="form-control" name="invoiceFirstName" id="invoiceFirstName">
             </div>
         </div>
         <div class="form-group">
             <label for="invoiceLastName" class="col-sm-2 control-label">Last Name:</label>
 
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="invoiceLastName">
+                <input type="text" class="form-control" name="invoiceLastName" id="invoiceLastName">
             </div>
         </div>
         <div class="form-group">
             <label for="invoiceStreetHouseNumber" class="col-sm-2 control-label">Street/No:</label>
 
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="invoiceStreetHouseNumber">
+                <input type="text" class="form-control" name="invoiceStreetHouseNumber" id="invoiceStreetHouseNumber">
             </div>
         </div>
         <div class="form-group">
             <label for="invoiceZip" class="col-sm-2 control-label">Zip:</label>
 
-            <div class="col-sm-10"><input type="text" class="form-control" id="invoiceZip"></div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="invoiceZip" id="invoiceZip">
+            </div>
         </div>
         <div class="form-group">
             <label for="invoiceZip" class="col-sm-2 control-label">City:</label>
 
-            <div class="col-sm-10"><input type="text" class="form-control" id="invoiceCity"></div>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="invoiceCity" id="invoiceCity">
+            </div>
         </div>
 
         <h3>Delivery Address</h3>
@@ -44,35 +48,35 @@
             <label for="deliveryFirstName" class="col-sm-2 control-label">First Name:</label>
 
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="deliveryFirstName">
+                <input type="text" class="form-control" name="deliveryFirstName" id="deliveryFirstName">
             </div>
         </div>
         <div class="form-group">
             <label for="deliveryLastName" class="col-sm-2 control-label">Last Name:</label>
 
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="deliveryLastName">
+                <input type="text" class="form-control" name="deliveryLastName" id="deliveryLastName">
             </div>
         </div>
         <div class="form-group">
             <label for="deliveryStreetHouseNumber" class="col-sm-2 control-label">Street/No:</label>
 
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="deliveryStreetHouseNumber">
+                <input type="text" class="form-control" name="deliveryStreetHouseNumber" id="deliveryStreetHouseNumber">
             </div>
         </div>
         <div class="form-group">
             <label for="deliveryZip" class="col-sm-2 control-label">Zip:</label>
 
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="deliveryZip">
+                <input type="text" class="form-control" name="deliveryZip" id="deliveryZip">
             </div>
         </div>
         <div class="form-group">
             <label for="deliveryZip" class="col-sm-2 control-label">City:</label>
 
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="deliveryCity">
+                <input type="text" class="form-control" name="deliveryCity" id="deliveryCity">
             </div>
         </div>
 

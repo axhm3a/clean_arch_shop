@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Bws\DoctrineBundle\Entity\Order" table="order">
+  <entity name="Bws\DoctrineBundle\Entity\Order" table="orders" repository-class="OrderRepository">
     <indexes>
       <index name="basket_id_idx" columns="basket_id"/>
+      <index name="invoice_address_id_idx" columns="invoice_address_id"/>
+      <index name="delivery_address_id_idx" columns="delivery_address_id"/>
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="basketId" type="integer" column="basket_id" nullable="true"/>
+    <many-to-one field="invoiceAddress" target-entity="InvoiceAddress">
+      <join-columns>
+        <join-column name="invoice_address_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="deliveryAddress" target-entity="DeliveryAddress">
+      <join-columns>
+        <join-column name="delivery_address_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="basket" target-entity="Basket">
+      <join-columns>
+        <join-column name="basket_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

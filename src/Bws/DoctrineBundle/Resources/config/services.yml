@@ -5,10 +5,17 @@ parameters:
     basket.repository.class: Bws\DoctrineBundle\Entity\BasketRepository
     basket.position.entity.class: Bws\DoctrineBundle\Entity\BasketPosition
     basket.position.repository.class: Bws\DoctrineBundle\Entity\BasketPositionRepository
+    invoiceaddress.entity.class: Bws\DoctrineBundle\Entity\InvoiceAddress
+    invoiceaddress.repository.class: Bws\DoctrineBundle\Entity\InvoiceAddressRepository
+    deliveryaddress.entity.class: Bws\DoctrineBundle\Entity\DeliveryAddress
+    deliveryaddress.repository.class: Bws\DoctrineBundle\Entity\DeliveryAddressRepository
+    order.entity.class: Bws\DoctrineBundle\Entity\Order
+    order.repository.class: Bws\DoctrineBundle\Entity\OrderRepository
 
     interactor.add_to_basket.class: Bws\Interactor\AddToBasket
     interactor.view_basket.class: Bws\Interactor\ViewBasket
     interactor.change_basket.class: Bws\Interactor\ChangeBasket
+    interactor.submit_order_unregistered.class: Bws\Interactor\SubmitOrderAsUnregisteredCustomer
 
 services:
     article.repository:
@@ -17,18 +24,41 @@ services:
         factory_method: getRepository
         arguments:
             - %article.entity.class%
+
     basket.repository:
         class: %basket.repository.class%
         factory_service: doctrine.orm.entity_manager
         factory_method: getRepository
         arguments:
             - %basket.entity.class%
+
     basket.position.repository:
         class: %basket.position.repository.class%
         factory_service: doctrine.orm.entity_manager
         factory_method: getRepository
         arguments:
             - %basket.position.entity.class%
+
+    invoiceaddress.repository:
+        class: %invoiceaddress.repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - %invoiceaddress.entity.class%
+
+    deliveryaddress.repository:
+        class: %deliveryaddress.repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - %deliveryaddress.entity.class%
+
+    order.repository:
+        class: %order.repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - %order.entity.class%
 
     interactor.add_to_basket:
         class: %interactor.add_to_basket.class%
@@ -48,3 +78,11 @@ services:
         arguments:
             - @basket.position.repository
             - @basket.repository
+
+    interactor.submit_order_unregistered:
+        class: %interactor.submit_order_unregistered.class%
+        arguments:
+            - @invoiceaddress.repository
+            - @deliveryaddress.repository
+            - @basket.repository
+            - @order.repository
