@@ -89,5 +89,7 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNotNull($response->getOrderId());
         $this->assertEquals(BasketStub::ID, $savedOrder->getBasket()->getId());
+        $this->assertEquals(SubmitOrderResponse::SUCCESS, $response->getCode());
+        $this->assertEquals('', $response->getMessage());
     }
 }
