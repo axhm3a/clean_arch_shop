@@ -6,20 +6,8 @@ Clean Architecture Shop
 Playground for Uncle Bobs' Clean Architecture which is awesome.
 This is not fully right implemented but im getting there.
 
-Some Use Cases to implement
+Links for Clean Architecture:
+=============================
 
- - Login
- - Logout
- - AddDeliveryAddress
- - RemoveDeliveryAddress
- - ChangeDeliveryAddress
- - AddInvoiceAddress
- - ChangeInvoiceAddress
- - SelectLogisticPartner
- - SelectDeliveryService
- - SelectPaymentMethod
-
-Some Basic Todo's
-
- - Use Presenters instead of return Response objects
-
+http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html
+https://www.youtube.com/watch?v=asLUTiJJqdE
