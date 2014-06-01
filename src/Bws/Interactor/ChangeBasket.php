@@ -51,7 +51,7 @@ class ChangeBasket
             return new ChangeBasketResponse(ChangeBasketResponse::BASKET_IS_EMPTY);
         }
 
-        return $this->buildBasketResponseFromBasketPositions($request, $basketPosition);
+        return $this->changeBasketPosition($request, $basketPosition);
     }
 
     /**
@@ -117,7 +117,7 @@ class ChangeBasket
      *
      * @return ChangeBasketResponse
      */
-    protected function buildBasketResponseFromBasketPositions(ChangeBasketRequest $request, array $basketPosition)
+    protected function changeBasketPosition(ChangeBasketRequest $request, array $basketPosition)
     {
         /** @var BasketPosition $position */
         foreach ($basketPosition as $position) {
