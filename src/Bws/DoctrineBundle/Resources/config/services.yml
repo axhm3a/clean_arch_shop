@@ -9,13 +9,18 @@ parameters:
     invoiceaddress.repository.class: Bws\DoctrineBundle\Entity\InvoiceAddressRepository
     deliveryaddress.entity.class: Bws\DoctrineBundle\Entity\DeliveryAddress
     deliveryaddress.repository.class: Bws\DoctrineBundle\Entity\DeliveryAddressRepository
+    logisticpartner.entity.class: Bws\DoctrineBundle\Entity\LogisticPartner
+    logisticpartner.repository.class: Bws\DoctrineBundle\Entity\LogisticPartnerRepository
     order.entity.class: Bws\DoctrineBundle\Entity\Order
     order.repository.class: Bws\DoctrineBundle\Entity\OrderRepository
-
+    paymentmethod.entity.class: Bws\DoctrineBundle\Entity\PaymentMethod
+    paymentmethod.repository.class: Bws\DoctrineBundle\Entity\PaymentMethodRepository
     interactor.add_to_basket.class: Bws\Interactor\AddToBasket
     interactor.view_basket.class: Bws\Interactor\ViewBasket
     interactor.change_basket.class: Bws\Interactor\ChangeBasket
     interactor.submit_order_unregistered.class: Bws\Interactor\SubmitOrderAsUnregisteredCustomer
+    interactor.present_paymentmethods.class: Bws\Interactor\PresentPaymentMethods
+    interactor.present_logisticpartners.class: Bws\Interactor\PresentLogisticPartners
 
 services:
     article.repository:
@@ -53,12 +58,26 @@ services:
         arguments:
             - %deliveryaddress.entity.class%
 
+    logisticpartner.repository:
+        class: %logisticpartner.repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - %logisticpartner.entity.class%
+
     order.repository:
         class: %order.repository.class%
         factory_service: doctrine.orm.entity_manager
         factory_method: getRepository
         arguments:
             - %order.entity.class%
+
+    paymentmethod.repository:
+        class: %paymentmethod.repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - %paymentmethod.entity.class%
 
     interactor.add_to_basket:
         class: %interactor.add_to_basket.class%
@@ -86,3 +105,13 @@ services:
             - @deliveryaddress.repository
             - @basket.repository
             - @order.repository
+
+    interactor.present_logisticpartners:
+        class: %interactor.present_logisticpartners.class%
+        arguments:
+            - @logisticpartner.repository
+
+    interactor.present_paymentmethods:
+        class: %interactor.present_paymentmethods.class%
+        arguments:
+            - @paymentmethod.repository

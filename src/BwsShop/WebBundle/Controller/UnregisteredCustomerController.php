@@ -8,7 +8,16 @@ class UnregisteredCustomerController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('BwsShopWebBundle:UnregisteredCustomer:index.html.twig');
+        $paymentMethods   = $this->get('interactor.present_paymentmethods')->execute()->getPaymentMethods();
+        $logisticPartners = $this->get('interactor.present_logisticpartners')->execute()->getLogisticPartners();
+
+        return $this->render(
+            'BwsShopWebBundle:UnregisteredCustomer:index.html.twig',
+            array(
+                'paymentMethods'   => $paymentMethods,
+                'logisticPartners' => $logisticPartners
+            )
+        );
     }
 }
  
