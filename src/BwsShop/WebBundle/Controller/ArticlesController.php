@@ -8,7 +8,7 @@ class ArticlesController extends Controller
 {
     public function indexAction()
     {
-        $articles = $this->get('article.repository')->findAll();
+        $articles = $this->get('interactor.present_articles')->execute()->getArticles();
         return $this->render('BwsShopWebBundle:ListArticles:index.html.twig', array('articles' => $articles));
     }
 }

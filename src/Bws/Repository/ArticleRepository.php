@@ -17,5 +17,10 @@ interface ArticleRepository
      * @return Article
      */
     public function find($id);
+
+    /**
+     * @return Article[]
+     */
+    public function findAll();
 }
  

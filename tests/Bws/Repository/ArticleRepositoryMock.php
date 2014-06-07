@@ -51,5 +51,15 @@ class ArticleRepositoryMock implements ArticleRepository
     {
         return $this->findById;
     }
+
+    public function findAll()
+    {
+        return $this->articles;
+    }
+
+    public function deleteAll()
+    {
+        $this->articles = array();
+    }
 }
  
