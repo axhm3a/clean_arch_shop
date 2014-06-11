@@ -34,19 +34,19 @@ class ViewBasketTest extends \PHPUnit_Framework_TestCase
 
     public function testBadBasketId()
     {
-        $result = $this->interactor->execute(new ViewBasketRequest(null));
+        $result = $this->interactor->execute(null);
         $this->assertEquals(ViewBasketResponse::BAD_BASKET_ID, $result->getCode());
     }
 
     public function testBasketNotFound()
     {
-        $result = $this->interactor->execute(new ViewBasketRequest(999));
+        $result = $this->interactor->execute(999);
         $this->assertEquals(ViewBasketResponse::BASKET_NOT_FOUND, $result->getCode());
     }
 
     public function testEmptyBasket()
     {
-        $result = $this->interactor->execute(new ViewBasketRequest(EmptyBasketStub::ID));
+        $result = $this->interactor->execute(EmptyBasketStub::ID);
         $this->assertEquals(ViewBasketResponse::SUCCESS, $result->getCode());
         $this->assertEquals(array(), $result->getPositions());
         $this->assertEquals(0, $result->getPositionCount());
@@ -55,7 +55,7 @@ class ViewBasketTest extends \PHPUnit_Framework_TestCase
 
     public function testFilledBasket()
     {
-        $result = $this->interactor->execute(new ViewBasketRequest(BasketStub::ID));
+        $result = $this->interactor->execute(BasketStub::ID);
         $this->assertEquals(ViewBasketResponse::SUCCESS, $result->getCode());
         $this->assertEquals(
             array(

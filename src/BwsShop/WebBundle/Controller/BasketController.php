@@ -47,7 +47,7 @@ class BasketController extends FOSRestController
 
         /** @var ViewBasket $interactor */
         $interactor = $this->get('interactor.view_basket');
-        $response   = $interactor->execute(new ViewBasketRequest($session->get('basketId', 0)));
+        $response   = $interactor->execute($session->get('basketId', 0));
 
         $view = $this->view($response, 200)
             ->setTemplate('BwsShopWebBundle:Basket:list.html.twig')

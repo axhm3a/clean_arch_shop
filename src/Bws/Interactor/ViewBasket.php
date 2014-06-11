@@ -29,17 +29,17 @@ class ViewBasket
     }
 
     /**
-     * @param ViewBasketRequest $request
+     * @param int $basketId
      *
      * @return ViewBasketResponse
      */
-    public function execute(ViewBasketRequest $request)
+    public function execute($basketId)
     {
-        if (null === $request->getBasketId()) {
+        if (null === $basketId) {
             return new ViewBasketResponse(ViewBasketResponse::BAD_BASKET_ID, 'BAD_BASKET_ID');
         }
 
-        $basket = $this->basketRepository->find($request->getBasketId());
+        $basket = $this->basketRepository->find($basketId);
 
         if (!$basket) {
             return new ViewBasketResponse(ViewBasketResponse::BASKET_NOT_FOUND, 'BASKET_NOT_FOUND');
