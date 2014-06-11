@@ -22,5 +22,12 @@ interface ArticleRepository
      * @return Article[]
      */
     public function findAll();
+
+    /**
+     * @param string $by
+     *
+     * @return Article[]
+     */
+    public function search($by);
 }
  

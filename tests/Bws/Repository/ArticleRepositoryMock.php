@@ -9,7 +9,19 @@ class ArticleRepositoryMock implements ArticleRepository
 {
     const ARTICLE_ID = 10;
 
+    /**
+     * @var Article[]
+     */
     private $articles = array();
+
+    /**
+     * @var int
+     */
+    private $searchCalls = 0;
+
+    /**
+     * @var
+     */
     private $findById;
 
     public function __construct()
@@ -60,6 +72,30 @@ class ArticleRepositoryMock implements ArticleRepository
     public function deleteAll()
     {
         $this->articles = array();
+    }
+
+    /**
+     * @param string $by
+     *
+     * @return Article[]
+     */
+    public function search($by)
+    {
+        $this->searchCalls++;
+        $articles = array();
+
+        foreach ($this->articles as $article) {
+            if (false !== strpos($article->getTitle(), $by)) {
+                $articles[] = $article;
+            }
+        }
+
+        return $articles;
+    }
+
+    public function getSearchCalls()
+    {
+        return $this->searchCalls;
     }
 }
  

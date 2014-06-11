@@ -34,9 +34,9 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ url('bws_shop_web_homepage') }}">Shop</a></li>
             </ul>
-            <form class="navbar-form navbar-left" role="search">
+            <form class="navbar-form navbar-left" role="search" action="{{ url('bws_shop_web_search') }}">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                    <input type="text" name="by" class="form-control" placeholder="Search">
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
