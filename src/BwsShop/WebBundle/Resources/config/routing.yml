@@ -3,8 +3,8 @@ bws_shop_web_homepage:
     defaults: { _controller: BwsShopWebBundle:Articles:index }
 
 bws_shop_web_search:
-    pattern:  /search
-    defaults: { _controller: BwsShopWebBundle:Articles:search }
+    pattern:  /search.{_format}
+    defaults: { _controller: BwsShopWebBundle:Articles:search, _format: html }
 
 bws_shop_web_add_to_basket:
     pattern: /basket/add/

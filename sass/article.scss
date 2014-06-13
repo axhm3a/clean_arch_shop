@@ -2,3 +2,31 @@
   color: $priceColor;
   font-weight: bold;
 }
+
+.search-articles-result {
+  background-color: white;
+  border: 1px solid black;
+  margin-top: 5px;
+  padding: 5px;
+  position: absolute;
+}
+
+.article-found {
+  border: 1px solid transparent;
+  border-bottom: 1px dotted #ccc;
+  padding: 5px;
+}
+
+.article-found:hover {
+  background-color: #ffffcc;
+  border: 1px solid #444;
+}
+
+.article-found:last-child {
+  border-bottom: 0;
+}
+
+.article-found:last-child:hover {
+  background-color: #ffffcc;
+  border: 1px solid #444;
+}

@@ -3,10 +3,11 @@
 namespace BwsShop\WebBundle\Controller;
 
 use Bws\Interactor\SearchArticlesRequest;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 
-class ArticlesController extends Controller
+class ArticlesController extends FOSRestController
 {
     public function indexAction()
     {
@@ -14,10 +15,24 @@ class ArticlesController extends Controller
         return $this->render('BwsShopWebBundle:ListArticles:index.html.twig', array('articles' => $articles));
     }
 
+    /**
+     * @View()
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function searchAction(Request $request)
     {
         $searchRequest = new SearchArticlesRequest($request->get('by'));
         $articles      = $this->get('interactor.search_articles')->execute($searchRequest)->getArticles();
-        return $this->render('BwsShopWebBundle:ListArticles:index.html.twig', array('articles' => $articles));
+
+        $view = $this
+            ->view($articles, 200)
+            ->setTemplate('BwsShopWebBundle:ListArticles:index.html.twig')
+            ->setTemplateVar('articles')
+        ;
+
+        return $this->handleView($view);
     }
 }

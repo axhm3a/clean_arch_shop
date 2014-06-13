@@ -36,7 +36,22 @@
             </ul>
             <form class="navbar-form navbar-left" role="search" action="{{ url('bws_shop_web_search') }}">
                 <div class="form-group">
-                    <input type="text" name="by" class="form-control" placeholder="Search">
+                    <input type="text" ng-model="by" ng-change="searchArticles()" name="by" class="form-control"
+                           placeholder="Search">
+                    {% verbatim %}
+                    <div class="search-articles-result" ng-show="articles.length > 0">
+                        <div ng-repeat="article in articles" class="row article-found no-margin">
+                            <div class="col-md-1">
+                                <img ng-src="{{ article.imagePath }}" style="width: 50px;"/>
+                            </div>
+                            <div class="col-md-10">
+                                <strong>{{ article.title }}</strong> <span class="price">{{ article.price }} €</span>
+
+                                <p>{{ article.description | limitTo : 150 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endverbatim %}
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
