@@ -3,6 +3,7 @@ parameters:
     interactor.view_basket.class: Bws\Interactor\ViewBasket
     interactor.change_basket.class: Bws\Interactor\ChangeBasket
     interactor.submit_order_unregistered.class: Bws\Interactor\SubmitOrderAsUnregisteredCustomer
+    interactor.present_article.class: Bws\Interactor\PresentArticle
     interactor.present_articles.class: Bws\Interactor\PresentArticles
     interactor.present_paymentmethods.class: Bws\Interactor\PresentPaymentMethods
     interactor.present_logisticpartners.class: Bws\Interactor\PresentLogisticPartners
@@ -91,6 +92,11 @@ services:
             - @deliveryaddress.repository
             - @basket.repository
             - @order.repository
+
+    interactor.present_article:
+        class: %interactor.present_article.class%
+        arguments:
+            - @article.repository
 
     interactor.present_articles:
         class: %interactor.present_articles.class%

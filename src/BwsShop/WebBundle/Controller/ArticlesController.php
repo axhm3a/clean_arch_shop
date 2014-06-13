@@ -30,8 +30,18 @@ class ArticlesController extends FOSRestController
         $view = $this
             ->view($articles, 200)
             ->setTemplate('BwsShopWebBundle:ListArticles:index.html.twig')
-            ->setTemplateVar('articles')
-        ;
+            ->setTemplateVar('articles');
+
+        return $this->handleView($view);
+    }
+
+    public function viewAction(Request $request)
+    {
+        $article = $this->get('interactor.present_article')->execute($request->get('id'))->getArticle();
+        $view    = $this
+            ->view($article, 200)
+            ->setTemplate('BwsShopWebBundle:ListArticles:view.html.twig')
+            ->setTemplateVar('article');
 
         return $this->handleView($view);
     }
