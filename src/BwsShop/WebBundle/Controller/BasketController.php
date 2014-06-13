@@ -2,12 +2,13 @@
 
 namespace BwsShop\WebBundle\Controller;
 
-use Bws\Interactor\AddToBasket;
-use Bws\Interactor\AddToBasketRequest;
 use Bws\Interactor\ChangeBasket;
 use Bws\Interactor\ChangeBasketRequest;
-use Bws\Interactor\ViewBasket;
+use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
+use Bws\Interactor\AddToBasket;
+use Bws\Interactor\AddToBasketRequest;
+use Bws\Interactor\ViewBasket;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 
