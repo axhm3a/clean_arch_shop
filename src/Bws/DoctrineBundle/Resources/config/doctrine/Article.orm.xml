@@ -5,7 +5,7 @@
       <generator strategy="IDENTITY"/>
     </id>
     <field name="ean" type="string" column="ean" length="13" nullable="true"/>
-    <field name="title" type="string" column="title" length="45" nullable="true"/>
+    <field name="title" type="string" column="title" length="255" nullable="true"/>
     <field name="description" type="text" column="description" nullable="true"/>
     <field name="price" type="float" column="price" precision="10" scale="0" nullable="true"/>
     <field name="imagePath" type="string" column="image_path" length="500" nullable="true"/>
