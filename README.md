@@ -11,3 +11,8 @@ Links for Clean Architecture:
 
 http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html
 https://www.youtube.com/watch?v=asLUTiJJqdE
+
+Screenshots:
+============
+
+![screenshot](screenshot.png)
