@@ -47,9 +47,11 @@ class BasketController extends FOSRestController
         $interactor = $this->get('interactor.view_basket');
         $response   = $interactor->execute($session->get('basketId', 0));
 
-        $view = $this->view($response, 200)
+        $view = $this
+            ->view($response, 200)
             ->setTemplate('BwsShopWebBundle:Basket:list.html.twig')
-            ->setTemplateVar('response');
+            ->setTemplateVar('response')
+        ;
 
         $session->set('total', $response->getTotal());
         $session->set('posCount', $response->getPositionCount());
@@ -77,9 +79,11 @@ class BasketController extends FOSRestController
             )
         );
 
-        $view = $this->view($response, 200)
+        $view = $this
+            ->view($response, 200)
             ->setTemplate('BwsShopWebBundle:Basket:change.html.twig')
-            ->setTemplateVar('response');
+            ->setTemplateVar('response')
+        ;
 
         return $this->handleView($view);
     }
