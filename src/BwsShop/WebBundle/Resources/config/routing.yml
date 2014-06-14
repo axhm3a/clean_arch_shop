@@ -1,14 +1,14 @@
 bws_shop_web_homepage:
     pattern:  /
-    defaults: { _controller: BwsShopWebBundle:Articles:index }
+    defaults: { _controller: BwsShopWebBundle:Article:index }
 
 bws_shop_view_article:
     pattern:  /article/{id}
-    defaults: { _controller: BwsShopWebBundle:Articles:view }
+    defaults: { _controller: BwsShopWebBundle:Article:view }
 
 bws_shop_web_search:
     pattern:  /search.{_format}
-    defaults: { _controller: BwsShopWebBundle:Articles:search, _format: html }
+    defaults: { _controller: BwsShopWebBundle:Article:search, _format: html }
 
 bws_shop_web_add_to_basket:
     pattern: /basket/add/
