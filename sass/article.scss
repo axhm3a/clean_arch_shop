@@ -12,21 +12,22 @@
 }
 
 .article-found {
-  border: 1px solid transparent;
   border-bottom: 1px dotted #ccc;
   padding: 5px;
 }
 
+.article-found a * {
+  color: black;
+}
+
+.article-found a strong {
+  color: #428bca;
+}
+
 .article-found:hover {
   background-color: #ffffcc;
-  border: 1px solid #444;
 }
 
 .article-found:last-child {
   border-bottom: 0;
-}
-
-.article-found:last-child:hover {
-  background-color: #ffffcc;
-  border: 1px solid #444;
 }

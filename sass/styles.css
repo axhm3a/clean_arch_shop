@@ -1,9 +1,35 @@
 body {
   padding-top: 80px; }
 
+.no-margin {
+  margin: 0; }
+
 .price {
   color: #b12704;
   font-weight: bold; }
+
+.search-articles-result {
+  background-color: white;
+  border: 1px solid black;
+  margin-top: 5px;
+  padding: 5px;
+  position: absolute; }
+
+.article-found {
+  border-bottom: 1px dotted #ccc;
+  padding: 5px; }
+
+.article-found a * {
+  color: black; }
+
+.article-found a strong {
+  color: #428bca; }
+
+.article-found:hover {
+  background-color: #ffffcc; }
+
+.article-found:last-child {
+  border-bottom: 0; }
 
 .list_articles_image {
   width: 150px; }
