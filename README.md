@@ -15,4 +15,4 @@ https://www.youtube.com/watch?v=asLUTiJJqdE
 Screenshots:
 ============
 
-![screenshot](screenshot_2.png)
+![screenshot](screenshot_3.png)
