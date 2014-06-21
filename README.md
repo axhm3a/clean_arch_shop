@@ -6,6 +6,11 @@ Clean Architecture Shop
 Playground for Uncle Bobs' Clean Architecture which is awesome.
 This is not fully right implemented but im getting there.
 
+Todos:
+
+ - Introduce Presenters
+ - Introduce Factories
+
 Links for Clean Architecture:
 =============================
 
