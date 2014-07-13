@@ -3,11 +3,17 @@
 namespace Bws\Repository;
 
 use Bws\Entity\DeliveryAddress;
+use Bws\Entity\DeliveryAddressStub;
 
 class DeliveryAddressRepositoryMock implements DeliveryAddressRepository
 {
     private $addresses = array();
     private $lastInserted;
+
+    public function __construct()
+    {
+        $this->save(new DeliveryAddressStub());
+    }
 
     /**
      * @param int $id
@@ -42,6 +48,23 @@ class DeliveryAddressRepositoryMock implements DeliveryAddressRepository
     public function findLastInserted()
     {
         return $this->lastInserted;
+    }
+
+    public function findExisting($firstName, $lastName, $street, $zip, $city)
+    {
+        /** @var DeliveryAddress $address */
+        foreach ($this->addresses as $address) {
+            if ($address->getFirstName() == $firstName
+                && $address->getLastName() == $lastName
+                && $address->getStreet() == $street
+                && $address->getZip() == $zip
+                && $address->getCity() == $city
+            ) {
+                return $address;
+            }
+        }
+
+        return null;
     }
 }
  

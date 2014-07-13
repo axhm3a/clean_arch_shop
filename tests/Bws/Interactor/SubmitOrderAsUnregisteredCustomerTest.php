@@ -4,6 +4,7 @@ namespace Bws\Interactor;
 
 use Bws\Entity\BasketStub;
 use Bws\Entity\CustomerStub;
+use Bws\Entity\DeliveryAddressStub;
 use Bws\Entity\InvoiceAddressStub;
 use Bws\Repository\BasketRepositoryMock;
 use Bws\Repository\CustomerRepositoryMock;
@@ -141,11 +142,11 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
         $request->invoiceZip        = InvoiceAddressStub::ZIP;
         $request->invoiceCity       = InvoiceAddressStub::CITY;
         $request->emailAddress      = 'cbergau86@gmail.com';
-        $request->deliveryFirstName = 'Max';
-        $request->deliveryLastName  = 'Muster';
-        $request->deliveryStreet    = 'Musterstreet 22';
-        $request->deliveryZip       = '30179';
-        $request->deliveryCity      = 'Isernhagen';
+        $request->deliveryFirstName = DeliveryAddressStub::FIRST_NAME;
+        $request->deliveryLastName  = DeliveryAddressStub::LAST_NAME;
+        $request->deliveryStreet    = DeliveryAddressStub::STREET;
+        $request->deliveryZip       = DeliveryAddressStub::ZIP;
+        $request->deliveryCity      = DeliveryAddressStub::CITY;
         $request->basketId          = BasketStub::ID;
         $request->paymentMethodId   = PaymentMethodRepositoryMock::INVOICE_ID;
         $request->logisticPartnerId = LogisticPartnerRepositoryMock::HERMES_ID;
@@ -181,6 +182,13 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($request->invoiceCity, $invoiceAddress->getCity());
 
         $deliveryAddress = $this->deliveryAddressRepository->findLastInserted();
+
+        if ($shouldBeMatchedCustomer) {
+            $this->assertEquals(DeliveryAddressStub::ID, $deliveryAddress->getId());
+        } else {
+            $this->assertNotEquals(DeliveryAddressStub::ID, $deliveryAddress->getId());
+        }
+
         $this->assertSame($request->deliveryFirstName, $deliveryAddress->getFirstName());
         $this->assertSame($request->deliveryLastName, $deliveryAddress->getLastName());
         $this->assertSame($request->deliveryStreet, $deliveryAddress->getStreet());

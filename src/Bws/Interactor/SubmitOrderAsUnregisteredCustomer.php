@@ -158,14 +158,23 @@ class SubmitOrderAsUnregisteredCustomer
      */
     protected function saveDeliveryAddress(SubmitOrderAsUnregisteredCustomerRequest $request)
     {
-        $address = $this->deliveryAddressRepository->factory();
-        $address->setFirstName($request->deliveryFirstName);
-        $address->setLastName($request->deliveryLastName);
-        $address->setStreet($request->deliveryStreet);
-        $address->setZip($request->deliveryZip);
-        $address->setCity($request->deliveryCity);
+        if (!$address = $this->deliveryAddressRepository->findExisting(
+            $request->deliveryFirstName,
+            $request->deliveryLastName,
+            $request->deliveryStreet,
+            $request->deliveryZip,
+            $request->deliveryCity
+        )
+        ) {
+            $address = $this->deliveryAddressRepository->factory();
+            $address->setFirstName($request->deliveryFirstName);
+            $address->setLastName($request->deliveryLastName);
+            $address->setStreet($request->deliveryStreet);
+            $address->setZip($request->deliveryZip);
+            $address->setCity($request->deliveryCity);
 
-        $this->deliveryAddressRepository->save($address);
+            $this->deliveryAddressRepository->save($address);
+        }
 
         return $address;
     }

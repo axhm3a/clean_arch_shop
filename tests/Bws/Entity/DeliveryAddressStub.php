@@ -2,14 +2,14 @@
 
 namespace Bws\Entity;
 
-class InvoiceAddressStub extends InvoiceAddress
+class DeliveryAddressStub extends DeliveryAddress
 {
-    const ID         = 887722;
-    const FIRST_NAME = 'Christian';
-    const LAST_NAME  = 'Bergau';
-    const STREET     = 'Gradestraße 15';
-    const ZIP        = '30163';
-    const CITY       = 'Hannover';
+    const ID         = 887723;
+    const FIRST_NAME = 'Max';
+    const LAST_NAME  = 'Mustermann';
+    const STREET     = 'Musterstraße 15';
+    const ZIP        = '5000';
+    const CITY       = 'Berlin';
 
     public function __construct()
     {

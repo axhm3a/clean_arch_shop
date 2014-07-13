@@ -20,5 +20,16 @@ interface DeliveryAddressRepository
      * @return DeliveryAddress
      */
     public function factory();
+
+    /**
+     * @param string $invoiceFirstName
+     * @param string $invoiceLastName
+     * @param string $invoiceStreet
+     * @param string $invoiceZip
+     * @param string $invoiceCity
+     *
+     * @return DeliveryAddress|null
+     */
+    public function findExisting($invoiceFirstName, $invoiceLastName, $invoiceStreet, $invoiceZip, $invoiceCity);
 }
  
