@@ -24,4 +24,26 @@ class InvoiceAddressRepository extends EntityRepository implements BaseInvoiceAd
     {
         return new InvoiceAddress();
     }
+
+    public function findExisting($firstName, $lastName, $street, $zip, $city)
+    {
+        $result = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+            ->select('i')
+            ->from('Bws\DoctrineBundle\Entity\InvoiceAddress', 'i')
+            ->where('i.firstName = :firstName')
+            ->andWhere('i.lastName = :lastName')
+            ->andWhere('i.lastName = :street')
+            ->andWhere('i.lastName = :zip')
+            ->andWhere('i.lastName = :city')
+            ->orderBy('i.id', 'desc')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+
+        $invoiceAddress = isset($result[0]) ? $result[0] : null;
+
+        return $invoiceAddress;
+    }
 }

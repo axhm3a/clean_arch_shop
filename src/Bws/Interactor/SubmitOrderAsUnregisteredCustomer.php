@@ -130,14 +130,23 @@ class SubmitOrderAsUnregisteredCustomer
      */
     protected function saveInvoiceAddress(SubmitOrderAsUnregisteredCustomerRequest $request)
     {
-        $address = $this->invoiceAddressRepository->factory();
-        $address->setFirstName($request->invoiceFirstName);
-        $address->setLastName($request->invoiceLastName);
-        $address->setStreet($request->invoiceStreet);
-        $address->setZip($request->invoiceZip);
-        $address->setCity($request->invoiceCity);
+        if (!$address = $this->invoiceAddressRepository->findExisting(
+            $request->invoiceFirstName,
+            $request->invoiceLastName,
+            $request->invoiceStreet,
+            $request->invoiceZip,
+            $request->invoiceCity
+        )
+        ) {
+            $address = $this->invoiceAddressRepository->factory();
+            $address->setFirstName($request->invoiceFirstName);
+            $address->setLastName($request->invoiceLastName);
+            $address->setStreet($request->invoiceStreet);
+            $address->setZip($request->invoiceZip);
+            $address->setCity($request->invoiceCity);
 
-        $this->invoiceAddressRepository->save($address);
+            $this->invoiceAddressRepository->save($address);
+        }
 
         return $address;
     }

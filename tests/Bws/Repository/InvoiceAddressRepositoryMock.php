@@ -3,11 +3,17 @@
 namespace Bws\Repository;
 
 use Bws\Entity\InvoiceAddress;
+use Bws\Entity\InvoiceAddressStub;
 
 class InvoiceAddressRepositoryMock implements InvoiceAddressRepository
 {
     private $addresses = array();
     private $lastInserted;
+
+    public function __construct()
+    {
+        $this->save(new InvoiceAddressStub());
+    }
 
     /**
      * @param int $id
@@ -42,6 +48,23 @@ class InvoiceAddressRepositoryMock implements InvoiceAddressRepository
     public function findLastInserted()
     {
         return $this->lastInserted;
+    }
+
+    public function findExisting($firstName, $lastName, $street, $zip, $city)
+    {
+        /** @var InvoiceAddress $address */
+        foreach ($this->addresses as $address) {
+            if ($address->getFirstName() == $firstName
+                && $address->getLastName() == $lastName
+                && $address->getStreet() == $street
+                && $address->getZip() == $zip
+                && $address->getCity() == $city
+            ) {
+                return $address;
+            }
+        }
+
+        return null;
     }
 }
  

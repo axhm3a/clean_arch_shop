@@ -20,4 +20,15 @@ interface InvoiceAddressRepository
      * @return InvoiceAddress
      */
     public function factory();
+
+    /**
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $street
+     * @param string $zip
+     * @param string $city
+     *
+     * @return InvoiceAddress|null
+     */
+    public function findExisting($firstName, $lastName, $street, $zip, $city);
 }

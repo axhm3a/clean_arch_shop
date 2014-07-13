@@ -167,6 +167,13 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
         $shouldBeMatchedCustomer = false
     ) {
         $invoiceAddress = $this->invoiceAddressRepository->findLastInserted();
+
+        if ($shouldBeMatchedCustomer) {
+            $this->assertEquals(InvoiceAddressStub::ID, $invoiceAddress->getId());
+        } else {
+            $this->assertNotEquals(InvoiceAddressStub::ID, $invoiceAddress->getId());
+        }
+
         $this->assertSame($request->invoiceFirstName, $invoiceAddress->getFirstName());
         $this->assertSame($request->invoiceLastName, $invoiceAddress->getLastName());
         $this->assertSame($request->invoiceStreet, $invoiceAddress->getStreet());

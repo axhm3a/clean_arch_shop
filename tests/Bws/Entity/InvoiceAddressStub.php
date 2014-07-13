@@ -4,6 +4,7 @@ namespace Bws\Entity;
 
 class InvoiceAddressStub extends InvoiceAddress
 {
+    CONST ID         = 887722;
     const FIRST_NAME = 'Christian';
     const LAST_NAME  = 'Bergau';
     const STREET     = 'Gradestraße 15';
@@ -12,6 +13,7 @@ class InvoiceAddressStub extends InvoiceAddress
 
     public function __construct()
     {
+        $this->id = static::ID;
         $this->setFirstName(static::FIRST_NAME);
         $this->setLastName(static::LAST_NAME);
         $this->setStreet(static::STREET);

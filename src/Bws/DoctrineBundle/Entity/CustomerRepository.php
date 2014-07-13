@@ -3,6 +3,7 @@
 namespace Bws\DoctrineBundle\Entity;
 
 use Bws\Entity\Customer as BaseCustomer;
+use Bws\Entity\InvoiceAddress as BaseInvoiceAddress;
 use Bws\Repository\CustomerRepository as BaseCustomerRepository;
 use Doctrine\ORM\EntityRepository;
 
@@ -28,7 +29,7 @@ class CustomerRepository extends EntityRepository implements BaseCustomerReposit
     /**
      * @inheritdoc
      */
-    public function match(InvoiceAddress $invoiceAddress)
+    public function match(BaseInvoiceAddress $invoiceAddress)
     {
         $result = $this->findBy(array('customerString' => $invoiceAddress->getCustomerString()));
         return isset($result[0]) ? $result[0] : null;
