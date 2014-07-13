@@ -2,8 +2,6 @@
 
 namespace Bws\Interactor;
 
-use Bws\DoctrineBundle\Entity\EmailAddressRepository;
-use Bws\DoctrineBundle\Entity\LogisticPartnerRepository;
 use Bws\Entity\BasketStub;
 use Bws\Repository\BasketRepositoryMock;
 use Bws\Repository\CustomerRepositoryMock;
