@@ -29,6 +29,7 @@ class EmailAddressRepository extends EntityRepository implements BaseEmailAddres
      */
     public function findByAddress($address)
     {
-        return $this->findBy(array('address' => $address));
+        $result = $this->findBy(array('address' => $address));
+        return isset($result[0]) ? $result[0] : null;
     }
 }
