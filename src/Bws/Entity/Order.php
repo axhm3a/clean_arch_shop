@@ -230,4 +230,3 @@ class Order
         return $this->paymentMethod;
     }
 }
- 
