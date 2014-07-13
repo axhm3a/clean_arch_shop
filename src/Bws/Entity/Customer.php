@@ -30,6 +30,11 @@ class Customer
     protected $lastUsedDeliveryAddress;
 
     /**
+     * @var string
+     */
+    protected $customerString;
+
+    /**
      * @return bool
      */
     public function isRegistered()
@@ -122,6 +127,22 @@ class Customer
     public function getLastUsedDeliveryAddress()
     {
         return $this->lastUsedDeliveryAddress;
+    }
+
+    /**
+     * @param string $customerString
+     */
+    public function setCustomerString($customerString)
+    {
+        $this->customerString = $customerString;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerString()
+    {
+        return $this->customerString;
     }
 }
  

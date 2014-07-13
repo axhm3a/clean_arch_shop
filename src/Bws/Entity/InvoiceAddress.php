@@ -2,7 +2,7 @@
 
 namespace Bws\Entity;
 
-class InvoiceAddress 
+class InvoiceAddress
 {
     /**
      * @var string
@@ -44,6 +44,7 @@ class InvoiceAddress
      * Set firstName
      *
      * @param string $firstName
+     *
      * @return InvoiceAddress
      */
     public function setFirstName($firstName)
@@ -67,6 +68,7 @@ class InvoiceAddress
      * Set lastName
      *
      * @param string $lastName
+     *
      * @return InvoiceAddress
      */
     public function setLastName($lastName)
@@ -90,6 +92,7 @@ class InvoiceAddress
      * Set street
      *
      * @param string $street
+     *
      * @return InvoiceAddress
      */
     public function setStreet($street)
@@ -113,6 +116,7 @@ class InvoiceAddress
      * Set zip
      *
      * @param string $zip
+     *
      * @return InvoiceAddress
      */
     public function setZip($zip)
@@ -136,6 +140,7 @@ class InvoiceAddress
      * Set city
      *
      * @param string $city
+     *
      * @return InvoiceAddress
      */
     public function setCity($city)
@@ -187,6 +192,28 @@ class InvoiceAddress
     public function getCustomer()
     {
         return $this->customer;
+    }
+
+    public function getCustomerString()
+    {
+        return sprintf(
+            '%s-%s-%s-%s-%s',
+            $this->filterForCustomerString($this->getFirstName()),
+            $this->filterForCustomerString($this->getLastName()),
+            $this->filterForCustomerString($this->getStreet()),
+            $this->filterForCustomerString($this->getZip()),
+            $this->filterForCustomerString($this->getCity())
+        );
+    }
+
+    /**
+     * @param string $input
+     *
+     * @return string
+     */
+    private function filterForCustomerString($input)
+    {
+        return preg_replace('/\s/', '', strtoupper($input));
     }
 }
  

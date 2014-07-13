@@ -3,6 +3,8 @@
 namespace Bws\Interactor;
 
 use Bws\Entity\BasketStub;
+use Bws\Entity\CustomerStub;
+use Bws\Entity\InvoiceAddressStub;
 use Bws\Repository\BasketRepositoryMock;
 use Bws\Repository\CustomerRepositoryMock;
 use Bws\Repository\DeliveryAddressRepositoryMock;
@@ -103,7 +105,7 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->interactor->execute($request);
 
-        $this->assertValidOrder($request, $response);
+        $this->assertValidOrderForNewCustomer($request, $response);
     }
 
     public function testSavesDataAsRegisteringCustomer()
@@ -127,33 +129,66 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->interactor->execute($request);
 
-        $this->assertValidOrder($request, $response);
+        $this->assertValidOrderForNewCustomer($request, $response);
+    }
+
+    public function testSavesDataAsRegisteringReturningCustomer()
+    {
+        $request                    = new SubmitOrderAsUnregisteredCustomerRequest();
+        $request->invoiceFirstName  = InvoiceAddressStub::FIRST_NAME;
+        $request->invoiceLastName   = InvoiceAddressStub::LAST_NAME;
+        $request->invoiceStreet     = InvoiceAddressStub::STREET;
+        $request->invoiceZip        = InvoiceAddressStub::ZIP;
+        $request->invoiceCity       = InvoiceAddressStub::CITY;
+        $request->emailAddress      = 'cbergau86@gmail.com';
+        $request->deliveryFirstName = 'Max';
+        $request->deliveryLastName  = 'Muster';
+        $request->deliveryStreet    = 'Musterstreet 22';
+        $request->deliveryZip       = '30179';
+        $request->deliveryCity      = 'Isernhagen';
+        $request->basketId          = BasketStub::ID;
+        $request->paymentMethodId   = PaymentMethodRepositoryMock::INVOICE_ID;
+        $request->logisticPartnerId = LogisticPartnerRepositoryMock::HERMES_ID;
+        $request->registering       = true;
+
+        $response = $this->interactor->execute($request);
+
+        $this->assertValidOrderForNewCustomer($request, $response, true);
     }
 
     /**
-     * @param $request
-     * @param $response
+     * @param SubmitOrderAsUnregisteredCustomerRequest $request
+     * @param SubmitOrderResponse                      $response
+     * @param bool                                     $shouldBeMatchedCustomer
      */
-    protected function assertValidOrder($request, $response)
-    {
+    protected function assertValidOrderForNewCustomer(
+        SubmitOrderAsUnregisteredCustomerRequest $request,
+        SubmitOrderResponse $response,
+        $shouldBeMatchedCustomer = false
+    ) {
         $invoiceAddress = $this->invoiceAddressRepository->findLastInserted();
-        $this->assertSame('Christian', $invoiceAddress->getFirstName());
-        $this->assertSame('Bergau', $invoiceAddress->getLastName());
-        $this->assertSame('Musterstreet 12', $invoiceAddress->getStreet());
-        $this->assertSame('30163', $invoiceAddress->getZip());
-        $this->assertSame('Hannover', $invoiceAddress->getCity());
+        $this->assertSame($request->invoiceFirstName, $invoiceAddress->getFirstName());
+        $this->assertSame($request->invoiceLastName, $invoiceAddress->getLastName());
+        $this->assertSame($request->invoiceStreet, $invoiceAddress->getStreet());
+        $this->assertSame($request->invoiceZip, $invoiceAddress->getZip());
+        $this->assertSame($request->invoiceCity, $invoiceAddress->getCity());
 
         $deliveryAddress = $this->deliveryAddressRepository->findLastInserted();
-        $this->assertSame('Max', $deliveryAddress->getFirstName());
-        $this->assertSame('Muster', $deliveryAddress->getLastName());
-        $this->assertSame('Musterstreet 22', $deliveryAddress->getStreet());
-        $this->assertSame('30179', $deliveryAddress->getZip());
-        $this->assertSame('Isernhagen', $deliveryAddress->getCity());
+        $this->assertSame($request->deliveryFirstName, $deliveryAddress->getFirstName());
+        $this->assertSame($request->deliveryLastName, $deliveryAddress->getLastName());
+        $this->assertSame($request->deliveryStreet, $deliveryAddress->getStreet());
+        $this->assertSame($request->deliveryZip, $deliveryAddress->getZip());
+        $this->assertSame($request->deliveryCity, $deliveryAddress->getCity());
 
         $emailAddress = $this->emailAddressRepository->findLastInserted();
-        $this->assertSame('cbergau86@gmail.com', $request->emailAddress);
+        $this->assertSame($request->emailAddress, $emailAddress->getAddress());
 
         $customer = $this->customerRepository->findLastInserted();
+
+        if ($shouldBeMatchedCustomer) {
+            $this->assertEquals(CustomerStub::ID, $customer->getId());
+        }
+
         $this->assertSame($invoiceAddress, $customer->getLastUsedInvoiceAddress());
         $this->assertSame($deliveryAddress, $customer->getLastUsedDeliveryAddress());
         $this->assertSame($emailAddress, $customer->getLastUsedEmailAddress());

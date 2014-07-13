@@ -10,6 +10,7 @@
       <generator strategy="IDENTITY"/>
     </id>
     <field name="isRegistered" type="boolean" column="is_registered" nullable="true"/>
+    <field name="customerString" type="string" column="customer_string" length="256" nullable="true"/>
     <many-to-one field="lastUsedInvoiceAddress" target-entity="InvoiceAddress">
       <join-columns>
         <join-column name="last_used_invoice_address_id" referenced-column-name="id"/>

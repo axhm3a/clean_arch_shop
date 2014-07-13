@@ -9,16 +9,28 @@ use Doctrine\ORM\EntityRepository;
 class CustomerRepository extends EntityRepository implements BaseCustomerRepository
 {
     /**
-     * @return BaseCustomer
+     * @inheritdoc
      */
     public function factory()
     {
         return new Customer();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function save(BaseCustomer $customer)
     {
         $this->getEntityManager()->persist($customer);
         $this->getEntityManager()->flush();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function match(InvoiceAddress $invoiceAddress)
+    {
+        $result = $this->findBy(array('customerString' => $invoiceAddress->getCustomerString()));
+        return isset($result[0]) ? $result[0] : null;
     }
 }

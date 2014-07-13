@@ -126,7 +126,7 @@ class SubmitOrderAsUnregisteredCustomer
     /**
      * @param SubmitOrderAsUnregisteredCustomerRequest $request
      *
-     * @return \Bws\Entity\InvoiceAddress
+     * @return InvoiceAddress
      */
     protected function saveInvoiceAddress(SubmitOrderAsUnregisteredCustomerRequest $request)
     {
@@ -145,7 +145,7 @@ class SubmitOrderAsUnregisteredCustomer
     /**
      * @param SubmitOrderAsUnregisteredCustomerRequest $request
      *
-     * @return \Bws\Entity\DeliveryAddress
+     * @return DeliveryAddress
      */
     protected function saveDeliveryAddress(SubmitOrderAsUnregisteredCustomerRequest $request)
     {
@@ -211,8 +211,8 @@ class SubmitOrderAsUnregisteredCustomer
     }
 
     /**
-     * @param $customer
-     * @param $email
+     * @param Customer     $customer
+     * @param EmailAddress $email
      */
     protected function updateCustomersEmailAddressRelation(Customer $customer, EmailAddress $email)
     {
@@ -229,7 +229,11 @@ class SubmitOrderAsUnregisteredCustomer
      */
     protected function saveCustomer(DeliveryAddress $deliveryAddress, InvoiceAddress $invoiceAddress, $registering)
     {
-        $customer = $this->customerRepository->factory();
+        if (!$customer = $this->customerRepository->match($invoiceAddress)) {
+            $customer = $this->customerRepository->factory();
+            $customer->setCustomerString($invoiceAddress->getCustomerString());
+        }
+
         $customer->setLastUsedDeliveryAddress($deliveryAddress);
         $customer->setLastUsedInvoiceAddress($invoiceAddress);
 
@@ -242,8 +246,8 @@ class SubmitOrderAsUnregisteredCustomer
     }
 
     /**
-     * @param $invoiceAddress
-     * @param $customer
+     * @param InvoiceAddress $invoiceAddress
+     * @param Customer       $customer
      */
     protected function updateInvoiceAddressCustomerRelation(InvoiceAddress $invoiceAddress, Customer $customer)
     {
@@ -252,8 +256,8 @@ class SubmitOrderAsUnregisteredCustomer
     }
 
     /**
-     * @param $deliveryAddress
-     * @param $customer
+     * @param DeliveryAddress $deliveryAddress
+     * @param Customer        $customer
      */
     protected function updateDeliveryAddressCustomerRelation(DeliveryAddress $deliveryAddress, Customer $customer)
     {

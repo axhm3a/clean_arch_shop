@@ -7,6 +7,7 @@
 
 namespace Bws\Repository;
 
+use Bws\Entity\InvoiceAddress;
 use Bws\Entity\Customer;
 
 interface CustomerRepository
@@ -16,6 +17,18 @@ interface CustomerRepository
      */
     public function factory();
 
+    /**
+     * @param InvoiceAddress $invoiceAddress
+     *
+     * @return Customer|null
+     */
+    public function match(InvoiceAddress $invoiceAddress);
+
+    /**
+     * @param Customer $customer
+     *
+     * @return void
+     */
     public function save(Customer $customer);
 }
  
