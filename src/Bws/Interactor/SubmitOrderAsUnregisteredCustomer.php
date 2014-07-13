@@ -101,7 +101,7 @@ class SubmitOrderAsUnregisteredCustomer
         $invoiceAddress  = $this->saveInvoiceAddress($request);
         $deliveryAddress = $this->saveDeliveryAddress($request);
         $basket          = $this->basketRepository->find($request->basketId);
-        $customer        = $this->saveCustomer($deliveryAddress, $invoiceAddress);
+        $customer        = $this->saveCustomer($deliveryAddress, $invoiceAddress, $request->registering);
         $email           = $this->saveEmailAddress($request->emailAddress, $customer);
         $paymentMethod   = $this->paymentMethodRepository->find($request->paymentMethodId);
         $logisticPartner = $this->logisticPartnerRepository->find($request->logisticPartnerId);
@@ -221,16 +221,22 @@ class SubmitOrderAsUnregisteredCustomer
     }
 
     /**
-     * @param $deliveryAddress
-     * @param $invoiceAddress
+     * @param DeliveryAddress $deliveryAddress
+     * @param InvoiceAddress  $invoiceAddress
+     * @param bool            $registering
      *
      * @return Customer
      */
-    protected function saveCustomer(DeliveryAddress $deliveryAddress, InvoiceAddress $invoiceAddress)
+    protected function saveCustomer(DeliveryAddress $deliveryAddress, InvoiceAddress $invoiceAddress, $registering)
     {
         $customer = $this->customerRepository->factory();
         $customer->setLastUsedDeliveryAddress($deliveryAddress);
         $customer->setLastUsedInvoiceAddress($invoiceAddress);
+
+        if ($registering) {
+            $customer->register();
+        }
+
         $this->customerRepository->save($customer);
         return $customer;
     }

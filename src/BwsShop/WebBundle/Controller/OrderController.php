@@ -28,6 +28,7 @@ class OrderController extends Controller
         $submitOrderRequest->basketId          = $session->get('basketId', null);
         $submitOrderRequest->paymentMethodId   = $request->get('paymentMethodId');
         $submitOrderRequest->logisticPartnerId = $request->get('logisticPartnerId');
+        $submitOrderRequest->registering       = $request->get('registering');
 
         $response = $this->get('interactor.submit_order_unregistered')->execute($submitOrderRequest);
 

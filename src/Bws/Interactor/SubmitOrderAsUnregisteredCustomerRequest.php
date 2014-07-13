@@ -22,5 +22,7 @@ class SubmitOrderAsUnregisteredCustomerRequest
     public $logisticPartnerId;
 
     public $basketId;
+
+    public $registering;
 }
  

@@ -8,6 +8,21 @@ class UnregisteredCustomerController extends Controller
 {
     public function indexAction()
     {
+        return $this->unregistered(false);
+    }
+
+    public function registeringAction()
+    {
+        return $this->unregistered(true);
+    }
+
+    /**
+     * @param bool $registering
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function unregistered($registering)
+    {
         $paymentMethods   = $this->get('interactor.present_paymentmethods')->execute()->getPaymentMethods();
         $logisticPartners = $this->get('interactor.present_logisticpartners')->execute()->getLogisticPartners();
 
@@ -15,7 +30,8 @@ class UnregisteredCustomerController extends Controller
             'BwsShopWebBundle:UnregisteredCustomer:index.html.twig',
             array(
                 'paymentMethods'   => $paymentMethods,
-                'logisticPartners' => $logisticPartners
+                'logisticPartners' => $logisticPartners,
+                'registering'      => $registering
             )
         );
     }
