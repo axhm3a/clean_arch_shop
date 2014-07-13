@@ -21,4 +21,14 @@ class EmailAddressRepository extends EntityRepository implements BaseEmailAddres
         $this->getEntityManager()->persist($emailAddress);
         $this->getEntityManager()->flush();
     }
+
+    /**
+     * @param string $address
+     *
+     * @return BaseEmailAddress|null
+     */
+    public function findByAddress($address)
+    {
+        return $this->findBy(array('address' => $address));
+    }
 }

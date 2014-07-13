@@ -5,6 +5,7 @@ namespace Bws\Interactor;
 use Bws\Entity\BasketStub;
 use Bws\Entity\CustomerStub;
 use Bws\Entity\DeliveryAddressStub;
+use Bws\Entity\EmailAddressStub;
 use Bws\Entity\InvoiceAddressStub;
 use Bws\Repository\BasketRepositoryMock;
 use Bws\Repository\CustomerRepositoryMock;
@@ -141,7 +142,7 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
         $request->invoiceStreet     = InvoiceAddressStub::STREET;
         $request->invoiceZip        = InvoiceAddressStub::ZIP;
         $request->invoiceCity       = InvoiceAddressStub::CITY;
-        $request->emailAddress      = 'cbergau86@gmail.com';
+        $request->emailAddress      = EmailAddressStub::ADDRESS;
         $request->deliveryFirstName = DeliveryAddressStub::FIRST_NAME;
         $request->deliveryLastName  = DeliveryAddressStub::LAST_NAME;
         $request->deliveryStreet    = DeliveryAddressStub::STREET;
@@ -196,6 +197,13 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($request->deliveryCity, $deliveryAddress->getCity());
 
         $emailAddress = $this->emailAddressRepository->findLastInserted();
+
+        if ($shouldBeMatchedCustomer) {
+            $this->assertEquals(EmailAddressStub::ID, $emailAddress->getId());
+        } else {
+            $this->assertNotEquals(EmailAddressStub::ID, $emailAddress->getId());
+        }
+
         $this->assertSame($request->emailAddress, $emailAddress->getAddress());
 
         $customer = $this->customerRepository->findLastInserted();
@@ -209,7 +217,7 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($emailAddress, $customer->getLastUsedEmailAddress());
         $this->assertSame($customer, $invoiceAddress->getCustomer());
         $this->assertSame($customer, $deliveryAddress->getCustomer());
-        $this->assertSame($customer, $emailAddress->getCustomer());
+        $this->assertSame($customer->getId(), $emailAddress->getCustomer()->getId());
         $this->assertSame($request->registering, $customer->isRegistered());
 
         $order = $this->orderRepository->findLastInserted();

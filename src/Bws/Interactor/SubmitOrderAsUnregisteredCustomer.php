@@ -221,10 +221,13 @@ class SubmitOrderAsUnregisteredCustomer
      */
     protected function saveEmailAddress($emailAddress, Customer $customer)
     {
-        $email = $this->emailAddressRepository->factory();
-        $email->setAddress($emailAddress);
-        $email->setCustomer($customer);
-        $this->emailAddressRepository->save($email);
+        if (!$email = $this->emailAddressRepository->findByAddress($emailAddress)) {
+            $email = $this->emailAddressRepository->factory();
+            $email->setAddress($emailAddress);
+            $email->setCustomer($customer);
+            $this->emailAddressRepository->save($email);
+        }
+
         return $email;
     }
 

@@ -16,6 +16,13 @@ interface EmailAddressRepository
      */
     public function factory();
 
+    /**
+     * @param string $address
+     *
+     * @return EmailAddress|null
+     */
+    public function findByAddress($address);
+
     public function save(EmailAddress $emailAddress);
 }
  
