@@ -15,5 +15,12 @@ interface LogisticPartnerRepository
      * @return LogisticPartner[]
      */
     public function findAll();
+
+    /**
+     * @param int $id
+     *
+     * @return LogisticPartner
+     */
+    public function find($id);
 }
  

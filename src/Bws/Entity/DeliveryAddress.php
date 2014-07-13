@@ -34,6 +34,10 @@ class DeliveryAddress
      */
     protected $id;
 
+    /**
+     * @var Customer
+     */
+    protected $customer;
 
     /**
      * Set firstName
@@ -158,6 +162,30 @@ class DeliveryAddress
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set customer
+     *
+     * @param Customer $customer
+     *
+     * @return DeliveryAddress
+     */
+    public function setCustomer(Customer $customer = null)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get customer
+     *
+     * @return Customer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
     }
 }
  

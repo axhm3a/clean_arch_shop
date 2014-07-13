@@ -4,6 +4,7 @@ namespace Bws\Interactor;
 
 use Bws\Entity\BasketStub;
 use Bws\Repository\BasketRepositoryMock;
+use Bws\Repository\CustomerRepositoryMock;
 use Bws\Repository\DeliveryAddressRepositoryMock;
 use Bws\Repository\InvoiceAddressRepositoryMock;
 use Bws\Repository\OrderRepositoryMock;
@@ -35,18 +36,25 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
      */
     private $orderRepository;
 
+    /**
+     * @var CustomerRepositoryMock
+     */
+    private $customerRepository;
+
     public function setUp()
     {
         $this->invoiceAddressRepository  = new InvoiceAddressRepositoryMock();
         $this->deliveryAddressRepository = new DeliveryAddressRepositoryMock();
         $this->basketRepository          = new BasketRepositoryMock();
         $this->orderRepository           = new OrderRepositoryMock();
+        $this->customerRepository        = new CustomerRepositoryMock();
 
         $this->interactor = new SubmitOrderAsUnregisteredCustomer(
             $this->invoiceAddressRepository,
             $this->deliveryAddressRepository,
             $this->basketRepository,
-            $this->orderRepository
+            $this->orderRepository,
+            $this->customerRepository
         );
     }
 
@@ -58,6 +66,8 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
         $request->invoiceStreet    = 'Musterstreet 12';
         $request->invoiceZip       = '30163';
         $request->invoiceCity      = 'Hannover';
+
+        $request->emailAddress     = 'cbergau86@gmail.com';
 
         $request->deliveryFirstName = 'Max';
         $request->deliveryLastName  = 'Muster';

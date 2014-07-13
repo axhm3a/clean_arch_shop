@@ -10,6 +10,8 @@ class SubmitOrderAsUnregisteredCustomerRequest
     public $invoiceZip;
     public $invoiceCity;
 
+    public $emailAddress;
+
     public $deliveryFirstName;
     public $deliveryLastName;
     public $deliveryStreet;

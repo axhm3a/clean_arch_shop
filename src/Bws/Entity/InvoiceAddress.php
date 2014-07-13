@@ -34,6 +34,11 @@ class InvoiceAddress
      */
     protected $id;
 
+    /**
+     * @var Customer
+     */
+    protected $customer;
+
 
     /**
      * Set firstName
@@ -158,6 +163,30 @@ class InvoiceAddress
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set customer
+     *
+     * @param Customer $customer
+     *
+     * @return InvoiceAddress
+     */
+    public function setCustomer(Customer $customer = null)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get customer
+     *
+     * @return Customer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
     }
 }
  

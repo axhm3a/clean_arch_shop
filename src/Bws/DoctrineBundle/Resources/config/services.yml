@@ -5,6 +5,10 @@ parameters:
     basket.repository.class: Bws\DoctrineBundle\Entity\BasketRepository
     basket.position.entity.class: Bws\DoctrineBundle\Entity\BasketPosition
     basket.position.repository.class: Bws\DoctrineBundle\Entity\BasketPositionRepository
+    customer.entity.class: Bws\DoctrineBundle\Entity\Customer
+    customer.repository.class: Bws\DoctrineBundle\Entity\CustomerRepository
+    email.entity.class: Bws\DoctrineBundle\Entity\EmailAddress
+    email.repository.class: Bws\DoctrineBundle\Entity\EmailAddressRepository
     invoiceaddress.entity.class: Bws\DoctrineBundle\Entity\InvoiceAddress
     invoiceaddress.repository.class: Bws\DoctrineBundle\Entity\InvoiceAddressRepository
     deliveryaddress.entity.class: Bws\DoctrineBundle\Entity\DeliveryAddress

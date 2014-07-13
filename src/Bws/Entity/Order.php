@@ -25,6 +25,16 @@ class Order
     protected $basket;
 
     /**
+     * @var \Bws\DoctrineBundle\Entity\Customer
+     */
+    protected $customer;
+
+    /**
+     * @var \Bws\DoctrineBundle\Entity\EmailAddress
+     */
+    protected $emailAddress;
+
+    /**
      * Get id
      *
      * @return integer
@@ -112,6 +122,54 @@ class Order
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * Set customer
+     *
+     * @param Customer $customer
+     *
+     * @return Order
+     */
+    public function setCustomer(Customer $customer = null)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get customer
+     *
+     * @return Customer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+
+    /**
+     * Set emailAddress
+     *
+     * @param EmailAddress $emailAddress
+     *
+     * @return Order
+     */
+    public function setEmailAddress(EmailAddress $emailAddress = null)
+    {
+        $this->emailAddress = $emailAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get emailAddress
+     *
+     * @return EmailAddress
+     */
+    public function getEmailAddress()
+    {
+        return $this->emailAddress;
     }
 }
  

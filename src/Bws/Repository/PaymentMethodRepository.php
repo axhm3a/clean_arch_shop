@@ -15,4 +15,11 @@ interface PaymentMethodRepository
      * @return PaymentMethod[]
      */
     public function findAll();
+
+    /**
+     * @param int $id
+     *
+     * @return PaymentMethod
+     */
+    public function find($id);
 }

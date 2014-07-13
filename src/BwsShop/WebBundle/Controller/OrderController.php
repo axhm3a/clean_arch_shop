@@ -19,6 +19,7 @@ class OrderController extends Controller
         $submitOrderRequest->invoiceStreet     = $request->get('invoiceStreetHouseNumber');
         $submitOrderRequest->invoiceZip        = $request->get('invoiceZip');
         $submitOrderRequest->invoiceCity       = $request->get('invoiceCity');
+        $submitOrderRequest->emailAddress      = $request->get('email');
         $submitOrderRequest->deliveryFirstName = $request->get('deliveryFirstName');
         $submitOrderRequest->deliveryLastName  = $request->get('deliveryLastName');
         $submitOrderRequest->deliveryStreet    = $request->get('deliveryStreetHouseNumber');

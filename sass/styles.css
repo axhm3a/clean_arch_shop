@@ -17,8 +17,7 @@ body {
   margin-top: 5px;
   padding: 5px;
   position: absolute;
-  width: 800px;
-}
+  width: 800px; }
 
 .article-found {
   border-bottom: 1px dotted #ccc;

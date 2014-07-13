@@ -31,6 +31,20 @@ services:
         arguments:
             - %basket.position.entity.class%
 
+    customer.repository:
+        class: %customer.repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - %customer.entity.class%
+
+    email.repository:
+        class: %email.repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            - %email.entity.class%
+
     invoiceaddress.repository:
         class: %invoiceaddress.repository.class%
         factory_service: doctrine.orm.entity_manager
@@ -92,6 +106,8 @@ services:
             - @deliveryaddress.repository
             - @basket.repository
             - @order.repository
+            - @customer.repository
+            - @email.repository
 
     interactor.present_article:
         class: %interactor.present_article.class%
