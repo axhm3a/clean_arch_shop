@@ -32,7 +32,7 @@ class OrderController extends Controller
         $response = $this->get('interactor.submit_order_unregistered')->execute($submitOrderRequest);
 
         $session->set('orderId', $response->getOrderId());
-        $session->set('basketId', null);
+        $session->set('basketId', 0);
 
         return $this->redirect($this->generateUrl('bws_shop_web_thanks'));
     }

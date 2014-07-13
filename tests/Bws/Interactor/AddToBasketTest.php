@@ -81,6 +81,18 @@ class AddToBasketTest extends \PHPUnit_Framework_TestCase
         $this->assertResponseCode($response, AddToBasketResponse::ARTICLE_NOT_FOUND);
     }
 
+    public function testCreatesNewBasketIfBasketDoesNotExist()
+    {
+        $noBasketInSessionId = 0;
+        $response = $this->interactor->execute(new AddToBasketRequest(ArticleStub::ID, 1, $noBasketInSessionId));
+        $this->assertResponseCode($response, AddToBasketResponse::SUCCESS);
+        $this->assertSame('9.99', $response->getTotal());
+        $this->assertSame(1, $response->getPosCount());
+        $this->assertSame(1, $this->basketPositionRepository->getAddToBasketCalls());
+        $this->assertSame('', $response->getMessage());
+        $this->assertTrue($response->getBasketId() > 0);
+    }
+
     public function testSuccessfulAdditionWithMergePositions()
     {
         $response = $this->interactor->execute(new AddToBasketRequest(ArticleStub::ID, 1, 12356));

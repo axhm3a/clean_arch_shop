@@ -33,6 +33,9 @@ class BasketRepositoryMock implements BasketRepository
      */
     public function save(Basket $basket)
     {
+        if ($basket->getId() == null) {
+            $basket->setId(time());
+        }
         $this->baskets[$basket->getId()] = $basket;
     }
 
