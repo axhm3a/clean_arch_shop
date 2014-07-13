@@ -25,14 +25,24 @@ class Order
     protected $basket;
 
     /**
-     * @var \Bws\DoctrineBundle\Entity\Customer
+     * @var Customer
      */
     protected $customer;
 
     /**
-     * @var \Bws\DoctrineBundle\Entity\EmailAddress
+     * @var EmailAddress
      */
     protected $emailAddress;
+
+    /**
+     * @var LogisticPartner
+     */
+    protected $logisticPartner;
+
+    /**
+     * @var PaymentMethod
+     */
+    protected $paymentMethod;
 
     /**
      * Get id
@@ -61,7 +71,7 @@ class Order
     /**
      * Get invoiceAddress
      *
-     * @return \Bws\DoctrineBundle\Entity\InvoiceAddress
+     * @return InvoiceAddress
      */
     public function getInvoiceAddress()
     {
@@ -85,7 +95,7 @@ class Order
     /**
      * Get deliveryAddress
      *
-     * @return \Bws\DoctrineBundle\Entity\DeliveryAddress
+     * @return DeliveryAddress
      */
     public function getDeliveryAddress()
     {
@@ -109,7 +119,7 @@ class Order
     /**
      * Get basket
      *
-     * @return \Bws\DoctrineBundle\Entity\Basket
+     * @return Basket
      */
     public function getBasket()
     {
@@ -170,6 +180,54 @@ class Order
     public function getEmailAddress()
     {
         return $this->emailAddress;
+    }
+
+    /**
+     * Set logisticPartner
+     *
+     * @param LogisticPartner $logisticPartner
+     *
+     * @return Order
+     */
+    public function setLogisticPartner(LogisticPartner $logisticPartner = null)
+    {
+        $this->logisticPartner = $logisticPartner;
+
+        return $this;
+    }
+
+    /**
+     * Get logisticPartner
+     *
+     * @return LogisticPartner
+     */
+    public function getLogisticPartner()
+    {
+        return $this->logisticPartner;
+    }
+
+    /**
+     * Set paymentMethod
+     *
+     * @param PaymentMethod $paymentMethod
+     *
+     * @return Order
+     */
+    public function setPaymentMethod(PaymentMethod $paymentMethod = null)
+    {
+        $this->paymentMethod = $paymentMethod;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentMethod
+     *
+     * @return PaymentMethod
+     */
+    public function getPaymentMethod()
+    {
+        return $this->paymentMethod;
     }
 }
  

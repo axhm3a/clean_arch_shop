@@ -108,6 +108,8 @@ services:
             - @order.repository
             - @customer.repository
             - @email.repository
+            - @paymentmethod.repository
+            - @logisticpartner.repository
 
     interactor.present_article:
         class: %interactor.present_article.class%

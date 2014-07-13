@@ -51,8 +51,14 @@ class SubmitOrderAsUnregisteredCustomer
      */
     private $emailAddressRepository;
 
+    /**
+     * @var PaymentMethodRepository
+     */
     private $paymentMethodRepository;
 
+    /**
+     * @var LogisticPartnerRepository
+     */
     private $logisticPartnerRepository;
 
     /**
@@ -95,28 +101,14 @@ class SubmitOrderAsUnregisteredCustomer
         $invoiceAddress  = $this->saveInvoiceAddress($request);
         $deliveryAddress = $this->saveDeliveryAddress($request);
         $basket          = $this->basketRepository->find($request->basketId);
-
-        $customer = $this->customerRepository->factory();
-        $customer->setLastUsedDeliveryAddress($deliveryAddress);
-        $customer->setLastUsedInvoiceAddress($invoiceAddress);
-        $this->customerRepository->save($customer);
-
-        $email = $this->emailAddressRepository->factory();
-        $email->setAddress($request->emailAddress);
-        $email->setCustomer($customer);
-        $this->emailAddressRepository->save($email);
-
-        $customer->setLastUsedEmailAddress($email);
-        $this->customerRepository->save($customer);
-
-        $invoiceAddress->setCustomer($customer);
-        $this->invoiceAddressRepository->save($invoiceAddress);
-
-        $deliveryAddress->setCustomer($customer);
-        $this->deliveryAddressRepository->save($deliveryAddress);
-
+        $customer        = $this->saveCustomer($deliveryAddress, $invoiceAddress);
+        $email           = $this->saveEmailAddress($request->emailAddress, $customer);
         $paymentMethod   = $this->paymentMethodRepository->find($request->paymentMethodId);
         $logisticPartner = $this->logisticPartnerRepository->find($request->logisticPartnerId);
+
+        $this->updateCustomersEmailAddressRelation($customer, $email);
+        $this->updateInvoiceAddressCustomerRelation($invoiceAddress, $customer);
+        $this->updateDeliveryAddressCustomerRelation($deliveryAddress, $customer);
 
         $order = $this->saveOrder(
             $invoiceAddress,
@@ -201,6 +193,66 @@ class SubmitOrderAsUnregisteredCustomer
         $this->orderRepository->save($order);
 
         return $order;
+    }
+
+    /**
+     * @param string   $emailAddress
+     * @param Customer $customer
+     *
+     * @return EmailAddress
+     */
+    protected function saveEmailAddress($emailAddress, Customer $customer)
+    {
+        $email = $this->emailAddressRepository->factory();
+        $email->setAddress($emailAddress);
+        $email->setCustomer($customer);
+        $this->emailAddressRepository->save($email);
+        return $email;
+    }
+
+    /**
+     * @param $customer
+     * @param $email
+     */
+    protected function updateCustomersEmailAddressRelation(Customer $customer, EmailAddress $email)
+    {
+        $customer->setLastUsedEmailAddress($email);
+        $this->customerRepository->save($customer);
+    }
+
+    /**
+     * @param $deliveryAddress
+     * @param $invoiceAddress
+     *
+     * @return Customer
+     */
+    protected function saveCustomer(DeliveryAddress $deliveryAddress, InvoiceAddress $invoiceAddress)
+    {
+        $customer = $this->customerRepository->factory();
+        $customer->setLastUsedDeliveryAddress($deliveryAddress);
+        $customer->setLastUsedInvoiceAddress($invoiceAddress);
+        $this->customerRepository->save($customer);
+        return $customer;
+    }
+
+    /**
+     * @param $invoiceAddress
+     * @param $customer
+     */
+    protected function updateInvoiceAddressCustomerRelation(InvoiceAddress $invoiceAddress, Customer $customer)
+    {
+        $invoiceAddress->setCustomer($customer);
+        $this->invoiceAddressRepository->save($invoiceAddress);
+    }
+
+    /**
+     * @param $deliveryAddress
+     * @param $customer
+     */
+    protected function updateDeliveryAddressCustomerRelation(DeliveryAddress $deliveryAddress, Customer $customer)
+    {
+        $deliveryAddress->setCustomer($customer);
+        $this->deliveryAddressRepository->save($deliveryAddress);
     }
 }
  

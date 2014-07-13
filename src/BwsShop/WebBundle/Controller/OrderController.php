@@ -26,6 +26,8 @@ class OrderController extends Controller
         $submitOrderRequest->deliveryZip       = $request->get('deliveryZip');
         $submitOrderRequest->deliveryCity      = $request->get('deliveryCity');
         $submitOrderRequest->basketId          = $session->get('basketId', null);
+        $submitOrderRequest->paymentMethodId   = $request->get('paymentMethodId');
+        $submitOrderRequest->logisticPartnerId = $request->get('logisticPartnerId');
 
         $response = $this->get('interactor.submit_order_unregistered')->execute($submitOrderRequest);
 
