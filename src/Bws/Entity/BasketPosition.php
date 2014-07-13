@@ -18,12 +18,12 @@ class BasketPosition
     protected $id;
 
     /**
-     * @var \Bws\DoctrineBundle\Entity\Basket
+     * @var Basket
      */
     protected $basket;
 
     /**
-     * @var \Bws\DoctrineBundle\Entity\Article
+     * @var Article
      */
     protected $article;
 
@@ -91,7 +91,7 @@ class BasketPosition
     /**
      * Get basket
      *
-     * @return \Bws\DoctrineBundle\Entity\Basket
+     * @return Basket
      */
     public function getBasket()
     {
@@ -115,7 +115,7 @@ class BasketPosition
     /**
      * Get article
      *
-     * @return \Bws\DoctrineBundle\Entity\Article
+     * @return Article
      */
     public function getArticle()
     {
