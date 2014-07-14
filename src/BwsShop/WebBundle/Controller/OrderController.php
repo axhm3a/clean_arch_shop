@@ -12,7 +12,7 @@ class OrderController extends Controller
 {
     public function submitAction(Request $request)
     {
-        $session                               = $this->get('session');
+        $session                               = $request->getSession();
         $submitOrderRequest                    = new SubmitOrderAsUnregisteredCustomerRequest();
         $submitOrderRequest->invoiceFirstName  = $request->get('invoiceFirstName');
         $submitOrderRequest->invoiceLastName   = $request->get('invoiceLastName');
@@ -38,11 +38,11 @@ class OrderController extends Controller
         return $this->redirect($this->generateUrl('bws_shop_web_thanks'));
     }
 
-    public function thanksAction()
+    public function thanksAction(Request $request)
     {
         return $this->render(
             'BwsShopWebBundle:Order:thanks.html.twig',
-            array('orderId' => $this->get('session')->get('orderId'))
+            array('orderId' => $request->getSession()->get('orderId'))
         );
     }
 }

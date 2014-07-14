@@ -8,12 +8,12 @@ class UnregisteredCustomerController extends Controller
 {
     public function indexAction()
     {
-        return $this->unregistered(false);
+        return $this->renderUnregistered(false);
     }
 
     public function registeringAction()
     {
-        return $this->unregistered(true);
+        return $this->renderUnregistered(true);
     }
 
     /**
@@ -21,7 +21,7 @@ class UnregisteredCustomerController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function unregistered($registering)
+    protected function renderUnregistered($registering)
     {
         $paymentMethods   = $this->get('interactor.present_paymentmethods')->execute()->getPaymentMethods();
         $logisticPartners = $this->get('interactor.present_logisticpartners')->execute()->getLogisticPartners();

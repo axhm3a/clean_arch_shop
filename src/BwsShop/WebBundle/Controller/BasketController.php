@@ -16,7 +16,7 @@ class BasketController extends FOSRestController
 {
     public function addAction(Request $request)
     {
-        $session = new Session();
+        $session = $request->getSession();
 
         /** @var AddToBasket $interactor */
         $interactor = $this->get('interactor.add_to_basket');
@@ -37,11 +37,14 @@ class BasketController extends FOSRestController
 
     /**
      * @View()
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $session = new Session();
+        $session = $request->getSession();
 
         /** @var ViewBasket $interactor */
         $interactor = $this->get('interactor.view_basket');
@@ -67,7 +70,7 @@ class BasketController extends FOSRestController
      */
     public function changeAction(Request $request)
     {
-        $session = new Session();
+        $session = $request->getSession();
 
         /** @var ChangeBasket $interactor */
         $interactor = $this->get('interactor.change_basket');
