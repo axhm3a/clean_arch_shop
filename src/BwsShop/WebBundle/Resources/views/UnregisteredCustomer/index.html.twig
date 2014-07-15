@@ -119,6 +119,10 @@
             </div>
         </div>
 
+        <div class="row registered_basket_details">
+            {{ include('BwsShopWebBundle:Basket:basket_details.html.twig') }}
+        </div>
+
         <div class="row">
             <input type="hidden" name="registering" value="{{ registering }}">
             <button type="submit" class="btn btn-primary pull-right">Submit Order</button>
