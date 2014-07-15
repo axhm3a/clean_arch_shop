@@ -26,6 +26,10 @@ bws_shop_web_authentication:
     pattern: /checkout/authentication
     defaults: { _controller: BwsShopWebBundle:Authentication:index }
 
+bws_shop_web_logout:
+    pattern: /logout
+    defaults: { _controller: BwsShopWebBundle:Authentication:logout }
+
 bws_shop_web_registering:
     pattern: /checkout/registering
     defaults: { _controller: BwsShopWebBundle:UnregisteredCustomer:registering }
@@ -33,6 +37,10 @@ bws_shop_web_registering:
 bws_shop_web_unregistered:
     pattern: /checkout/unregistered
     defaults: { _controller: BwsShopWebBundle:UnregisteredCustomer:index }
+
+bws_shop_web_registered:
+    pattern: /checkout/registered
+    defaults: { _controller: BwsShopWebBundle:RegisteredCustomer:registered }
 
 bws_shop_web_submit_order:
     pattern: /checkout/order/submit

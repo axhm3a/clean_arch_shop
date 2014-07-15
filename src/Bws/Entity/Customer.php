@@ -35,6 +35,16 @@ class Customer
     protected $customerString;
 
     /**
+     * @var string
+     */
+    protected $password;
+
+    /**
+     * @var \DateTime
+     */
+    protected $birthday;
+
+    /**
      * @return bool
      */
     public function isRegistered()
@@ -143,6 +153,38 @@ class Customer
     public function getCustomerString()
     {
         return $this->customerString;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param \DateTime $birthday
+     */
+    public function setBirthday($birthday)
+    {
+        $this->birthday = $birthday;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getBirthday()
+    {
+        return $this->birthday;
     }
 }
  

@@ -8,6 +8,7 @@ parameters:
     interactor.present_paymentmethods.class: Bws\Interactor\PresentPaymentMethods
     interactor.present_logisticpartners.class: Bws\Interactor\PresentLogisticPartners
     interactor.search_articles.class: Bws\Interactor\SearchArticles
+    interactor.login.class: Bws\Interactor\Login
 
 services:
     article.repository:
@@ -98,6 +99,11 @@ services:
         arguments:
             - @basket.position.repository
             - @basket.repository
+
+    interactor.login:
+        class: %interactor.login.class%
+        arguments:
+            - @email.repository
 
     interactor.submit_order_unregistered:
         class: %interactor.submit_order_unregistered.class%
