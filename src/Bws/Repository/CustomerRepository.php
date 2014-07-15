@@ -18,6 +18,13 @@ interface CustomerRepository
     public function factory();
 
     /**
+     * @param $customerId
+     *
+     * @return Customer|null
+     */
+    public function find($customerId);
+
+    /**
      * @param InvoiceAddress $invoiceAddress
      *
      * @return Customer|null

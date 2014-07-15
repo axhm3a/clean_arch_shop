@@ -2,6 +2,25 @@
 
 {% block body %}
 
-    
+    <div class="row">
+        <div class="col-md-5">
+            <h2>Invoice Address</h2>
+
+            <p>{{ invoice.firstName }} {{ invoice.lastName }}</p>
+
+            <p>{{ invoice.street }}</p>
+
+            <p>{{ invoice.zip }} {{ invoice.city }}</p>
+        </div>
+        <div class="col-md-5">
+            <h2>Delivery Address</h2>
+
+            <p>{{ delivery.firstName }} {{ delivery.lastName }}</p>
+
+            <p>{{ delivery.street }}</p>
+
+            <p>{{ delivery.zip }} {{ delivery.city }}</p>
+        </div>
+    </div>
 
 {% endblock %}

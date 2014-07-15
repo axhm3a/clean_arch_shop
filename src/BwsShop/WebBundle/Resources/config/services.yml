@@ -9,6 +9,7 @@ parameters:
     interactor.present_logisticpartners.class: Bws\Interactor\PresentLogisticPartners
     interactor.search_articles.class: Bws\Interactor\SearchArticles
     interactor.login.class: Bws\Interactor\Login
+    interactor.present_last_used_address.class: Bws\Interactor\PresentLastUsedAddress
 
 services:
     article.repository:
@@ -126,6 +127,11 @@ services:
         class: %interactor.present_articles.class%
         arguments:
             - @article.repository
+
+    interactor.present_last_used_address:
+        class: %interactor.present_last_used_address.class%
+        arguments:
+            - @customer.repository
 
     interactor.present_logisticpartners:
         class: %interactor.present_logisticpartners.class%

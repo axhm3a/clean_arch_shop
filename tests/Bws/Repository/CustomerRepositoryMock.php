@@ -17,6 +17,11 @@ class CustomerRepositoryMock implements CustomerRepository
         $this->save(new CustomerStub());
     }
 
+    public function truncate()
+    {
+        $this->customers = array();
+    }
+
     /**
      * @return Customer
      */
@@ -63,6 +68,23 @@ class CustomerRepositoryMock implements CustomerRepository
     public function getMatchedInvoice()
     {
         return $this->matchedInvoice;
+    }
+
+    /**
+     * @param $customerId
+     *
+     * @return Customer|null
+     */
+    public function find($customerId)
+    {
+        /** @var Customer $customer */
+        foreach ($this->customers as $customer) {
+            if ($customer->getId() == $customerId) {
+                return $customer;
+            }
+        }
+
+        return null;
     }
 }
  
