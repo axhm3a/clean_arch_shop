@@ -4,23 +4,76 @@
 
     <div class="row">
         <div class="col-md-5">
-            <h2>Invoice Address</h2>
-
-            <p>{{ invoice.firstName }} {{ invoice.lastName }}</p>
-
-            <p>{{ invoice.street }}</p>
-
-            <p>{{ invoice.zip }} {{ invoice.city }}</p>
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Invoice Address</strong></div>
+                <div class="panel-body">
+                    <div>{{ invoice.firstName }} {{ invoice.lastName }}</div>
+                    <div>{{ invoice.street }}</div>
+                    <div>{{ invoice.zip }} {{ invoice.city }}</div>
+                </div>
+            </div>
         </div>
         <div class="col-md-5">
-            <h2>Delivery Address</h2>
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Delivery Address</strong></div>
+                <div class="panel-body">
+                    <div>{{ delivery.firstName }} {{ delivery.lastName }}</div>
 
-            <p>{{ delivery.firstName }} {{ delivery.lastName }}</p>
+                    <div>{{ delivery.street }}</div>
 
-            <p>{{ delivery.street }}</p>
-
-            <p>{{ delivery.zip }} {{ delivery.city }}</p>
+                    <div>{{ delivery.zip }} {{ delivery.city }}</div>
+                </div>
+            </div>
         </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Logistic Partner</strong></div>
+                <div class="panel-body">
+
+                    {% for logisticPartner in logisticPartners %}
+                        <div class="radio">
+                            <label>
+                                <input type="radio"
+                                       name="logisticPartnerId"
+                                       value="{{ logisticPartner.id }}">
+                                {{ logisticPartner.name }}
+                            </label>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Payment Method</strong></div>
+                <div class="panel-body">
+
+                    {% for paymentMethod in paymentMethods %}
+                        <div class="radio">
+                            <label>
+                                <input type="radio"
+                                       name="paymentMethodId"
+                                       value="{{ paymentMethod.id }}">
+                                {{ paymentMethod.name }}
+                            </label>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row registered_basket_details">
+        {{ include('BwsShopWebBundle:Basket:basket_details.html.twig') }}
+    </div>
+
+    <div class="row">
+        <button type="submit" class="btn btn-primary pull-right">Submit Order</button>
     </div>
 
 {% endblock %}

@@ -26,7 +26,13 @@ class Login
     public function execute($email, $password)
     {
         $response = new LoginResponse();
-        $email    = $this->emailRepository->findByAddress($email);
+
+        if (!$email = $this->emailRepository->findByAddress($email)) {
+            $response->code       = LoginResponse::WRONG_EMAIL_ADDRESS;
+            $response->messages[] = 'Please check your e-mail address again';
+            return $response;
+        }
+
         $customer = $email->getCustomer();
 
         if ($customer->getPassword() == null) {

@@ -25,6 +25,12 @@ class LoginTest extends \PHPUnit_Framework_TestCase
         $this->interactor      = new Login($this->emailRepository);
     }
 
+    public function testLoginWithNonExistingEmailAddressShouldReturnAnError()
+    {
+        $response = $this->interactor->execute('doesnot@exist.com', '1999-01-02');
+        $this->assertEquals($response::WRONG_EMAIL_ADDRESS, $response->code);
+    }
+
     public function testLoginWithWrongBirthdayIfPasswordIsNotSet()
     {
         $response = $this->interactor->execute(EmailAddressStub::ADDRESS, '1999-01-02');
