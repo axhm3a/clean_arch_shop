@@ -16,7 +16,7 @@ app.controller('ShopCtrl', function ($scope, $http) {
         });
     };
 
-    $scope.searchArticles = function() {
+    $scope.searchArticles = function () {
         if ($scope.by == '') {
             $scope.articles = null;
             return;
@@ -28,4 +28,16 @@ app.controller('ShopCtrl', function ($scope, $http) {
     };
 
     $scope.updateBasket();
+
+    $scope.getDeliveryAddresses = function () {
+        $http.get('shop/deliveryaddress/list.json').success(function (data) {
+            $scope.deliveryaddresses = data;
+        });
+    };
+
+    $scope.selectDeliveryAddress = function (address) {
+        $http.post('shop/deliveryaddress/select.json', address).success(function (data) {
+
+        });
+    };
 });

@@ -5,7 +5,9 @@
     <div class="row">
         <div class="col-md-5">
             <div class="panel panel-default">
-                <div class="panel-heading"><strong>Invoice Address</strong></div>
+                <div class="panel-heading">
+                    <strong>Invoice Address</strong>
+                </div>
                 <div class="panel-body">
                     <div>{{ invoice.firstName }} {{ invoice.lastName }}</div>
                     <div>{{ invoice.street }}</div>
@@ -15,7 +17,18 @@
         </div>
         <div class="col-md-5">
             <div class="panel panel-default">
-                <div class="panel-heading"><strong>Delivery Address</strong></div>
+                <div class="panel-heading">
+                    <strong>Delivery Address</strong>
+                    <a class="btn btn-default btn-xs" title="Add a new address" data-toggle="modal"
+                       data-target="#myModal">
+                        <span class="glyphicon glyphicon-plus"></span> Add
+                    </a>
+                    <a class="btn btn-default btn-xs" title="Select a delivery address" data-toggle="modal"
+                       data-target="#selectDeliveryAddress"
+                       ng-click="getDeliveryAddresses()">
+                        <span class="glyphicon glyphicon-cog"></span> Select
+                    </a>
+                </div>
                 <div class="panel-body">
                     <div>{{ delivery.firstName }} {{ delivery.lastName }}</div>
 
@@ -76,4 +89,60 @@
         <button type="submit" class="btn btn-primary pull-right">Submit Order</button>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="addDeliveryAddress"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="addDeliveryAddress">Add Delivery Address</h4>
+                </div>
+                <div class="modal-body">
+                    Form stuff here
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Delivery address book -->
+    <div class="modal fade" id="selectDeliveryAddress" tabindex="-1" role="dialog"
+         aria-labelledby="selectDeliveryAddress"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="addDeliveryAddress">Select Delivery Address</h4>
+                </div>
+                <div class="modal-body">
+                    {% verbatim %}
+                    <div ng-repeat="address in deliveryaddresses" class="deliveryaddress">
+                        <div class="row">
+                            <div class="col-md-7">
+                                {{ address.first_name }} {{ address.last_name }}<br/>
+                                {{ address.street }}<br/>
+                                {{ address.zip }} {{ address.city }}<br/>
+                            </div>
+                            <div class="col-md-5">
+                                <a class="btn btn-default" ng-click="selectDeliveryAddress(address)">Select</a>
+                                <a class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endverbatim %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

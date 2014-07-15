@@ -16,7 +16,6 @@ class RegisteredCustomerController extends Controller
         return $this->render(
             'BwsShopWebBundle:RegisteredCustomer:registered.html.twig',
             array(
-                'display'          => $request->getSession()->get('display'),
                 'invoice'          => $interactor->getInvoice($request->getSession()->get('customerId'))->address,
                 'delivery'         => $interactor->getDelivery($request->getSession()->get('customerId'))->address,
                 'paymentMethods'   => $paymentMethods,

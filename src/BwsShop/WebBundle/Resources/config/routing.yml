@@ -34,6 +34,14 @@ bws_shop_web_registering:
     pattern: /checkout/registering
     defaults: { _controller: BwsShopWebBundle:UnregisteredCustomer:registering }
 
+bws_shop_web_deliveryaddress_list:
+    pattern: /deliveryaddress/list.{_format}
+    defaults: { _controller: BwsShopWebBundle:DeliveryAddress:list, _format: json }
+
+bws_shop_web_deliveryaddress_select:
+    pattern: /deliveryaddress/select.{_format}
+    defaults: { _controller: BwsShopWebBundle:DeliveryAddress:select, _format: json }
+
 bws_shop_web_unregistered:
     pattern: /checkout/unregistered
     defaults: { _controller: BwsShopWebBundle:UnregisteredCustomer:index }
