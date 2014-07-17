@@ -37,7 +37,7 @@ app.controller('ShopCtrl', function ($scope, $http, $modal, $log) {
 
     $scope.openDeliveryAddressBook = function (size) {
         $scope.getDeliveryAddresses(function () {
-            var modalInstance = $modal.open({
+            $modal.open({
                 templateUrl: 'deliveryAddressBook.html',
                 controller: DeliveryAddressBook,
                 size: size,
