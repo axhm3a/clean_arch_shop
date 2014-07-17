@@ -2,6 +2,7 @@
 
 namespace Bws\Interactor;
 
+use Bws\Entity\Customer;
 use Bws\Repository\EmailAddressRepository;
 
 class Login
@@ -37,29 +38,59 @@ class Login
 
         $customer = $email->getCustomer();
 
-        if ($customer->getPassword() == null) {
-            if ($password != $customer->getBirthday()->format('Y-m-d')) {
-                $response->code       = LoginResponse::WRONG_PASSWORD_BIRTHDAY;
-                $response->messages[] = 'Your initial password is the birthday in format yyyy-mm-dd';
-            } else {
-                $invoice              = $customer->getLastUsedInvoiceAddress();
-                $response->code       = LoginResponse::SUCCESS;
-                $response->customerId = $customer->getId();
-                $response->display    = $invoice->getFirstName() . ' ' . $invoice->getLastName();
-            }
+        if ($this->customerPasswordShouldBeHisBirthday($customer)) {
+            $this->validateBirthdayPassword($password, $customer, $response);
         } else {
-            if ($customer->getPassword() != md5($password)) {
-                $response->code       = LoginResponse::WRONG_PASSWORD_BIRTHDAY;
-                $response->messages[] = 'Your password is wrong';
-            } else {
-                $invoice              = $customer->getLastUsedInvoiceAddress();
-                $response->code       = LoginResponse::SUCCESS;
-                $response->customerId = $customer->getId();
-                $response->display    = $invoice->getFirstName() . ' ' . $invoice->getLastName();
-            }
+            $this->validateRealPassword($password, $customer, $response);
         }
 
         return $response;
+    }
+
+    /**
+     * @param Customer $customer
+     *
+     * @return bool
+     */
+    protected function customerPasswordShouldBeHisBirthday(Customer $customer)
+    {
+        return $customer->getPassword() == null;
+    }
+
+    /**
+     * @param string        $password
+     * @param Customer      $customer
+     * @param LoginResponse $response
+     */
+    protected function validateBirthdayPassword($password, Customer $customer, LoginResponse $response)
+    {
+        if ($password != $customer->getBirthday()->format('Y-m-d')) {
+            $response->code       = LoginResponse::WRONG_PASSWORD_BIRTHDAY;
+            $response->messages[] = 'Your initial password is the birthday in format yyyy-mm-dd';
+        } else {
+            $invoice              = $customer->getLastUsedInvoiceAddress();
+            $response->code       = LoginResponse::SUCCESS;
+            $response->customerId = $customer->getId();
+            $response->display    = $invoice->getFirstName() . ' ' . $invoice->getLastName();
+        }
+    }
+
+    /**
+     * @param string        $password
+     * @param Customer      $customer
+     * @param LoginResponse $response
+     */
+    protected function validateRealPassword($password, Customer $customer, LoginResponse $response)
+    {
+        if ($customer->getPassword() != md5($password)) {
+            $response->code       = LoginResponse::WRONG_PASSWORD_BIRTHDAY;
+            $response->messages[] = 'Your password is wrong';
+        } else {
+            $invoice              = $customer->getLastUsedInvoiceAddress();
+            $response->code       = LoginResponse::SUCCESS;
+            $response->customerId = $customer->getId();
+            $response->display    = $invoice->getFirstName() . ' ' . $invoice->getLastName();
+        }
     }
 }
  
