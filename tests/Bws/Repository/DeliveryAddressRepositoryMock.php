@@ -66,5 +66,10 @@ class DeliveryAddressRepositoryMock implements DeliveryAddressRepository
 
         return null;
     }
+
+    public function truncate()
+    {
+        $this->addresses = array();
+    }
 }
  

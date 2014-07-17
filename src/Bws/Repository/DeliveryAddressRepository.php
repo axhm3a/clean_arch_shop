@@ -22,6 +22,13 @@ interface DeliveryAddressRepository
     public function factory();
 
     /**
+     * @param int $id
+     *
+     * @return DeliveryAddress|null
+     */
+    public function find($id);
+
+    /**
      * @param string $invoiceFirstName
      * @param string $invoiceLastName
      * @param string $invoiceStreet

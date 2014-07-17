@@ -68,6 +68,14 @@ class Customer
     }
 
     /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
      * Set lastUsedInvoiceAddress
      *
      * @param InvoiceAddress $lastUsedInvoiceAddress
@@ -185,6 +193,11 @@ class Customer
     public function getBirthday()
     {
         return $this->birthday;
+    }
+
+    public function isSame(Customer $customerTwo)
+    {
+        return $this->getId() == $customerTwo->getId();
     }
 }
  

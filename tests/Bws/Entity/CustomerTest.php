@@ -24,4 +24,26 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
         $this->customer->register();
         $this->assertTrue($this->customer->isRegistered());
     }
+
+    public function testTwoUsersAreNotTheSame()
+    {
+        $customerOne = new Customer();
+        $customerOne->setId(123);
+
+        $customerTwo = new Customer();
+        $customerTwo->setId(345);
+
+        $this->assertFalse($customerOne->isSame($customerTwo));
+    }
+
+    public function testOneUserIsTheSame()
+    {
+        $customerOne = new Customer();
+        $customerOne->setId(123);
+
+        $customerTwo = new Customer();
+        $customerTwo->setId(123);
+
+        $this->assertTrue($customerOne->isSame($customerTwo));
+    }
 }

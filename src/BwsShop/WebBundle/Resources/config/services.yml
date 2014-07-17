@@ -10,6 +10,7 @@ parameters:
     interactor.search_articles.class: Bws\Interactor\SearchArticles
     interactor.login.class: Bws\Interactor\Login
     interactor.present_last_used_address.class: Bws\Interactor\PresentLastUsedAddress
+    interactor.delivery_address_selectable.class: Bws\Interactor\DeliveryAddressSelectable
 
 services:
     article.repository:
@@ -100,6 +101,12 @@ services:
         arguments:
             - @basket.position.repository
             - @basket.repository
+
+    interactor.delivery_address_selectable:
+        class: %interactor.delivery_address_selectable.class%
+        arguments:
+            - @customer.repository
+            - @deliveryaddress.repository
 
     interactor.login:
         class: %interactor.login.class%
