@@ -1,6 +1,6 @@
-var app = angular.module('shopApp', []);
+var app = angular.module('shopApp', ['ui.bootstrap']);
 
-app.controller('ShopCtrl', function ($scope, $http) {
+app.controller('ShopCtrl', function ($scope, $http, $modal, $log) {
 
     $scope.by = '';
 
@@ -29,15 +29,56 @@ app.controller('ShopCtrl', function ($scope, $http) {
 
     $scope.updateBasket();
 
-    $scope.getDeliveryAddresses = function () {
+    $scope.getDeliveryAddresses = function (successCallback) {
         $http.get('shop/deliveryaddress/list.json').success(function (data) {
             $scope.deliveryaddresses = data;
-        });
+        }).success(successCallback);
     };
 
-    $scope.selectDeliveryAddress = function (address) {
-        $http.post('shop/deliveryaddress/select.json', address).success(function (data) {
+    $scope.openDeliveryAddressBook = function (size) {
+        $scope.getDeliveryAddresses(function () {
+            var modalInstance = $modal.open({
+                templateUrl: 'deliveryAddressBook.html',
+                controller: DeliveryAddressBook,
+                size: size,
+                resolve: {
+                    deliveryaddresses: function () {
+                        return $scope.deliveryaddresses;
+                    }
+                }
+            });
 
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
         });
     };
 });
+
+var DeliveryAddressBook = function ($scope, $modalInstance, $http, $log, deliveryaddresses) {
+    $scope.deliveryaddresses = deliveryaddresses;
+
+    $scope.selectDeliveryAddress = function (address) {
+        $http.post('shop/deliveryaddress/select.json', address).success(function (data) {
+            $modalInstance.close();
+        });
+    };
+
+    $scope.editDeliveryAddress = function (address) {
+        $log.error('editDeliveryAddress not implemented yet');
+    };
+
+    $scope.deleteDeliveryAddress = function (address) {
+        $log.error('deleteDeliveryAddress not implemented yet');
+    };
+
+    $scope.ok = function () {
+        $modalInstance.close();
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+};
