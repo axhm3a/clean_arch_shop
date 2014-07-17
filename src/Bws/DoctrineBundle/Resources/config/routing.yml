@@ -1,3 +1,0 @@
-bws_doctrine_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: BwsDoctrineBundle:Default:index }
