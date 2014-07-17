@@ -47,12 +47,6 @@ app.controller('ShopCtrl', function ($scope, $http, $modal, $log) {
                     }
                 }
             });
-
-            modalInstance.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
-            });
         });
     };
 });
