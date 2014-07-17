@@ -2,9 +2,6 @@
 
 namespace Bws\Entity;
 
-/**
- * Article
- */
 class Article
 {
     /**

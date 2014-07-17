@@ -2,9 +2,6 @@
 
 namespace Bws\Entity;
 
-/**
- * Basket
- */
 class Basket
 {
     /**
