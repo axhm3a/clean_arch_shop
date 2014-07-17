@@ -65,6 +65,7 @@ class PresentLastUsedAddress
         }
 
         $presentable = array(
+            'id'        => $address->getId(),
             'firstName' => $address->getFirstName(),
             'lastName'  => $address->getLastName(),
             'street'    => $address->getStreet(),

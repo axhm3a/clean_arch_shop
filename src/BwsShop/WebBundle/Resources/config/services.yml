@@ -10,6 +10,7 @@ parameters:
     interactor.search_articles.class: Bws\Interactor\SearchArticles
     interactor.login.class: Bws\Interactor\Login
     interactor.present_last_used_address.class: Bws\Interactor\PresentLastUsedAddress
+    interactor.present_current_address.class: Bws\Interactor\PresentCurrentAddress
     interactor.delivery_address_selectable.class: Bws\Interactor\DeliveryAddressSelectable
 
 services:
@@ -134,6 +135,13 @@ services:
         class: %interactor.present_articles.class%
         arguments:
             - @article.repository
+
+    interactor.present_current_address:
+        class: %interactor.present_current_address.class%
+        arguments:
+            - @deliveryaddress.repository
+            - @invoiceaddress.repository
+            - @interactor.present_last_used_address
 
     interactor.present_last_used_address:
         class: %interactor.present_last_used_address.class%

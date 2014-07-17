@@ -9,19 +9,24 @@ class RegisteredCustomerController extends Controller
 {
     public function registeredAction(Request $request)
     {
-        $interactor       = $this->get('interactor.present_last_used_address');
-        $paymentMethods   = $this->get('interactor.present_paymentmethods')->execute()->getPaymentMethods();
-        $logisticPartners = $this->get('interactor.present_logisticpartners')->execute()->getLogisticPartners();
+        $presentCurrentAddress = $this->get('interactor.present_current_address');
+        $presentLastUsed       = $this->get('interactor.present_last_used_address');
+        $paymentMethods        = $this->get('interactor.present_paymentmethods')->execute()->getPaymentMethods();
+        $logisticPartners      = $this->get('interactor.present_logisticpartners')->execute()->getLogisticPartners();
 
+        // TODO: There is no error handling for finding the addresses here
+        $selectedDeliveryAddressId = $request->getSession()->get('selectedDeliveryAddressId', null);
         return $this->render(
             'BwsShopWebBundle:RegisteredCustomer:registered.html.twig',
             array(
-                'invoice'          => $interactor->getInvoice($request->getSession()->get('customerId'))->address,
-                'delivery'         => $interactor->getDelivery($request->getSession()->get('customerId'))->address,
+                'invoice'          => $presentLastUsed->getInvoice($request->getSession()->get('customerId'))->address,
+                'delivery'         => $presentCurrentAddress->getCurrentDeliveryAddress(
+                        $request->getSession()->get('customerId'),
+                        $selectedDeliveryAddressId
+                    )->address,
                 'paymentMethods'   => $paymentMethods,
                 'logisticPartners' => $logisticPartners
             )
         );
     }
 }
- 

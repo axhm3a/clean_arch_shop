@@ -63,6 +63,7 @@ class PresentLastUsedAddressTest extends \PHPUnit_Framework_TestCase
         $result = $this->interactor->getInvoice($customerWithInvoice->getId());
 
         $this->assertEquals($result::SUCCESS, $result->code);
+        $this->assertEquals(InvoiceAddressStub::ID, $result->address['id']);
         $this->assertEquals(InvoiceAddressStub::FIRST_NAME, $result->address['firstName']);
         $this->assertEquals(InvoiceAddressStub::LAST_NAME, $result->address['lastName']);
         $this->assertEquals(InvoiceAddressStub::STREET, $result->address['street']);

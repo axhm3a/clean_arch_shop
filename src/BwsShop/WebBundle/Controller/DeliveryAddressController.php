@@ -55,6 +55,7 @@ class DeliveryAddressController extends FOSRestController
                 break;
             case $result::ADDRESS_IS_SELECTABLE:
                 $view = $this->view('ok', 200)->setTemplateVar('result');
+                $request->getSession()->set('selectedDeliveryAddressId', $addressId);
                 break;
         }
 
