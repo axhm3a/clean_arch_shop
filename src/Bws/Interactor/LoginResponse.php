@@ -10,9 +10,23 @@ class LoginResponse
     const WRONG_PASSWORD          = -2;
     const WRONG_EMAIL_ADDRESS     = -3;
 
+    /**
+     * @var int
+     */
     public $code;
+
+    /**
+     * @var array
+     */
     public $messages = array();
 
+    /**
+     * @var int
+     */
     public $customerId;
+
+    /**
+     * @var string
+     */
     public $display;
 }

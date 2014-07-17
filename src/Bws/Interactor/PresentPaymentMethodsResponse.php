@@ -4,6 +4,9 @@ namespace Bws\Interactor;
 
 class PresentPaymentMethodsResponse
 {
+    /**
+     * @var array
+     */
     private $paymentMethods = array();
 
     public function __construct(array $paymentMethods)

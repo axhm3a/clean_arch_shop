@@ -4,15 +4,21 @@ namespace Bws\Interactor;
 
 class PresentArticlesResponse
 {
+    /**
+     * @var array
+     */
     private $articles;
 
+    /**
+     * @param array $articles
+     */
     public function __construct($articles)
     {
         $this->articles = $articles;
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getArticles()
     {

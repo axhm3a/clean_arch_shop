@@ -9,6 +9,9 @@ class SearchArticlesRequest
      */
     private $by;
 
+    /**
+     * @param string $by
+     */
     public function __construct($by)
     {
         $this->by = $by;

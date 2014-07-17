@@ -16,6 +16,9 @@ class PresentLogisticPartners
         $this->logisticPartnerRepository = $logisticPartnerRepository;
     }
 
+    /**
+     * @return PresentLogisticPartnersResponse
+     */
     public function execute()
     {
         $logisticPartners = $this->logisticPartnerRepository->findAll();

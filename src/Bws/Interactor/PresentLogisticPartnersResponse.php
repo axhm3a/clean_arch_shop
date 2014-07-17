@@ -4,6 +4,9 @@ namespace Bws\Interactor;
 
 class PresentLogisticPartnersResponse
 {
+    /**
+     * @var array
+     */
     private $logisticPartners = array();
 
     public function __construct(array $logisticPartners)

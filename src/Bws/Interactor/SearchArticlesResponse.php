@@ -14,6 +14,9 @@ class SearchArticlesResponse
         $this->articles = $articles;
     }
 
+    /**
+     * @return array
+     */
     public function getArticles()
     {
         return $this->articles;

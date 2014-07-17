@@ -17,6 +17,9 @@ class PresentArticles
         $this->articleRepository = $articleRepository;
     }
 
+    /**
+     * @return PresentArticlesResponse
+     */
     public function execute()
     {
         $articles = array();

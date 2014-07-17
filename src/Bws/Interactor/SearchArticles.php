@@ -16,6 +16,11 @@ class SearchArticles
         $this->articleRepository = $articleRepository;
     }
 
+    /**
+     * @param SearchArticlesRequest $request
+     *
+     * @return SearchArticlesResponse
+     */
     public function execute(SearchArticlesRequest $request)
     {
         $articles = array();
