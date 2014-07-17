@@ -14,21 +14,21 @@ class OrderController extends Controller
     {
         $session                               = $request->getSession();
         $submitOrderRequest                    = new SubmitOrderAsUnregisteredCustomerRequest();
-        $submitOrderRequest->invoiceFirstName  = $request->get('invoiceFirstName');
-        $submitOrderRequest->invoiceLastName   = $request->get('invoiceLastName');
-        $submitOrderRequest->invoiceStreet     = $request->get('invoiceStreetHouseNumber');
-        $submitOrderRequest->invoiceZip        = $request->get('invoiceZip');
-        $submitOrderRequest->invoiceCity       = $request->get('invoiceCity');
-        $submitOrderRequest->emailAddress      = $request->get('email');
-        $submitOrderRequest->deliveryFirstName = $request->get('deliveryFirstName');
-        $submitOrderRequest->deliveryLastName  = $request->get('deliveryLastName');
-        $submitOrderRequest->deliveryStreet    = $request->get('deliveryStreetHouseNumber');
-        $submitOrderRequest->deliveryZip       = $request->get('deliveryZip');
-        $submitOrderRequest->deliveryCity      = $request->get('deliveryCity');
+        $submitOrderRequest->invoiceFirstName  = (string) $request->get('invoiceFirstName');
+        $submitOrderRequest->invoiceLastName   = (string) $request->get('invoiceLastName');
+        $submitOrderRequest->invoiceStreet     = (string) $request->get('invoiceStreetHouseNumber');
+        $submitOrderRequest->invoiceZip        = (string) $request->get('invoiceZip');
+        $submitOrderRequest->invoiceCity       = (string) $request->get('invoiceCity');
+        $submitOrderRequest->emailAddress      = (string) $request->get('email');
+        $submitOrderRequest->deliveryFirstName = (string) $request->get('deliveryFirstName');
+        $submitOrderRequest->deliveryLastName  = (string) $request->get('deliveryLastName');
+        $submitOrderRequest->deliveryStreet    = (string) $request->get('deliveryStreetHouseNumber');
+        $submitOrderRequest->deliveryZip       = (string) $request->get('deliveryZip');
+        $submitOrderRequest->deliveryCity      = (string) $request->get('deliveryCity');
         $submitOrderRequest->basketId          = $session->get('basketId', null);
-        $submitOrderRequest->paymentMethodId   = $request->get('paymentMethodId');
-        $submitOrderRequest->logisticPartnerId = $request->get('logisticPartnerId');
-        $submitOrderRequest->registering       = $request->get('registering');
+        $submitOrderRequest->paymentMethodId   = (int) $request->get('paymentMethodId');
+        $submitOrderRequest->logisticPartnerId = (int) $request->get('logisticPartnerId');
+        $submitOrderRequest->registering       = (bool) $request->get('registering');
 
         $response = $this->get('interactor.submit_order_unregistered')->execute($submitOrderRequest);
 
