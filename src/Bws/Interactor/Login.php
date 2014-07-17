@@ -6,7 +6,9 @@ use Bws\Repository\EmailAddressRepository;
 
 class Login
 {
-    /** @var EmailAddressRepository */
+    /**
+     * @var EmailAddressRepository
+     */
     private $emailRepository;
 
     /**
