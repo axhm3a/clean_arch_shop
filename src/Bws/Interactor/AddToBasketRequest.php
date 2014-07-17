@@ -4,10 +4,26 @@ namespace Bws\Interactor;
 
 class AddToBasketRequest
 {
+    /**
+     * @var int
+     */
     private $articleId;
+
+    /**
+     * @var int
+     */
     private $count;
+
+    /**
+     * @var int
+     */
     private $basketId;
 
+    /**
+     * @param int $articleId
+     * @param int $count
+     * @param int $basketId
+     */
     public function __construct($articleId, $count, $basketId)
     {
         $this->articleId = $articleId;
@@ -16,7 +32,7 @@ class AddToBasketRequest
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getArticleId()
     {
@@ -24,7 +40,7 @@ class AddToBasketRequest
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getCount()
     {
@@ -32,7 +48,7 @@ class AddToBasketRequest
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getBasketId()
     {

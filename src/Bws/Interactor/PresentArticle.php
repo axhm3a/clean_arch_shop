@@ -16,6 +16,11 @@ class PresentArticle
         $this->articleRepository = $articleRepository;
     }
 
+    /**
+     * @param int $articleId
+     *
+     * @return PresentArticleResponse
+     */
     public function execute($articleId)
     {
         if (!$article = $this->articleRepository->find($articleId)) {
