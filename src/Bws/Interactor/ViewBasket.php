@@ -18,10 +18,6 @@ class ViewBasket
      */
     private $positionRepository;
 
-    /**
-     * @param BasketRepository         $basketRepository
-     * @param BasketPositionRepository $positionRepository
-     */
     public function __construct(BasketRepository $basketRepository, BasketPositionRepository $positionRepository)
     {
         $this->basketRepository   = $basketRepository;

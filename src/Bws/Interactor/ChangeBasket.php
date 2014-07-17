@@ -18,10 +18,6 @@ class ChangeBasket
      */
     private $basketPositionRepository;
 
-    /**
-     * @param BasketPositionRepository $basketPositionRepository
-     * @param BasketRepository         $basketRepository
-     */
     public function __construct(BasketPositionRepository $basketPositionRepository, BasketRepository $basketRepository)
     {
         $this->basketPositionRepository = $basketPositionRepository;

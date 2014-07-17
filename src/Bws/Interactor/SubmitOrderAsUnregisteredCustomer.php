@@ -61,16 +61,6 @@ class SubmitOrderAsUnregisteredCustomer
      */
     private $logisticPartnerRepository;
 
-    /**
-     * @param InvoiceAddressRepository  $invoiceAddressRepository
-     * @param DeliveryAddressRepository $deliveryAddressRepository
-     * @param BasketRepository          $basketRepository
-     * @param OrderRepository           $orderRepository
-     * @param CustomerRepository        $customerRepository
-     * @param EmailAddressRepository    $emailAddressRepository
-     * @param PaymentMethodRepository   $paymentMethodRepository
-     * @param LogisticPartnerRepository $logisticPartnerRepository
-     */
     public function __construct(
         InvoiceAddressRepository $invoiceAddressRepository,
         DeliveryAddressRepository $deliveryAddressRepository,

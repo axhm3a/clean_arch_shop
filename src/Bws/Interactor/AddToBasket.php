@@ -25,11 +25,6 @@ class AddToBasket
      */
     private $basketPositionRepository;
 
-    /**
-     * @param ArticleRepository        $articleRepository
-     * @param BasketPositionRepository $basketPositionRepository
-     * @param BasketRepository         $basketRepository
-     */
     public function __construct(
         ArticleRepository $articleRepository,
         BasketPositionRepository $basketPositionRepository,
