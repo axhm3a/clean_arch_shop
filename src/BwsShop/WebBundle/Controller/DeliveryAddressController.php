@@ -2,9 +2,6 @@
 
 namespace BwsShop\WebBundle\Controller;
 
-use Bws\Entity\Customer;
-use Bws\Entity\DeliveryAddress;
-use Bws\Interactor\DeliveryAddressSelectable;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Request;
