@@ -31,4 +31,3 @@ class PresentLogisticPartners
         return new PresentLogisticPartnersResponse($result);
     }
 }
- 
