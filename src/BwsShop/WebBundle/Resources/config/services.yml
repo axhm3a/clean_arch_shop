@@ -1,5 +1,6 @@
 parameters:
     interactor.add_to_basket.class: Bws\Interactor\AddToBasket
+    interactor.add_delivery_address.class: Bws\Interactor\AddDeliveryAddress
     interactor.view_basket.class: Bws\Interactor\ViewBasket
     interactor.change_basket.class: Bws\Interactor\ChangeBasket
     interactor.submit_order_unregistered.class: Bws\Interactor\SubmitOrderAsUnregisteredCustomer
@@ -90,6 +91,12 @@ services:
             - @article.repository
             - @basket.position.repository
             - @basket.repository
+
+    interactor.add_delivery_address:
+        class: %interactor.add_delivery_address.class%
+        arguments:
+            - @customer.repository
+            - @deliveryaddress.repository
 
     interactor.view_basket:
         class: %interactor.view_basket.class%

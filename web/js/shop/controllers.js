@@ -35,6 +35,14 @@ app.controller('ShopCtrl', function ($scope, $http, $modal, $log) {
         }).success(successCallback);
     };
 
+    $scope.openNewDeliveryAddressForm = function (size) {
+        var newDeliveryAddressForm = $modal.open({
+            templateUrl: 'newDeliveryAddressForm.html',
+            controller: AddDeliveryAddress,
+            size: size
+        });
+    };
+
     $scope.openDeliveryAddressBook = function (size) {
         $scope.getDeliveryAddresses(function () {
             var deliveryAddressBook = $modal.open({
@@ -54,6 +62,15 @@ app.controller('ShopCtrl', function ($scope, $http, $modal, $log) {
         });
     };
 });
+
+var AddDeliveryAddress = function ($scope, $modalInstance, $http) {
+    $scope.address = {  };
+    $scope.saveDeliveryAddress = function () {
+        $http.post('shop/deliveryaddress/add.json', $scope.address).success(function (data) {
+            $modalInstance.close();
+        });
+    };
+};
 
 var DeliveryAddressBook = function ($scope, $modalInstance, $http, $log, deliveryaddresses) {
     $scope.deliveryaddresses = deliveryaddresses;

@@ -20,7 +20,8 @@
                 <div class="panel-heading">
                     <strong>Delivery Address</strong>
                     <a class="btn btn-default btn-xs" title="Add a new address" data-toggle="modal"
-                       data-target="#myModal">
+                       data-target="#myModal"
+                       ng-click="openNewDeliveryAddressForm()">
                         <span class="glyphicon glyphicon-plus"></span> Add
                     </a>
                     <a class="btn btn-default btn-xs" title="Select a delivery address" data-toggle="modal"
@@ -100,26 +101,63 @@
         <button type="submit" class="btn btn-primary pull-right">Submit Order</button>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="addDeliveryAddress"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                                aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="addDeliveryAddress">Add Delivery Address</h4>
-                </div>
+    <!-- Modal New Delivery address -->
+    {% verbatim %}
+    <script type="text/ng-template" id="newDeliveryAddressForm.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Add Delivery Addresses</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" role="form" name="newDeliveryAddressForm">
                 <div class="modal-body">
-                    Form stuff here
+                    <div class="form-group">
+                        <label for="inputLastName" class="col-sm-3 control-label">First Name:</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-model="address.first_name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputLastName" class="col-sm-3 control-label">Last Name:</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-model="address.last_name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputStreet" class="col-sm-3 control-label">Street:</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-model="address.street">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputZip" class="col-sm-3 control-label">Zip:</label>
+
+                        <div class="col-sm-3">
+                            <input class="form-control" ng-model="address.zip">
+                        </div>
+
+                        <label for="inputZip" class="col-sm-1 control-label">City:</label>
+
+                        <div class="col-sm-5">
+                            <input class="form-control" ng-model="address.city">
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary" ng-click="saveDeliveryAddress()">Save changes
+                    </button>
                 </div>
-            </div>
+            </form>
         </div>
-    </div>
+    </script>
+    {% endverbatim %}
 
     <!-- Modal Delivery address book -->
     {% verbatim %}
