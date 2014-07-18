@@ -21,3 +21,4 @@ Screenshots:
 ============
 
 ![screenshot](screenshot.png)
+![screenshot](screenshot_registered.png)
