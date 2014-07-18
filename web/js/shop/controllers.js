@@ -99,7 +99,6 @@ var DeliveryAddressBook = function ($scope, $modalInstance, $http, $log, deliver
     $scope.selectDeliveryAddress = function (address) {
         $http.post('shop/deliveryaddress/select.json', address).success(function (data) {
             $modalInstance.close(address);
-            $scope.deliveryAddressName = 'test'; //@todo whats this?
         });
     };
 
