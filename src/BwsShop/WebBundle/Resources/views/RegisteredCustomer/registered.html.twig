@@ -30,9 +30,22 @@
                     </a>
                 </div>
                 <div class="panel-body">
-                    <div>{{ delivery.firstName }} {{ delivery.lastName }}</div>
-                    <div>{{ delivery.street }}</div>
-                    <div>{{ delivery.zip }} {{ delivery.city }}</div>
+                    <div>
+                        <span ng-bind="selectedDeliveryAddress.first_name"></span>
+                        <span ng-if="!selectedDeliveryAddress.first_name">{{ delivery.firstName }}</span>
+                        <span ng-bind="selectedDeliveryAddress.last_name"></span>
+                        <span ng-if="!selectedDeliveryAddress.last_name">{{ delivery.lastName }}</span>
+                    </div>
+                    <div>
+                        <span ng-bind="selectedDeliveryAddress.street"></span>
+                        <span ng-if="!selectedDeliveryAddress.street">{{ delivery.street }}</span>
+                    </div>
+                    <div>
+                        <span ng-bind="selectedDeliveryAddress.zip"></span>
+                        <span ng-if="!selectedDeliveryAddress.zip">{{ delivery.zip }}</span>
+                        <span ng-bind="selectedDeliveryAddress.city"></span>
+                        <span ng-if="!selectedDeliveryAddress.city">{{ delivery.city }}</span>
+                    </div>
                 </div>
             </div>
         </div>

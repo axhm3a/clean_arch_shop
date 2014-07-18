@@ -37,7 +37,7 @@ app.controller('ShopCtrl', function ($scope, $http, $modal, $log) {
 
     $scope.openDeliveryAddressBook = function (size) {
         $scope.getDeliveryAddresses(function () {
-            $modal.open({
+            var deliveryAddressBook = $modal.open({
                 templateUrl: 'deliveryAddressBook.html',
                 controller: DeliveryAddressBook,
                 size: size,
@@ -46,6 +46,10 @@ app.controller('ShopCtrl', function ($scope, $http, $modal, $log) {
                         return $scope.deliveryaddresses;
                     }
                 }
+            });
+
+            deliveryAddressBook.result.then(function (selectedItem) {
+                $scope.selectedDeliveryAddress = selectedItem;
             });
         });
     };
@@ -56,7 +60,8 @@ var DeliveryAddressBook = function ($scope, $modalInstance, $http, $log, deliver
 
     $scope.selectDeliveryAddress = function (address) {
         $http.post('shop/deliveryaddress/select.json', address).success(function (data) {
-            $modalInstance.close();
+            $modalInstance.close(address);
+            $scope.deliveryAddressName = 'test';
         });
     };
 
