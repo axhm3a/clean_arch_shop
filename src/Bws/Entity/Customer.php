@@ -90,6 +90,18 @@ class Customer
     }
 
     /**
+     * @param InvoiceAddress $address
+     *
+     * @return $this
+     */
+    public function changeCurrentInvoiceAddress(InvoiceAddress $address)
+    {
+        $this->lastUsedInvoiceAddress = $address;
+
+        return $this;
+    }
+
+    /**
      * Get lastUsedInvoiceAddress
      *
      * @return InvoiceAddress

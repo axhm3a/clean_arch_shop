@@ -7,11 +7,29 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <strong>Invoice Address</strong>
+                    <a class="btn btn-default btn-xs" title="Change invoice address" data-toggle="modal"
+                       data-target="#selectDeliveryAddress"
+                       ng-click="openChangeInvoiceAddressForm()">
+                        <span class="glyphicon glyphicon-pencil"></span> Change
+                    </a>
                 </div>
                 <div class="panel-body">
-                    <div>{{ invoice.firstName }} {{ invoice.lastName }}</div>
-                    <div>{{ invoice.street }}</div>
-                    <div>{{ invoice.zip }} {{ invoice.city }}</div>
+                    <div>
+                        <span ng-bind="currentInvoiceAddress.first_name"></span>
+                        <span ng-if="!currentInvoiceAddress.first_name">{{ invoice.firstName }}</span>
+                        <span ng-bind="currentInvoiceAddress.last_name"></span>
+                        <span ng-if="!currentInvoiceAddress.last_name">{{ invoice.lastName }}</span>
+                    </div>
+                    <div>
+                        <span ng-bind="currentInvoiceAddress.street"></span>
+                        <span ng-if="!currentInvoiceAddress.street">{{ invoice.street }}</span>
+                    </div>
+                    <div>
+                        <span ng-bind="currentInvoiceAddress.zip"></span>
+                        <span ng-if="!currentInvoiceAddress.zip">{{ invoice.zip }}</span>
+                        <span ng-bind="currentInvoiceAddress.city"></span>
+                        <span ng-if="!currentInvoiceAddress.city">{{ invoice.city }}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -100,6 +118,64 @@
     <div class="row">
         <button type="submit" class="btn btn-primary pull-right">Submit Order</button>
     </div>
+
+    <!-- Modal Change Invoice address -->
+    {% verbatim %}
+    <script type="text/ng-template" id="changeInvoiceAddressForm.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Change Invoice Addresses</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" role="form" name="changeInvoiceAddressForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputLastName" class="col-sm-3 control-label">First Name:</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-model="currentInvoiceAddress.first_name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputLastName" class="col-sm-3 control-label">Last Name:</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-model="currentInvoiceAddress.last_name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputStreet" class="col-sm-3 control-label">Street:</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-model="currentInvoiceAddress.street">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputZip" class="col-sm-3 control-label">Zip:</label>
+
+                        <div class="col-sm-3">
+                            <input class="form-control" ng-model="currentInvoiceAddress.zip">
+                        </div>
+
+                        <label for="inputZip" class="col-sm-1 control-label">City:</label>
+
+                        <div class="col-sm-5">
+                            <input class="form-control" ng-model="currentInvoiceAddress.city">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" ng-click="saveInvoiceAddress()">Save changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </script>
+    {% endverbatim %}
 
     <!-- Modal New Delivery address -->
     {% verbatim %}

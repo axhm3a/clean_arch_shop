@@ -3,6 +3,7 @@ parameters:
     interactor.add_delivery_address.class: Bws\Interactor\AddDeliveryAddress
     interactor.view_basket.class: Bws\Interactor\ViewBasket
     interactor.change_basket.class: Bws\Interactor\ChangeBasket
+    interactor.change_invoice_address.class: Bws\Interactor\ChangeInvoiceAddress
     interactor.submit_order_unregistered.class: Bws\Interactor\SubmitOrderAsUnregisteredCustomer
     interactor.present_article.class: Bws\Interactor\PresentArticle
     interactor.present_articles.class: Bws\Interactor\PresentArticles
@@ -109,6 +110,12 @@ services:
         arguments:
             - @basket.position.repository
             - @basket.repository
+
+    interactor.change_invoice_address:
+        class: %interactor.change_invoice_address.class%
+        arguments:
+            - @customer.repository
+            - @invoiceaddress.repository
 
     interactor.delivery_address_selectable:
         class: %interactor.delivery_address_selectable.class%

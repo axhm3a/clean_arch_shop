@@ -35,6 +35,18 @@ app.controller('ShopCtrl', function ($scope, $http, $modal, $log) {
         }).success(successCallback);
     };
 
+    $scope.openChangeInvoiceAddressForm = function (size) {
+        var changeInvoiceAddressForm = $modal.open({
+            templateUrl: 'changeInvoiceAddressForm.html',
+            controller: ChangeInvoiceAddress,
+            size: size
+        });
+
+        changeInvoiceAddressForm.result.then(function (currentInvoiceAddress) {
+            $scope.currentInvoiceAddress = currentInvoiceAddress;
+        });
+    };
+
     $scope.openNewDeliveryAddressForm = function (size) {
         var newDeliveryAddressForm = $modal.open({
             templateUrl: 'newDeliveryAddressForm.html',
@@ -63,6 +75,15 @@ app.controller('ShopCtrl', function ($scope, $http, $modal, $log) {
     };
 });
 
+var ChangeInvoiceAddress = function ($scope, $modalInstance, $http) {
+    $scope.currentInvoiceAddress = {  };
+    $scope.saveInvoiceAddress = function () {
+        $http.post('shop/invoiceaddress/change.json', $scope.currentInvoiceAddress).success(function (data) {
+            $modalInstance.close($scope.currentInvoiceAddress);
+        });
+    };
+};
+
 var AddDeliveryAddress = function ($scope, $modalInstance, $http) {
     $scope.address = {  };
     $scope.saveDeliveryAddress = function () {
@@ -78,7 +99,7 @@ var DeliveryAddressBook = function ($scope, $modalInstance, $http, $log, deliver
     $scope.selectDeliveryAddress = function (address) {
         $http.post('shop/deliveryaddress/select.json', address).success(function (data) {
             $modalInstance.close(address);
-            $scope.deliveryAddressName = 'test';
+            $scope.deliveryAddressName = 'test'; //@todo whats this?
         });
     };
 

@@ -46,4 +46,22 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($customerOne->isSame($customerTwo));
     }
+
+    public function testCustomerChangeInvoiceAddress()
+    {
+        $oldInvoiceAddress = new InvoiceAddressStub();
+        $newInvoiceAddress = new InvoiceAddress();
+        $newInvoiceAddress->setFirstName(InvoiceAddressStub::FIRST_NAME);
+        $newInvoiceAddress->setLastName(InvoiceAddressStub::LAST_NAME);
+        $newInvoiceAddress->setStreet('Wohlenbergstraße 15a');
+        $newInvoiceAddress->setZip('30179');
+        $newInvoiceAddress->setCity('Hannover');
+
+        $customer = new Customer();
+        $customer->setLastUsedInvoiceAddress($oldInvoiceAddress);
+
+        $customer->changeCurrentInvoiceAddress($newInvoiceAddress);
+
+        $this->assertSame($newInvoiceAddress, $customer->getLastUsedInvoiceAddress());
+    }
 }

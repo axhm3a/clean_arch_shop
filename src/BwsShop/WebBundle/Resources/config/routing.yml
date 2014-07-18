@@ -34,6 +34,10 @@ bws_shop_web_registering:
     pattern: /checkout/registering
     defaults: { _controller: BwsShopWebBundle:UnregisteredCustomer:registering }
 
+bws_shop_web_invoiceaddress_change:
+    pattern: /invoiceaddress/change.{_format}
+    defaults: { _controller: BwsShopWebBundle:InvoiceAddress:change, _format: json }
+
 bws_shop_web_deliveryaddress_add:
     pattern: /deliveryaddress/add.{_format}
     defaults: { _controller: BwsShopWebBundle:DeliveryAddress:add, _format: json }
