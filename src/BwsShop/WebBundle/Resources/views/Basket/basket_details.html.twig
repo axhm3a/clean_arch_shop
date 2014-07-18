@@ -10,7 +10,7 @@
 
     <tr ng-repeat="position in basket.positions">
         <td><img ng-src="{{ position.articleImage }}" alt="" style="width: 70px;"/></td>
-        <td class="list_basket_title">{{ position.articleTitle }}</td>
+        <td class="list_basket_title" ng-bind="position.articleTitle"></td>
         <td class="list_basket_quantity">
             <select ng-model="position.count"
                     ng-options="option as option for option in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
@@ -18,13 +18,13 @@
                     id="select_quantity_{{ position.articleId }}">
             </select>
         </td>
-        <td class="list_basket_price">{{ position.articlePrice }} €</td>
-        <td class="list_basket_total">{{ position.totalPrice }} €</td>
+        <td class="list_basket_price"><span ng-bind="position.articlePrice"></span> €</td>
+        <td class="list_basket_total"><span ng-bind="position.totalPrice"></span> €</td>
     </tr>
 
     <tr>
         <td class="list_basket_total_order_sum_label" colspan="4">Total Order Sum:</td>
-        <td class="list_basket_total_order_sum">{{ basket.total }} €</td>
+        <td class="list_basket_total_order_sum"><span ng-bind="basket.total"></span> €</td>
     </tr>
 </table>
 {% endverbatim %}
