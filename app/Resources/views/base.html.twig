@@ -46,10 +46,11 @@
                                     <img ng-src="{{ article.imagePath }}" style="width: 50px;"/>
                                 </div>
                                 <div class="col-md-10">
-                                    <strong>{{ article.title }}</strong> <span class="price">{{ article.price }}
-                                        €</span>
-
-                                    <p>{{ article.description | limitTo : 150 }}</p>
+                                    <strong ng-bind="article.title"></strong>
+                                    <span class="price">
+                                        <span ng-bind="article.price"></span> €
+                                    </span>
+                                    <p ng-bind="article.description | limitTo : 250"></p>
                                 </div>
                             </a>
                         </div>
