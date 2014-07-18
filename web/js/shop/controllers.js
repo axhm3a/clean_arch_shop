@@ -82,6 +82,9 @@ var ChangeInvoiceAddress = function ($scope, $modalInstance, $http) {
             $modalInstance.close($scope.currentInvoiceAddress);
         });
     };
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
 };
 
 var AddDeliveryAddress = function ($scope, $modalInstance, $http) {
