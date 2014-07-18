@@ -2,7 +2,6 @@
 
 namespace BwsShop\WebBundle\Controller;
 
-use Bws\Interactor\SubmitOrderAsUnregisteredCustomer;
 use Bws\Interactor\SubmitOrderAsUnregisteredCustomerRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
