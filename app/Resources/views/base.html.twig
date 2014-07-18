@@ -71,9 +71,7 @@
                 {% endif %}
                 <li>
                     <a href="{{ url('bws_shop_web_list_basket') }}">
-                        <span>
-                            {% verbatim %}{{ basket.positions.length }}{% endverbatim %}
-                        </span> Items - {% verbatim %}{{ basket.total }}{% endverbatim %} €
+                        <span ng-bind="basket.positions.length"></span> Items - <span ng-bind="basket.total"></span> €
                     </a>
                 </li>
             </ul>
