@@ -21,4 +21,7 @@ Screenshots:
 ============
 
 ![screenshot](screenshot.png)
+
+Registered Customer:
+====================
 ![screenshot](screenshot_registered.png)
