@@ -56,7 +56,6 @@ class OrderController extends Controller
                 return $this->redirect($this->generateUrl('bws_shop_web_thanks'));
             default:
                 die('Error :(');
-                break;
         }
     }
 
