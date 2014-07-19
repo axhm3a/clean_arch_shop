@@ -132,7 +132,6 @@ class SubmitOrder
             return new SubmitOrderResponse(SubmitOrderResponse::CUSTOMER_NOT_FOUND);
         }
 
-        //@todo error handling needed here!
         $result = $this->presentCurrentAddress->getCurrentDeliveryAddress(
             $request->customerId,
             $request->selectedDelivery
@@ -146,11 +145,15 @@ class SubmitOrder
             return new SubmitOrderResponse(SubmitOrderResponse::BASKET_NOT_FOUND);
         }
 
-        if (!$paymentMethod = $this->paymentMethodRepository->find($request->paymentMethodId)) {
+        if (!$request->paymentMethodId
+         || !$paymentMethod = $this->paymentMethodRepository->find($request->paymentMethodId)
+        ) {
             return new SubmitOrderResponse(SubmitOrderResponse::PAYMENT_METHOD_NOT_FOUND);
         }
 
-        if (!$logisticPartner = $this->logisticPartnerRepository->find($request->logisticPartnerId)) {
+        if (!$request->logisticPartnerId
+         || !$logisticPartner = $this->logisticPartnerRepository->find($request->logisticPartnerId)
+        ) {
             return new SubmitOrderResponse(SubmitOrderResponse::LOGISTIC_PARTNER_NOT_FOUND);
         }
 
