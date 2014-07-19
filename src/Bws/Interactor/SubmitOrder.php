@@ -6,6 +6,7 @@ use Bws\Entity\Basket;
 use Bws\Entity\Customer;
 use Bws\Entity\DeliveryAddress;
 use Bws\Entity\EmailAddress;
+use Bws\Entity\EmailAddressStub;
 use Bws\Entity\InvoiceAddress;
 use Bws\Entity\LogisticPartner;
 use Bws\Entity\Order;
@@ -19,7 +20,7 @@ use Bws\Repository\LogisticPartnerRepository;
 use Bws\Repository\OrderRepository;
 use Bws\Repository\PaymentMethodRepository;
 
-class SubmitOrderAsUnregisteredCustomer
+class SubmitOrder
 {
     /**
      * @var \Bws\Repository\InvoiceAddressRepository
@@ -61,6 +62,11 @@ class SubmitOrderAsUnregisteredCustomer
      */
     private $logisticPartnerRepository;
 
+    /**
+     * @var PresentCurrentAddress
+     */
+    private $presentCurrentAddress;
+
     public function __construct(
         InvoiceAddressRepository $invoiceAddressRepository,
         DeliveryAddressRepository $deliveryAddressRepository,
@@ -69,7 +75,8 @@ class SubmitOrderAsUnregisteredCustomer
         CustomerRepository $customerRepository,
         EmailAddressRepository $emailAddressRepository,
         PaymentMethodRepository $paymentMethodRepository,
-        LogisticPartnerRepository $logisticPartnerRepository
+        LogisticPartnerRepository $logisticPartnerRepository,
+        PresentCurrentAddress $presentCurrentAddress
     ) {
         $this->invoiceAddressRepository  = $invoiceAddressRepository;
         $this->deliveryAddressRepository = $deliveryAddressRepository;
@@ -79,6 +86,7 @@ class SubmitOrderAsUnregisteredCustomer
         $this->emailAddressRepository    = $emailAddressRepository;
         $this->paymentMethodRepository   = $paymentMethodRepository;
         $this->logisticPartnerRepository = $logisticPartnerRepository;
+        $this->presentCurrentAddress     = $presentCurrentAddress;
     }
 
     /**
@@ -86,7 +94,7 @@ class SubmitOrderAsUnregisteredCustomer
      *
      * @return SubmitOrderResponse
      */
-    public function execute(SubmitOrderAsUnregisteredCustomerRequest $request)
+    public function asUnregisteredCustomer(SubmitOrderAsUnregisteredCustomerRequest $request)
     {
         $invoiceAddress  = $this->saveInvoiceAddress($request);
         $deliveryAddress = $this->saveDeliveryAddress($request);
@@ -106,6 +114,54 @@ class SubmitOrderAsUnregisteredCustomer
             $basket,
             $customer,
             $email,
+            $paymentMethod,
+            $logisticPartner
+        );
+
+        return new SubmitOrderResponse(SubmitOrderResponse::SUCCESS, '', $order->getId());
+    }
+
+    /**
+     * @param SubmitOrderAsRegisteredCustomerRequest $request
+     *
+     * @return SubmitOrderResponse
+     */
+    public function asRegisteredCustomer(SubmitOrderAsRegisteredCustomerRequest $request)
+    {
+        if (!$customer = $this->customerRepository->find($request->customerId)) {
+            return new SubmitOrderResponse(SubmitOrderResponse::CUSTOMER_NOT_FOUND);
+        }
+
+        //@todo error handling needed here!
+        $result = $this->presentCurrentAddress->getCurrentDeliveryAddress(
+            $request->customerId,
+            $request->selectedDelivery
+        );
+
+        if ($result->code == $result::DELIVERY_ADDRESS_NOT_FOUND) {
+            return new SubmitOrderResponse(SubmitOrderResponse::DELIVERY_ADDRESS_NOT_FOUND);
+        }
+
+        if (!$basket = $this->basketRepository->find($request->basketId)) {
+            return new SubmitOrderResponse(SubmitOrderResponse::BASKET_NOT_FOUND);
+        }
+
+        if (!$paymentMethod = $this->paymentMethodRepository->find($request->paymentMethodId)) {
+            return new SubmitOrderResponse(SubmitOrderResponse::PAYMENT_METHOD_NOT_FOUND);
+        }
+
+        if (!$logisticPartner = $this->logisticPartnerRepository->find($request->logisticPartnerId)) {
+            return new SubmitOrderResponse(SubmitOrderResponse::LOGISTIC_PARTNER_NOT_FOUND);
+        }
+
+        $address = $this->presentCurrentAddress->getLastFetchedDeliveryAddress();
+
+        $order = $this->saveOrder(
+            $customer->getLastUsedInvoiceAddress(),
+            $address,
+            $basket,
+            $customer,
+            $customer->getLastUsedEmailAddress(),
             $paymentMethod,
             $logisticPartner
         );

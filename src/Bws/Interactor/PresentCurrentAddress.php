@@ -22,6 +22,8 @@ class PresentCurrentAddress
      */
     private $invoiceAddressRepository;
 
+    private $lastFetchedDeliveryAddress;
+
     public function __construct(
         DeliveryAddressRepository $deliveryAddressRepository,
         InvoiceAddressRepository $invoiceAddressRepository,
@@ -60,8 +62,8 @@ class PresentCurrentAddress
         if (!$address = $this->deliveryAddressRepository->find($selectedDeliveryAddressId)) {
             $response->code = $response::DELIVERY_ADDRESS_NOT_FOUND;
         } else {
-            $response->code    = $response::SUCCESS;
-            $response->address = array(
+            $response->code                   = $response::SUCCESS;
+            $response->address                = array(
                 'id'        => $address->getId(),
                 'firstName' => $address->getFirstName(),
                 'lastName'  => $address->getLastName(),
@@ -69,6 +71,7 @@ class PresentCurrentAddress
                 'zip'       => $address->getZip(),
                 'city'      => $address->getCity()
             );
+            $this->lastFetchedDeliveryAddress = $address;
         }
     }
 
@@ -78,9 +81,15 @@ class PresentCurrentAddress
      */
     protected function handleLastUsedDeliveryAddress($customerId, $response)
     {
-        $result            = $this->presentLastUsedAddress->getDelivery($customerId);
-        $response->code    = $result->code;
-        $response->address = $result->address;
+        $result                           = $this->presentLastUsedAddress->getDelivery($customerId);
+        $this->lastFetchedDeliveryAddress = $this->presentLastUsedAddress->getLastFetchedDeliveryAddress();
+        $response->code                   = $result->code;
+        $response->address                = $result->address;
+    }
+
+    public function getLastFetchedDeliveryAddress()
+    {
+        return $this->lastFetchedDeliveryAddress;
     }
 }
  

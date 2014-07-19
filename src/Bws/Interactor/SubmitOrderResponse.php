@@ -4,7 +4,12 @@ namespace Bws\Interactor;
 
 class SubmitOrderResponse
 {
-    const SUCCESS = 1;
+    const SUCCESS                    = 1;
+    const CUSTOMER_NOT_FOUND         = -1;
+    const DELIVERY_ADDRESS_NOT_FOUND = -2;
+    const BASKET_NOT_FOUND           = -3;
+    const PAYMENT_METHOD_NOT_FOUND   = -4;
+    const LOGISTIC_PARTNER_NOT_FOUND = -5;
 
     /**
      * @var integer
@@ -26,7 +31,7 @@ class SubmitOrderResponse
      * @param string  $message
      * @param integer $orderId
      */
-    public function __construct($code, $message, $orderId)
+    public function __construct($code, $message = '', $orderId = 0)
     {
         $this->code    = $code;
         $this->message = $message;

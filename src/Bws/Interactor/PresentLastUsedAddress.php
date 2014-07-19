@@ -11,6 +11,8 @@ class PresentLastUsedAddress
      */
     private $customerRepository;
 
+    private $lastFetchedDeliveryAddress;
+
     public function __construct(CustomerRepository $customerRepository)
     {
         $this->customerRepository = $customerRepository;
@@ -57,6 +59,7 @@ class PresentLastUsedAddress
                 $response->code = $response::CUSTOMER_HAS_NO_LAST_USED_DELIVERY_ADDRESS;
                 return $response;
             }
+            $this->lastFetchedDeliveryAddress = $address;
         } else {
             if (!$address = $customer->getLastUsedInvoiceAddress()) {
                 $response->code = $response::CUSTOMER_HAS_NO_LAST_USED_INVOICE_ADDRESS;
@@ -77,5 +80,10 @@ class PresentLastUsedAddress
         $response->address = $presentable;
 
         return $response;
+    }
+
+    public function getLastFetchedDeliveryAddress()
+    {
+        return $this->lastFetchedDeliveryAddress;
     }
 }

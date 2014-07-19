@@ -4,7 +4,7 @@ parameters:
     interactor.view_basket.class: Bws\Interactor\ViewBasket
     interactor.change_basket.class: Bws\Interactor\ChangeBasket
     interactor.change_invoice_address.class: Bws\Interactor\ChangeInvoiceAddress
-    interactor.submit_order_unregistered.class: Bws\Interactor\SubmitOrderAsUnregisteredCustomer
+    interactor.submit_order_unregistered.class: Bws\Interactor\SubmitOrder
     interactor.present_article.class: Bws\Interactor\PresentArticle
     interactor.present_articles.class: Bws\Interactor\PresentArticles
     interactor.present_paymentmethods.class: Bws\Interactor\PresentPaymentMethods
@@ -128,7 +128,7 @@ services:
         arguments:
             - @email.repository
 
-    interactor.submit_order_unregistered:
+    interactor.submit_order:
         class: %interactor.submit_order_unregistered.class%
         arguments:
             - @invoiceaddress.repository
@@ -139,6 +139,7 @@ services:
             - @email.repository
             - @paymentmethod.repository
             - @logisticpartner.repository
+            - @interactor.present_current_address
 
     interactor.present_article:
         class: %interactor.present_article.class%

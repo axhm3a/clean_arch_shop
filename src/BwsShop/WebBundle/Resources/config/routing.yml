@@ -58,9 +58,13 @@ bws_shop_web_registered:
     pattern: /checkout/registered
     defaults: { _controller: BwsShopWebBundle:RegisteredCustomer:registered }
 
+bws_shop_web_submit_order_registered:
+    pattern: /checkout/order/submit
+    defaults: { _controller: BwsShopWebBundle:Order:submitRegistered }
+
 bws_shop_web_submit_order:
     pattern: /checkout/order/submit
-    defaults: { _controller: BwsShopWebBundle:Order:submit }
+    defaults: { _controller: BwsShopWebBundle:Order:submitUnregistered }
 
 bws_shop_web_thanks:
     pattern: /checkout/thanks

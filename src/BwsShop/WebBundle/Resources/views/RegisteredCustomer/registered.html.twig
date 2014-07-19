@@ -70,54 +70,58 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-5">
-            <div class="panel panel-default">
-                <div class="panel-heading"><strong>Logistic Partner</strong></div>
-                <div class="panel-body">
+    <form method="post" action="{{ path('bws_shop_web_submit_order_registered') }}">
 
-                    {% for logisticPartner in logisticPartners %}
-                        <div class="radio">
-                            <label>
-                                <input type="radio"
-                                       name="logisticPartnerId"
-                                       value="{{ logisticPartner.id }}">
-                                {{ logisticPartner.name }}
-                            </label>
-                        </div>
-                    {% endfor %}
+        <div class="row">
+            <div class="col-md-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Logistic Partner</strong></div>
+                    <div class="panel-body">
 
+                        {% for logisticPartner in logisticPartners %}
+                            <div class="radio">
+                                <label>
+                                    <input type="radio"
+                                           name="logisticPartnerId"
+                                           value="{{ logisticPartner.id }}">
+                                    {{ logisticPartner.name }}
+                                </label>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><strong>Payment Method</strong></div>
+                    <div class="panel-body">
+
+                        {% for paymentMethod in paymentMethods %}
+                            <div class="radio">
+                                <label>
+                                    <input type="radio"
+                                           name="paymentMethodId"
+                                           value="{{ paymentMethod.id }}">
+                                    {{ paymentMethod.name }}
+                                </label>
+                            </div>
+                        {% endfor %}
+
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
-            <div class="panel panel-default">
-                <div class="panel-heading"><strong>Payment Method</strong></div>
-                <div class="panel-body">
 
-                    {% for paymentMethod in paymentMethods %}
-                        <div class="radio">
-                            <label>
-                                <input type="radio"
-                                       name="paymentMethodId"
-                                       value="{{ paymentMethod.id }}">
-                                {{ paymentMethod.name }}
-                            </label>
-                        </div>
-                    {% endfor %}
-
-                </div>
-            </div>
+        <div class="row registered_basket_details">
+            {{ include('BwsShopWebBundle:Basket:basket_details.html.twig') }}
         </div>
-    </div>
 
-    <div class="row registered_basket_details">
-        {{ include('BwsShopWebBundle:Basket:basket_details.html.twig') }}
-    </div>
+        <div class="row">
+            <button type="submit" class="btn btn-primary pull-right">Submit Order</button>
+        </div>
 
-    <div class="row">
-        <button type="submit" class="btn btn-primary pull-right">Submit Order</button>
-    </div>
+    </form>
 
     <!-- Modal Change Invoice address -->
     {% verbatim %}
@@ -168,7 +172,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" ng-click="cancel()" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" ng-click="cancel()" data-dismiss="modal">Close
+                    </button>
                     <button type="submit" class="btn btn-primary" ng-click="saveInvoiceAddress()">Save changes
                     </button>
                 </div>

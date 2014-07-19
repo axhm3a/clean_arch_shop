@@ -16,10 +16,10 @@ use Bws\Repository\LogisticPartnerRepositoryMock;
 use Bws\Repository\OrderRepositoryMock;
 use Bws\Repository\PaymentMethodRepositoryMock;
 
-class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
+class SubmitOrderTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var SubmitOrderAsUnregisteredCustomer
+     * @var SubmitOrder
      */
     private $interactor;
 
@@ -63,6 +63,16 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
      */
     private $logisticPartnerRepository;
 
+    /**
+     * @var PresentLastUsedAddress
+     */
+    private $presentLastUsedAddress;
+
+    /**
+     * @var PresentCurrentAddress
+     */
+    private $presentCurrentAddress;
+
     public function setUp()
     {
         $this->invoiceAddressRepository  = new InvoiceAddressRepositoryMock();
@@ -73,8 +83,16 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
         $this->emailAddressRepository    = new EmailAddressRepositoryMock();
         $this->paymentMethodRepository   = new PaymentMethodRepositoryMock();
         $this->logisticPartnerRepository = new LogisticPartnerRepositoryMock();
+        $this->presentLastUsedAddress    = new PresentLastUsedAddress(
+            $this->customerRepository
+        );
+        $this->presentCurrentAddress     = new PresentCurrentAddress(
+            $this->deliveryAddressRepository,
+            $this->invoiceAddressRepository,
+            $this->presentLastUsedAddress
+        );
 
-        $this->interactor = new SubmitOrderAsUnregisteredCustomer(
+        $this->interactor = new SubmitOrder(
             $this->invoiceAddressRepository,
             $this->deliveryAddressRepository,
             $this->basketRepository,
@@ -82,7 +100,8 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
             $this->customerRepository,
             $this->emailAddressRepository,
             $this->paymentMethodRepository,
-            $this->logisticPartnerRepository
+            $this->logisticPartnerRepository,
+            $this->presentCurrentAddress
         );
     }
 
@@ -105,7 +124,7 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
         $request->logisticPartnerId = LogisticPartnerRepositoryMock::HERMES_ID;
         $request->registering       = false;
 
-        $response = $this->interactor->execute($request);
+        $response = $this->interactor->asUnregisteredCustomer($request);
 
         $this->assertValidOrderForNewCustomer($request, $response);
     }
@@ -129,7 +148,7 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
         $request->logisticPartnerId = LogisticPartnerRepositoryMock::HERMES_ID;
         $request->registering       = true;
 
-        $response = $this->interactor->execute($request);
+        $response = $this->interactor->asUnregisteredCustomer($request);
 
         $this->assertValidOrderForNewCustomer($request, $response);
     }
@@ -153,7 +172,7 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
         $request->logisticPartnerId = LogisticPartnerRepositoryMock::HERMES_ID;
         $request->registering       = true;
 
-        $response = $this->interactor->execute($request);
+        $response = $this->interactor->asUnregisteredCustomer($request);
 
         $this->assertValidOrderForNewCustomer($request, $response, true);
     }
@@ -232,5 +251,104 @@ class SubmitOrderAsUnregisteredCustomerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(BasketStub::ID, $order->getBasket()->getId());
         $this->assertSame(SubmitOrderResponse::SUCCESS, $response->getCode());
         $this->assertSame('', $response->getMessage());
+    }
+
+    public function testRegisteredCustomerOrderWhenCustomerNotFoundShouldReturnError()
+    {
+        $this->customerRepository->truncate();
+        $result = $this->interactor->asRegisteredCustomer(new SubmitOrderAsRegisteredCustomerRequest());
+        $this->assertEquals($result::CUSTOMER_NOT_FOUND, $result->getCode());
+    }
+
+    public function testRegisteredCustomerOrderWhenDeliveryAddressNotFoundShouldReturnError()
+    {
+        $request                   = new SubmitOrderAsRegisteredCustomerRequest();
+        $request->customerId       = CustomerStub::ID;
+        $request->selectedDelivery = 999;
+
+        $result = $this->interactor->asRegisteredCustomer($request);
+
+        $this->assertEquals($result::DELIVERY_ADDRESS_NOT_FOUND, $result->getCode());
+    }
+
+    public function testRegisteredCustomerOrderWhenBasketNotFoundShouldReturnError()
+    {
+        $selectedDeliveryAddress = new DeliveryAddressStub();
+        $customer                = new CustomerStub();
+        $selectedDeliveryAddress->setCustomer($customer);
+        $this->deliveryAddressRepository->truncate();
+        $this->deliveryAddressRepository->save($selectedDeliveryAddress);
+
+        $request                   = new SubmitOrderAsRegisteredCustomerRequest();
+        $request->customerId       = CustomerStub::ID;
+        $request->selectedDelivery = DeliveryAddressStub::ID;
+        $request->basketId         = 888;
+
+        $result = $this->interactor->asRegisteredCustomer($request);
+
+        $this->assertEquals($result::BASKET_NOT_FOUND, $result->getCode());
+    }
+
+    public function testRegisteredCustomerOrderWhenPaymentMethodNotFoundShouldReturnError()
+    {
+        $selectedDeliveryAddress = new DeliveryAddressStub();
+        $customer                = new CustomerStub();
+        $selectedDeliveryAddress->setCustomer($customer);
+        $this->deliveryAddressRepository->truncate();
+        $this->deliveryAddressRepository->save($selectedDeliveryAddress);
+
+        $request                   = new SubmitOrderAsRegisteredCustomerRequest();
+        $request->customerId       = CustomerStub::ID;
+        $request->selectedDelivery = DeliveryAddressStub::ID;
+        $request->basketId         = BasketStub::ID;
+        $request->paymentMethodId  = 999;
+
+        $result = $this->interactor->asRegisteredCustomer($request);
+
+        $this->assertEquals($result::PAYMENT_METHOD_NOT_FOUND, $result->getCode());
+    }
+
+    public function testRegisteredCustomerOrderWhenLogisticPartnerNotFoundShouldReturnError()
+    {
+        $selectedDeliveryAddress = new DeliveryAddressStub();
+        $customer                = new CustomerStub();
+        $selectedDeliveryAddress->setCustomer($customer);
+        $this->deliveryAddressRepository->truncate();
+        $this->deliveryAddressRepository->save($selectedDeliveryAddress);
+
+        $request                    = new SubmitOrderAsRegisteredCustomerRequest();
+        $request->customerId        = CustomerStub::ID;
+        $request->selectedDelivery  = DeliveryAddressStub::ID;
+        $request->basketId          = BasketStub::ID;
+        $request->paymentMethodId   = PaymentMethodRepositoryMock::COD_ID;
+        $request->logisticPartnerId = 999;
+
+        $result = $this->interactor->asRegisteredCustomer($request);
+
+        $this->assertEquals($result::LOGISTIC_PARTNER_NOT_FOUND, $result->getCode());
+    }
+
+    public function testRegisteredCustomerOrderWhenOrderWasSavedShouldReturnOrderId()
+    {
+        $customer                = new CustomerStub();
+        $customer->setLastUsedInvoiceAddress(new InvoiceAddressStub());
+        $customer->setLastUsedEmailAddress(new EmailAddressStub());
+        $selectedDeliveryAddress = new DeliveryAddressStub();
+        $selectedDeliveryAddress->setCustomer($customer);
+        $this->customerRepository->truncate();
+        $this->customerRepository->save($customer);
+        $this->deliveryAddressRepository->truncate();
+        $this->deliveryAddressRepository->save($selectedDeliveryAddress);
+
+        $request                    = new SubmitOrderAsRegisteredCustomerRequest();
+        $request->customerId        = CustomerStub::ID;
+        $request->selectedDelivery  = DeliveryAddressStub::ID;
+        $request->basketId          = BasketStub::ID;
+        $request->paymentMethodId   = PaymentMethodRepositoryMock::COD_ID;
+        $request->logisticPartnerId = LogisticPartnerRepositoryMock::DHL_ID;
+
+        $result = $this->interactor->asRegisteredCustomer($request);
+
+        $this->assertEquals($result::SUCCESS, $result->getCode());
     }
 }

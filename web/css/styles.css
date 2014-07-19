@@ -81,3 +81,6 @@ div.deliveryaddress {
 
 .nav, .pagination, .carousel, .panel-title a {
   cursor: pointer; }
+
+input.ng-invalid {
+  border: 1px solid red; }
