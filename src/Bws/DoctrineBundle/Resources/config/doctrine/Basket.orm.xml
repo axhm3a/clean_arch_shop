@@ -4,5 +4,6 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
+    <one-to-many field="basketPositions" target-entity="Bws\DoctrineBundle\Entity\BasketPosition" mapped-by="basket" />
   </entity>
 </doctrine-mapping>

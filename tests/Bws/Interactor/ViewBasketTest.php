@@ -3,6 +3,8 @@
 namespace Bws\Interactor;
 
 use Bws\Entity\ArticleStub;
+use Bws\Entity\Basket;
+use Bws\Entity\BasketPosition;
 use Bws\Entity\BasketStub;
 use Bws\Entity\EmptyBasketStub;
 use Bws\Repository\BasketPositionRepositoryMock;
@@ -56,6 +58,22 @@ class ViewBasketTest extends \PHPUnit_Framework_TestCase
 
     public function testFilledBasket()
     {
+        $basketPositionOne = new BasketPosition();
+        $basketPositionOne->setArticle(new ArticleStub());
+        $basketPositionOne->setCount(1);
+
+        $basketPositionTwo = new BasketPosition();
+        $basketPositionTwo->setArticle(new ArticleStub());
+        $basketPositionTwo->setCount(1);
+
+        $basketPositions = new \ArrayObject(array($basketPositionOne, $basketPositionTwo));
+
+        $basket = new BasketStub();
+        $basket->setBasketPositions($basketPositions);
+
+        $this->basketRepository->truncate();
+        $this->basketRepository->save($basket);
+
         $result = $this->interactor->execute(BasketStub::ID);
         $this->assertEquals(ViewBasketResponse::SUCCESS, $result->getCode());
         $this->assertEquals(
@@ -67,12 +85,20 @@ class ViewBasketTest extends \PHPUnit_Framework_TestCase
                     'articleImage' => ArticleStub::IMAGE_PATH,
                     'totalPrice'   => '9.99',
                     'count'        => 1
+                ),
+                array(
+                    'articleId'    => ArticleStub::ID,
+                    'articleTitle' => ArticleStub::TITLE,
+                    'articlePrice' => ArticleStub::PRICE,
+                    'articleImage' => ArticleStub::IMAGE_PATH,
+                    'totalPrice'   => '9.99',
+                    'count'        => 1
                 )
             ),
             $result->getPositions()
         );
-        $this->assertEquals(1, $result->getPositionCount());
-        $this->assertEquals('9.99', $result->getTotal());
+        $this->assertEquals(2, $result->getPositionCount());
+        $this->assertEquals('19.98', $result->getTotal());
         $this->assertEquals('', $result->getMessage());
     }
 }

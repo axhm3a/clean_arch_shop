@@ -54,5 +54,10 @@ class BasketRepositoryMock implements BasketRepository
     {
         return $this->findById;
     }
+
+    public function truncate()
+    {
+        $this->baskets = array();
+    }
 }
  

@@ -2,6 +2,7 @@
 
 namespace Bws\Interactor;
 
+use ArrayAccess;
 use Bws\Entity\BasketPosition;
 use Bws\Repository\BasketPositionRepository;
 use Bws\Repository\BasketRepository;
@@ -46,7 +47,7 @@ class ViewBasket
             return new ViewBasketResponse(ViewBasketResponse::BASKET_NOT_FOUND, 'BASKET_NOT_FOUND');
         }
 
-        $positions = $this->positionRepository->findByBasket($basket);
+        $positions = $basket->getPositions();
 
         if (sizeof($positions) == 0) {
             return new ViewBasketResponse(ViewBasketResponse::SUCCESS, '');
@@ -56,11 +57,11 @@ class ViewBasket
     }
 
     /**
-     * @param BasketPosition[] $positions
+     * @param \ArrayAccess $positions
      *
      * @return ViewBasketResponse
      */
-    protected function buildResponseFromPositions(array $positions)
+    protected function buildResponseFromPositions(ArrayAccess $positions)
     {
         $positionsDto = array();
         $total        = 0.0;
@@ -77,11 +78,11 @@ class ViewBasket
     }
 
     /**
-     * @param array  $positions
-     * @param array  $positionsDto
-     * @param double $total
+     * @param array|\ArrayAccess $positions
+     * @param array              $positionsDto
+     * @param double             $total
      */
-    protected function buildPositionsDtoAndCalculatePrices(array $positions, &$positionsDto, &$total)
+    protected function buildPositionsDtoAndCalculatePrices(ArrayAccess $positions, &$positionsDto, &$total)
     {
         /** @var BasketPosition $position */
         foreach ($positions as $position) {
