@@ -79,12 +79,13 @@
                     <div class="panel-body">
 
                         {% for logisticPartner in logisticPartners %}
-                            <div class="radio">
+                            <div class="radio logisticpartner">
                                 <label>
                                     <input type="radio"
                                            name="logisticPartnerId"
                                            value="{{ logisticPartner.id }}">
-                                    {{ logisticPartner.name }}
+                                    <img src="{{ asset('') }}/img/lp/{{ logisticPartner.name }}.png"
+                                         alt="{{ logisticPartner.name }}">
                                 </label>
                             </div>
                         {% endfor %}
