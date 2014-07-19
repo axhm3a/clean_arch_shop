@@ -36,6 +36,7 @@ class ViewBasketTest extends \PHPUnit_Framework_TestCase
     {
         $result = $this->interactor->execute(null);
         $this->assertEquals(ViewBasketResponse::BAD_BASKET_ID, $result->getCode());
+        $this->assertEquals('0.00', $result->getTotal());
     }
 
     public function testBasketNotFound()
