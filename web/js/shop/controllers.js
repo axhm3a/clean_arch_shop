@@ -89,11 +89,16 @@ var ChangeInvoiceAddress = function ($scope, $modalInstance, $http) {
 
 var AddDeliveryAddress = function ($scope, $modalInstance, $http) {
     $scope.address = {  };
+
     $scope.saveDeliveryAddress = function () {
         $http.post('shop/deliveryaddress/add.json', $scope.address).success(function (data) {
             $modalInstance.close();
         });
     };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    }
 };
 
 var DeliveryAddressBook = function ($scope, $modalInstance, $http, $log, deliveryaddresses) {
