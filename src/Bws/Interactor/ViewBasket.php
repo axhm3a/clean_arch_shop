@@ -31,8 +31,13 @@ class ViewBasket
      */
     public function execute($basketId)
     {
-        if (null === $basketId) {
-            return new ViewBasketResponse(ViewBasketResponse::BAD_BASKET_ID, 'BAD_BASKET_ID');
+        if (null == $basketId) {
+            return new ViewBasketResponse(
+                ViewBasketResponse::BAD_BASKET_ID,
+                'BAD_BASKET_ID',
+                array(),
+                PriceFormatter::format(0.00)
+            );
         }
 
         $basket = $this->basketRepository->find($basketId);
