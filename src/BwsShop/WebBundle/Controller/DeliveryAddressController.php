@@ -46,17 +46,19 @@ class DeliveryAddressController extends FOSRestController
         $result = $this->get('interactor.delivery_address_selectable')->execute($customerId, $addressId);
 
         switch ($result->code) {
-            default:
-            case $result::ADDRESS_NOT_FOUND:
-            case $result::CUSTOMER_NOT_FOUND:
-                $view = $this->view('address or customer not found', 500)->setTemplateVar('result');
-                break;
             case $result::ADDRESS_DOES_NOT_BELONG_TO_GIVEN_CUSTOMER:
                 $view = $this->view('forbidden', 403)->setTemplateVar('result');
                 break;
             case $result::ADDRESS_IS_SELECTABLE:
                 $view = $this->view('ok', 200)->setTemplateVar('result');
                 $request->getSession()->set('selectedDeliveryAddressId', $addressId);
+                break;
+            case $result::ADDRESS_NOT_FOUND:
+            case $result::CUSTOMER_NOT_FOUND:
+                $view = $this->view('address or customer not found', 500)->setTemplateVar('result');
+                break;
+            default:
+                $view = $this->view('unknown error', 500)->setTemplateVar('result');
                 break;
         }
 
@@ -90,7 +92,7 @@ class DeliveryAddressController extends FOSRestController
                 $view = $this->view('Internal Server Error', 500)->setTemplateVar('result');
                 break;
         }
- 
+
         return $this->handleView($view);
     }
 }
