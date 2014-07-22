@@ -256,15 +256,26 @@ class SubmitOrderTest extends \PHPUnit_Framework_TestCase
     public function testRegisteredCustomerOrderWhenCustomerNotFoundShouldReturnError()
     {
         $this->customerRepository->truncate();
-        $result = $this->interactor->asRegisteredCustomer(new SubmitOrderAsRegisteredCustomerRequest());
+        $request                    = new SubmitOrderAsRegisteredCustomerRequest();
+        $request->customerId        = 999;
+        $request->selectedDelivery  = DeliveryAddressStub::ID;
+        $request->basketId          = BasketStub::ID;
+        $request->paymentMethodId   = PaymentMethodRepositoryMock::COD_ID;
+        $request->logisticPartnerId = LogisticPartnerRepositoryMock::DHL_ID;
+
+        $result = $this->interactor->asRegisteredCustomer($request);
+
         $this->assertEquals($result::CUSTOMER_NOT_FOUND, $result->getCode());
     }
 
     public function testRegisteredCustomerOrderWhenDeliveryAddressNotFoundShouldReturnError()
     {
-        $request                   = new SubmitOrderAsRegisteredCustomerRequest();
-        $request->customerId       = CustomerStub::ID;
-        $request->selectedDelivery = 999;
+        $request                    = new SubmitOrderAsRegisteredCustomerRequest();
+        $request->customerId        = CustomerStub::ID;
+        $request->selectedDelivery  = 999;
+        $request->basketId          = BasketStub::ID;
+        $request->paymentMethodId   = PaymentMethodRepositoryMock::COD_ID;
+        $request->logisticPartnerId = LogisticPartnerRepositoryMock::DHL_ID;
 
         $result = $this->interactor->asRegisteredCustomer($request);
 
@@ -279,14 +290,54 @@ class SubmitOrderTest extends \PHPUnit_Framework_TestCase
         $this->deliveryAddressRepository->truncate();
         $this->deliveryAddressRepository->save($selectedDeliveryAddress);
 
-        $request                   = new SubmitOrderAsRegisteredCustomerRequest();
-        $request->customerId       = CustomerStub::ID;
-        $request->selectedDelivery = DeliveryAddressStub::ID;
-        $request->basketId         = 888;
+        $request                    = new SubmitOrderAsRegisteredCustomerRequest();
+        $request->customerId        = CustomerStub::ID;
+        $request->selectedDelivery  = DeliveryAddressStub::ID;
+        $request->basketId          = 888;
+        $request->paymentMethodId   = PaymentMethodRepositoryMock::COD_ID;
+        $request->logisticPartnerId = LogisticPartnerRepositoryMock::DHL_ID;
 
         $result = $this->interactor->asRegisteredCustomer($request);
 
         $this->assertEquals($result::BASKET_NOT_FOUND, $result->getCode());
+    }
+
+    public function testRegisteredCustomerOrderWhenPaymentMethodIdIsNullReturnError()
+    {
+        $selectedDeliveryAddress = new DeliveryAddressStub();
+        $customer                = new CustomerStub();
+        $selectedDeliveryAddress->setCustomer($customer);
+        $this->deliveryAddressRepository->truncate();
+        $this->deliveryAddressRepository->save($selectedDeliveryAddress);
+
+        $request                   = new SubmitOrderAsRegisteredCustomerRequest();
+        $request->customerId       = CustomerStub::ID;
+        $request->selectedDelivery = DeliveryAddressStub::ID;
+        $request->basketId         = BasketStub::ID;
+        $request->paymentMethodId  = null;
+
+        $result = $this->interactor->asRegisteredCustomer($request);
+
+        $this->assertEquals($result::PAYMENT_METHOD_ID_INVALID, $result->getCode());
+    }
+
+    public function testRegisteredCustomerOrderWhenPaymentMethodIdIsZeroReturnError()
+    {
+        $selectedDeliveryAddress = new DeliveryAddressStub();
+        $customer                = new CustomerStub();
+        $selectedDeliveryAddress->setCustomer($customer);
+        $this->deliveryAddressRepository->truncate();
+        $this->deliveryAddressRepository->save($selectedDeliveryAddress);
+
+        $request                   = new SubmitOrderAsRegisteredCustomerRequest();
+        $request->customerId       = CustomerStub::ID;
+        $request->selectedDelivery = DeliveryAddressStub::ID;
+        $request->basketId         = BasketStub::ID;
+        $request->paymentMethodId  = 0;
+
+        $result = $this->interactor->asRegisteredCustomer($request);
+
+        $this->assertEquals($result::PAYMENT_METHOD_NOT_FOUND, $result->getCode());
     }
 
     public function testRegisteredCustomerOrderWhenPaymentMethodNotFoundShouldReturnError()
@@ -330,7 +381,7 @@ class SubmitOrderTest extends \PHPUnit_Framework_TestCase
 
     public function testRegisteredCustomerOrderWhenOrderWasSavedShouldReturnOrderId()
     {
-        $customer                = new CustomerStub();
+        $customer = new CustomerStub();
         $customer->setLastUsedInvoiceAddress(new InvoiceAddressStub());
         $customer->setLastUsedEmailAddress(new EmailAddressStub());
         $selectedDeliveryAddress = new DeliveryAddressStub();

@@ -9,7 +9,8 @@ class SubmitOrderResponse
     const DELIVERY_ADDRESS_NOT_FOUND = -2;
     const BASKET_NOT_FOUND           = -3;
     const PAYMENT_METHOD_NOT_FOUND   = -4;
-    const LOGISTIC_PARTNER_NOT_FOUND = -5;
+    const PAYMENT_METHOD_ID_INVALID  = -5;
+    const LOGISTIC_PARTNER_NOT_FOUND = -6;
 
     /**
      * @var integer

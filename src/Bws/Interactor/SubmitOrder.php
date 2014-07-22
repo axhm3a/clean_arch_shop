@@ -128,6 +128,10 @@ class SubmitOrder
      */
     public function asRegisteredCustomer(SubmitOrderAsRegisteredCustomerRequest $request)
     {
+        if (null === $request->paymentMethodId) {
+            return new SubmitOrderResponse(SubmitOrderResponse::PAYMENT_METHOD_ID_INVALID);
+        }
+
         if (!$customer = $this->customerRepository->find($request->customerId)) {
             return new SubmitOrderResponse(SubmitOrderResponse::CUSTOMER_NOT_FOUND);
         }
@@ -145,14 +149,12 @@ class SubmitOrder
             return new SubmitOrderResponse(SubmitOrderResponse::BASKET_NOT_FOUND);
         }
 
-        if (!$request->paymentMethodId
-         || !$paymentMethod = $this->paymentMethodRepository->find($request->paymentMethodId)
-        ) {
+        if (!$paymentMethod = $this->paymentMethodRepository->find($request->paymentMethodId)) {
             return new SubmitOrderResponse(SubmitOrderResponse::PAYMENT_METHOD_NOT_FOUND);
         }
 
         if (!$request->logisticPartnerId
-         || !$logisticPartner = $this->logisticPartnerRepository->find($request->logisticPartnerId)
+            || !$logisticPartner = $this->logisticPartnerRepository->find($request->logisticPartnerId)
         ) {
             return new SubmitOrderResponse(SubmitOrderResponse::LOGISTIC_PARTNER_NOT_FOUND);
         }
