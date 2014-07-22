@@ -12,7 +12,7 @@ class Basket
     protected $id;
 
     /**
-     * @var BasketPosition[]
+     * @var ArrayAccess
      */
     protected $basketPositions;
 
