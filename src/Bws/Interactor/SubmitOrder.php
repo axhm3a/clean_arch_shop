@@ -159,11 +159,9 @@ class SubmitOrder
             return new SubmitOrderResponse(SubmitOrderResponse::LOGISTIC_PARTNER_NOT_FOUND);
         }
 
-        $address = $this->presentCurrentAddress->getLastFetchedDeliveryAddress();
-
         $order = $this->saveOrder(
             $customer->getLastUsedInvoiceAddress(),
-            $address,
+            $this->presentCurrentAddress->getLastFetchedDeliveryAddress(),
             $basket,
             $customer,
             $customer->getLastUsedEmailAddress(),
