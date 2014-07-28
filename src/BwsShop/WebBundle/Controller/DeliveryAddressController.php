@@ -88,6 +88,9 @@ class DeliveryAddressController extends FOSRestController
             case $result::SUCCESS:
                 $view = $this->view('ok', 200)->setTemplateVar('result');
                 break;
+            case $result::ADDRESS_INVALID:
+                $view = $this->view($result->messages, 500)->setTemplateVar('result');
+                break;
             default:
                 $view = $this->view('Internal Server Error', 500)->setTemplateVar('result');
                 break;

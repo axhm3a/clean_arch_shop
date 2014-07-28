@@ -62,5 +62,21 @@ class AddDeliveryAddressTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($request->city, $lastInserted->getCity());
         $this->assertEquals(new CustomerStub(), $lastInserted->getCustomer());
     }
+
+    public function testInvalidAddressShouldReturnAnErrorAndNotBeSaved()
+    {
+        $request             = new AddDeliveryAddressRequest();
+        $request->customerId = CustomerStub::ID;
+        $request->firstName  = 'Max';
+        $request->lastName   = 'Mustermann';
+        $request->street     = 'Musterstraße 55';
+        $request->city       = 'Hannover';
+        $request->zip        = '999999';
+
+        $result = $this->interactor->execute($request);
+
+        $this->assertNull($this->deliveryAddressRepository->findLastInserted());
+        $this->assertEquals($result::ADDRESS_INVALID, $result->code);
+        $this->assertEquals(array('zip' => array('STRING_TOO_LONG')), $result->messages);
+    }
 }
- 

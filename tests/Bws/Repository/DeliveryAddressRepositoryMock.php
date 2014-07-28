@@ -12,7 +12,7 @@ class DeliveryAddressRepositoryMock implements DeliveryAddressRepository
 
     public function __construct()
     {
-        $this->save(new DeliveryAddressStub());
+        $this->addresses[DeliveryAddressStub::ID] = new DeliveryAddressStub();
     }
 
     /**

@@ -2,9 +2,11 @@
 
 namespace Bws\Interactor;
 
+use Bws\Entity\Customer;
 use Bws\Entity\DeliveryAddress;
 use Bws\Repository\CustomerRepository;
 use Bws\Repository\DeliveryAddressRepository;
+use Bws\Validator\DeliveryAddressValidatorFactory;
 
 class AddDeliveryAddress
 {
@@ -40,6 +42,29 @@ class AddDeliveryAddress
             return $result;
         }
 
+        $address = $this->buildAddressFromRequest($request, $customer);
+
+        $deliveryAddressValidator = DeliveryAddressValidatorFactory::getDeliveryAddressValidator('');
+        if (!$deliveryAddressValidator->isValid($address)) {
+            $result->code     = $result::ADDRESS_INVALID;
+            $result->messages = $deliveryAddressValidator->getMessages();
+            return $result;
+        }
+
+        $this->deliveryAddressRepository->save($address);
+        $result->code = $result::SUCCESS;
+
+        return $result;
+    }
+
+    /**
+     * @param AddDeliveryAddressRequest $request
+     * @param Customer                  $customer
+     *
+     * @return DeliveryAddress
+     */
+    protected function buildAddressFromRequest(AddDeliveryAddressRequest $request, Customer $customer)
+    {
         $address = $this->deliveryAddressRepository->factory();
         $address->setFirstName($request->firstName);
         $address->setLastName($request->lastName);
@@ -47,12 +72,7 @@ class AddDeliveryAddress
         $address->setZip($request->zip);
         $address->setCity($request->city);
         $address->setCustomer($customer);
-
-        $this->deliveryAddressRepository->save($address);
-
-        $result->code = $result::SUCCESS;
-
-        return $result;
+        return $address;
     }
 }
  
