@@ -6,7 +6,6 @@ use Bws\Entity\Basket;
 use Bws\Entity\Customer;
 use Bws\Entity\DeliveryAddress;
 use Bws\Entity\EmailAddress;
-use Bws\Entity\EmailAddressStub;
 use Bws\Entity\InvoiceAddress;
 use Bws\Entity\LogisticPartner;
 use Bws\Entity\Order;
@@ -19,6 +18,7 @@ use Bws\Repository\InvoiceAddressRepository;
 use Bws\Repository\LogisticPartnerRepository;
 use Bws\Repository\OrderRepository;
 use Bws\Repository\PaymentMethodRepository;
+use Exception;
 
 class SubmitOrder
 {
@@ -128,40 +128,20 @@ class SubmitOrder
      */
     public function asRegisteredCustomer(SubmitOrderAsRegisteredCustomerRequest $request)
     {
-        if (null === $request->paymentMethodId) {
-            return new SubmitOrderResponse(SubmitOrderResponse::PAYMENT_METHOD_ID_INVALID);
-        }
-
-        if (!$customer = $this->customerRepository->find($request->customerId)) {
-            return new SubmitOrderResponse(SubmitOrderResponse::CUSTOMER_NOT_FOUND);
-        }
-
-        $result = $this->presentCurrentAddress->getCurrentDeliveryAddress(
-            $request->customerId,
-            $request->selectedDelivery
-        );
-
-        if ($result->code == $result::DELIVERY_ADDRESS_NOT_FOUND) {
-            return new SubmitOrderResponse(SubmitOrderResponse::DELIVERY_ADDRESS_NOT_FOUND);
-        }
-
-        if (!$basket = $this->basketRepository->find($request->basketId)) {
-            return new SubmitOrderResponse(SubmitOrderResponse::BASKET_NOT_FOUND);
-        }
-
-        if (!$paymentMethod = $this->paymentMethodRepository->find($request->paymentMethodId)) {
-            return new SubmitOrderResponse(SubmitOrderResponse::PAYMENT_METHOD_NOT_FOUND);
-        }
-
-        if (!$request->logisticPartnerId
-            || !$logisticPartner = $this->logisticPartnerRepository->find($request->logisticPartnerId)
-        ) {
-            return new SubmitOrderResponse(SubmitOrderResponse::LOGISTIC_PARTNER_NOT_FOUND);
+        try {
+            $this->validateRequest($request);
+            $customer        = $this->findCustomer($request->customerId);
+            $deliveryAddress = $this->findDeliveryAddress($request->customerId, $request->selectedDelivery);
+            $basket          = $this->findBasket($request->basketId);
+            $paymentMethod   = $this->findPaymentMethod($request->paymentMethodId);
+            $logisticPartner = $this->findLogisticPartner($request->logisticPartnerId);
+        } catch (Exception $exception) {
+            return new SubmitOrderResponse($exception->getCode(), $exception->getMessage());
         }
 
         $order = $this->saveOrder(
             $customer->getLastUsedInvoiceAddress(),
-            $this->presentCurrentAddress->getLastFetchedDeliveryAddress(),
+            $deliveryAddress,
             $basket,
             $customer,
             $customer->getLastUsedEmailAddress(),
@@ -333,6 +313,59 @@ class SubmitOrder
     {
         $deliveryAddress->setCustomer($customer);
         $this->deliveryAddressRepository->save($deliveryAddress);
+    }
+
+    protected function findCustomer($customerId)
+    {
+        if (!$customer = $this->customerRepository->find($customerId)) {
+            throw new Exception('', SubmitOrderResponse::CUSTOMER_NOT_FOUND);
+        }
+        return $customer;
+    }
+
+    protected function findBasket($basketId)
+    {
+        if (!$basket = $this->basketRepository->find($basketId)) {
+            throw new Exception('', SubmitOrderResponse::BASKET_NOT_FOUND);
+        }
+        return $basket;
+    }
+
+    protected function findPaymentMethod($paymentMethodId)
+    {
+        if (!$paymentMethod = $this->paymentMethodRepository->find($paymentMethodId)) {
+            throw new Exception('', SubmitOrderResponse::PAYMENT_METHOD_NOT_FOUND);
+        }
+        return $paymentMethod;
+    }
+
+    protected function findLogisticPartner($logisticPartnerId)
+    {
+        if (!$logisticPartner = $this->logisticPartnerRepository->find($logisticPartnerId)) {
+            throw new Exception('', SubmitOrderResponse::LOGISTIC_PARTNER_NOT_FOUND);
+        }
+        return $logisticPartner;
+    }
+
+    protected function findDeliveryAddress($customerId, $deliveryAddressId)
+    {
+        $result = $this->presentCurrentAddress->getCurrentDeliveryAddress(
+            $customerId,
+            $deliveryAddressId
+        );
+
+        if ($result->code == $result::DELIVERY_ADDRESS_NOT_FOUND) {
+            throw new Exception('', SubmitOrderResponse::DELIVERY_ADDRESS_NOT_FOUND);
+        }
+
+        return $this->presentCurrentAddress->getLastFetchedDeliveryAddress();
+    }
+
+    protected function validateRequest($request)
+    {
+        if ($request->paymentMethodId === null) {
+            throw new Exception('', SubmitOrderResponse::PAYMENT_METHOD_ID_INVALID);
+        }
     }
 }
  
