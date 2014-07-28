@@ -91,9 +91,13 @@ var AddDeliveryAddress = function ($scope, $modalInstance, $http) {
     $scope.address = {  };
 
     $scope.saveDeliveryAddress = function () {
-        $http.post('shop/deliveryaddress/add.json', $scope.address).success(function (data) {
-            $modalInstance.close();
-        });
+        $http.post('shop/deliveryaddress/add.json', $scope.address)
+            .success(function (data) {
+                $modalInstance.close();
+            })
+            .error(function(data) {
+
+            });
     };
 
     $scope.cancel = function () {
