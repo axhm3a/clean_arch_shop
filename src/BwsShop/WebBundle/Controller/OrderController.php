@@ -2,11 +2,11 @@
 
 namespace BwsShop\WebBundle\Controller;
 
+use Bws\Interactor\SubmitOrder;
 use Bws\Interactor\SubmitOrderAsRegisteredCustomerRequest;
 use Bws\Interactor\SubmitOrderAsUnregisteredCustomerRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class OrderController extends Controller
 {
@@ -30,7 +30,9 @@ class OrderController extends Controller
         $submitOrderRequest->logisticPartnerId = (int)$request->get('logisticPartnerId');
         $submitOrderRequest->registering       = (bool)$request->get('registering');
 
-        $response = $this->get('interactor.submit_order')->execute($submitOrderRequest);
+        /** @var SubmitOrder $interactor */
+        $interactor = $this->get('interactor.submit_order');
+        $response = $interactor->asUnregisteredCustomer($submitOrderRequest);
 
         $session->set('orderId', $response->getOrderId());
         $session->set('basketId', 0);
@@ -47,7 +49,9 @@ class OrderController extends Controller
         $request->paymentMethodId   = $httpRequest->get('paymentMethodId');
         $request->selectedDelivery  = $httpRequest->getSession()->get('selectedDeliveryAddressId');
 
-        $response = $this->get('interactor.submit_order')->asRegisteredCustomer($request);
+        /** @var SubmitOrder $interactor */
+        $interactor = $this->get('interactor.submit_order');
+        $response = $interactor->asRegisteredCustomer($request);
 
         switch ($response->getCode()) {
             case $response::SUCCESS:
@@ -55,7 +59,7 @@ class OrderController extends Controller
                 $httpRequest->getSession()->set('basketId', 0);
                 return $this->redirect($this->generateUrl('bws_shop_web_thanks'));
             default:
-                die('Error :(');
+                die('Error :(' . $response->getMessage());
         }
     }
 
